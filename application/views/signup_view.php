@@ -12,6 +12,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			body{
 				background: #fff7e6;
 			}
+
 			h1{
 				text-align: center;
 			}
@@ -21,8 +22,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<body>
 		<!-- Page Content -->
 		<div class="container-page">
-			<h1 class="mt-4">Welcome to Jolles' E-Store</h1>
-			
+			<h1 class="mt-4">Welcome to Join Jolles' member!!!</h1>
+
 		</div>
 
 	</body>
