@@ -236,7 +236,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             .social-container {
                 margin: 20px 0;
             }
-
+            
             .social-container a {
                 border: 1px solid #DDDDDD;
                 border-radius: 50%;
@@ -246,6 +246,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 margin: 0 5px;
                 height: 40px;
                 width: 40px;
+            }
+
+            .social-container img{
+                width: 30px;
+                height: 30px;
             }
 
 		</style>
@@ -273,11 +278,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <form action="#">
                     <h1>Sign in</h1>
                     <div class="social-container">
-                        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-                        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="google_login" class="social"><i class="fab fa-google-plus-g"></i> <img src="images/google-icon.png"/></a>
                     </div>
-                    <span>or use your account</span>
+                    <span>*Sign in with Google <b>or</b> use Jolles' account.</span>
                     <input type="email" placeholder="Email" />
                     <input type="password" placeholder="Password" />
                     <a href="#" class="reset-pwd">Forgot your password?</a>
@@ -293,7 +296,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </div>
                     <div class="overlay-panel overlay-right">
                         <h1>Hello, Friend!</h1>
-                        <p>Enter your personal details and start journey with us</p>
+                        <p>Enter your personal details and start journey with us now!!!</p>
                         <button class="signup-btn" id="signUp">Sign Up</button>
                         <a href="home" class="back" id="back-btn">Back</button>
                     </div>
