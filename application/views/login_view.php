@@ -278,7 +278,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <form action="#">
                     <h1>Sign in</h1>
                     <div class="social-container">
-                        <a href="google_login" class="social"><i class="fab fa-google-plus-g"></i> <img src="images/google-icon.png"/></a>
+                        <a href="#" class="social"><i class="fab fa-google-plus-g"></i> <img src="images/google-icon.png"/></a>
                     </div>
                     <span>*Sign in with Google <b>or</b> use Jolles' account.</span>
                     <input type="email" placeholder="Email" />
