@@ -6,7 +6,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<title>JonTong</title>
+		<title>Jolles Mall</title>
 		
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
@@ -278,7 +278,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <form action="#">
                     <h1>Sign in</h1>
                     <div class="social-container">
-                        <a href="#" class="social"><i class="fab fa-google-plus-g"></i> <img src="images/google-icon.png"/></a>
+                        <a href="#" class="social"><i class="fab fa-google-plus-g"></i><img src="<?php echo base_url()?>images/google-icon.png"/></a>
                     </div>
                     <span>*Sign in with Google <b>or</b> use Jolles' account.</span>
                     <input type="email" placeholder="Email" />
