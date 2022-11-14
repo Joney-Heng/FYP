@@ -32,7 +32,7 @@ class Product_model extends CI_Model{
             'sku_number'        => $this->input->post('sku_number'),
             'date_created'      => date('Y-m-d H:i:s', time()),
             'date_updated'      => date('Y-m-d H:i:s', time()),
-            'photo'             => $this->input->post('photo'),
+            'photo'             => $this->input->post('product_photo'),
             'product_status'    => empty($this->input->post('product_status')) ? 0 : 1
         ];
         $result = $this->db->insert('products', $data);
@@ -61,10 +61,9 @@ class Product_model extends CI_Model{
             'stock_quantity'    => $this->input->post('stock_quantity'),
             'sku_number'        => $this->input->post('sku_number'),
             'date_updated'      => date('Y-m-d H:i:s', time()),
-            'photo'             => $this->input->post('photo'),
+            'photo'             => $this->input->post('product_photo'),
             'product_status'    => empty($this->input->post('product_status')) ? 0 : 1
         ];
- 
 
         $result = $this->db->where('id',$id)->update('products',$data);
         return $result;

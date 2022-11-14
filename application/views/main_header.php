@@ -34,6 +34,8 @@
 
 		li a:hover {
 			background-color: #f9f2ec;
+			color: black;
+			text-decoration: none;
 		}
 
 		.navbar-logo {

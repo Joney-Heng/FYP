@@ -5,6 +5,33 @@
     <title>Products Management - CRUD</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.0/js/bootstrap.min.js" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <style type="text/css">
+        body .container .card .card-header {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        body .container .card .card-body {
+            overflow-x: auto;
+        }
+
+        body .container .card .table td.product-desc {
+            display: block;
+            white-space: nowrap;
+            overflow: hidden;
+            height: 128px;
+            width: 100%;
+            text-overflow: ellipsis;
+        }
+
+        body .container .card .table .action-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 0;
+        }
+    </style>
 </head>
 
 <body>
@@ -12,7 +39,10 @@
         <h2 class="text-center mt-5 mb-3"><?php echo $title; ?></h2>
         <div class="card">
             <div class="card-header">
-                <a class="btn btn-outline-primary" href="<?php echo base_url('product/create/'); ?>">
+                <a class="btn btn-outline-primary" href="<?php echo base_url('home  '); ?>">
+                    Back to Home
+                </a>
+                <a class="btn btn-outline-success" href="<?php echo base_url('product/create/'); ?>">
                     Create New Product
                 </a>
             </div>
@@ -27,9 +57,8 @@
                     <tr>
                         <th>Example Product</th>
                         <th>Name</th>
-                        <th>Description</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
+                        <th>Price(MYR)</th>
+                        <th>Stock Quantity</th>
                         <th>SKU Number</th>
                         <th>Status</th>
                         <th width="240px">Action</th>
@@ -37,25 +66,23 @@
 
                     <?php foreach ($products as $product) { ?>
                         <tr>
-                            <td><img src="<?php echo $product->photo; ?>"/></td>
+                            <td><img src="http://joney-fyp-app.herokuapp.com/files/<?php echo explode(',', $product->photo)[0]; ?>" style="width:80px"/></td>
                             <td><?php echo $product->name; ?></td>
-                            <td><?php echo $product->description; ?></td>
-                            <td><?php echo $product->price; ?></td>
+                            <td><?php echo number_format($product->price, 2, '.', ''); ?></td>
                             <td><?php echo $product->stock_quantity; ?></td>
                             <td><?php echo $product->sku_number; ?></td>
-                            <td><?php echo $product->product_status == 1 ? 'ACTIVE' : 'DISABLED' ?></td>
+                            <td><?php echo $product->product_status == 1 ? 'PUBLISHED' : 'UNPUBULISHED' ?></td>
 
-                            <td>
-                                <a class="btn btn-outline-info" href="<?php echo base_url('product/show/' . $product->id) ?>">
-                                    Show
+                            <td class="action-container">
+                                <a href="<?php echo base_url('product/show/' . $product->id) ?>">
+                                    <img src="https://img.icons8.com/color/48/000000/ingredients-list.png" />
                                 </a>
-                                <a class="btn btn-outline-success" href="<?php echo base_url('product/edit/' . $product->id) ?>">
-                                    Edit
+                                <a href="<?php echo base_url('product/edit/' . $product->id) ?>">
+                                    <img src="https://img.icons8.com/color/48/000000/edit-property.png" />
                                 </a>
-                                <a class="btn btn-outline-danger delete" href="#">
-                                    Delete
+                                <a class="delete" href="#">
+                                    <img src="https://img.icons8.com/color-glass/48/000000/delete-forever.png" />
                                 </a>
-                                <!-- <?php echo base_url('product/delete/' . $product->id) ?> -->
                             </td>
                         </tr>
                     <?php } ?>
@@ -64,7 +91,7 @@
         </div>
 
     </div>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>   
     <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 
     <script>
