@@ -10,11 +10,9 @@
         body {
             background: #ecedee;
         }
-
         body .container {
             margin-bottom: 40px;
         }
-
         body .container a.back-btn {
             display: flex;
             align-items: center;
@@ -22,45 +20,49 @@
             color: #000;
             font-weight: 500;
         }
-
         body .container a img {
             text-decoration: none;
             margin-right: 4px;
         }
-
         body .container .card label {
             font-size: 16px;
             font-weight: 500;
         }
-
         body .container .card .form-group label {
             color: #e69900;
             font-weight: 700;
         }
-
         body .container .card .photo-container{
             display: flex;
             justify-content: space-between;
         }
-
         body .container .card .form-group.upload {
             margin: 20px 0;
         }
-
         body .container .card .custom-control {
             display: flex;
             align-items: center;
         }
-
         body .container .card .cta {
             display: flex;
             justify-content: space-between;
             border-top: 1px solid #ccc;
         }
+        body .container .card .card-body .upload #preview-photo {
+           display: flex;
+           flex-wrap: wrap;
+           gap: 15px;
+        }
+        body .container .card .card-body .upload #preview-photo .wrapper {
+            display: flex;
+            flex-direction: column;
+        }
         body .container .card .card-body .upload img {
-            max-width: 200px;
+            margin-bottom: 2px;
             margin-top: 15px;
-            border: 2px solid #b8b894;
+            width: 200px;
+            height: 200px;
+            border: 2px solid #e69900;
             border-radius: 5px;
         }
         body .container .card .btn-save {
@@ -110,10 +112,10 @@
                     </div>
 
                     <div class="form-group upload">
-                        <label for="photo">Example Product Image 1</label>
+                        <label for="photo">Example Product Image</label>
                         <input type="file" class="form-control-file" id="photo" name="photo">
                         <input type="hidden" id="product_photo" name="product_photo">
-                        <img id="preview-photo"/>
+                        <div id="preview-photo"></div>
                     </div>
 
                     <div class="cta">
@@ -154,14 +156,38 @@
                     method: "POST",
                     success: function(data) {
                         data = JSON.parse(data);
-                        $('#product_photo').val(data.msg);
+                        $('#preview-photo').append("<div class='wrapper'><img data-value='" + data.msg + "'src='http://joney-fyp-app.herokuapp.com/files/" + data.msg + "'><button class='btn btn-danger remove'>Remove</button></div>");
 
-                        $('#preview-photo').attr('src', 'http://joney-fyp-app.herokuapp.com/files/' + data.msg);
+                        $('.remove').click(function(e) {
+                            e.preventDefault();
+                            $(this).closest('.wrapper').remove();
+
+                            updateProductPhoto();
+                        });
+
+                        updateProductPhoto();
                     }
                 });
             }
         });
+
+        $('.remove').click(function(e) {
+            e.preventDefault();
+            $(this).closest('.wrapper').remove();
+            updateProductPhoto();
+        });
     });
+
+    function updateProductPhoto() {
+        var photo = [];
+
+        $.each($('#preview-photo img'), function(i, value) {
+            photo.push($(value).attr('data-value'));
+        });
+
+        $('#product_photo').val(photo.join(','));
+
+    }
 </script>
 
 </html>

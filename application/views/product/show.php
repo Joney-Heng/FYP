@@ -64,10 +64,11 @@
         }
 
         body .container .card-body .image-container .wrapper img {
+            margin-top: 5px;
+            margin-bottom: 2px;
             width: 200px;
             height: 200px;
-            margin-top: 5px;
-            border: 2px solid #b8b894;
+            border: 2px solid #e69900;
             border-radius: 5px;
             object-fit: contain;
         }
