@@ -42,7 +42,7 @@
         .thumbnail_images ul li {
             margin: 5px;
             padding: 10px;
-            border: 2px solid #e69900 ;
+            border: 2px solid #e69900;
             cursor: pointer;
             transition: all 0.5s
         }
@@ -50,13 +50,13 @@
         .thumbnail_images ul li {
             margin: 5px;
             padding: 10px;
-            border: 1px solid #e69900 ;
+            border: 1px solid #e69900;
             cursor: pointer;
             transition: all 0.5s
         }
 
         .thumbnail_images ul li:hover {
-            border: 2px solid #e69900 ;
+            border: 2px solid #e69900;
         }
 
         .main-image {
@@ -68,8 +68,8 @@
             width: 100%;
             overflow: hidden
         }
-        
-        .main-image img{
+
+        .main-image img {
             border-radius: 25px;
         }
 
@@ -183,15 +183,15 @@
                 <div class="row g-0">
                     <div class="col-md-5 border-end">
                         <div class="d-flex flex-column justify-content-center">
-                            <div class="main-image"> <img src="http://joney-fyp-app.herokuapp.com/files/<?php echo $product->photo ?>" id="main_product_image" width="350"> </div>
+                            <div class="main-image"><img src="http://joney-fyp-app.herokuapp.com/files/<?php echo explode(',', $product->photo)[0] ?>" id="main_product_image" width="350"> </div>
                             <div class="thumbnail_images">
                                 <ul id="thumbnail">
-                                    <li><img onclick="changeImage(this)" src="http://joney-fyp-app.herokuapp.com/files/<?php echo $product->photo ?>" width="50"></li>
-                                    
-                                    <li><img onclick="changeImage(this)" src=<?php $product->photo != null ? "http://joney-fyp-app.herokuapp.com/files/<?php echo $product->photo2 ?>" : "HAHA"?> width="50"></li>
-                                    <li><img onclick="changeImage(this)" src="" width="50"></li>
-                                    <li><img onclick="changeImage(this)" src="" width="50"></li>
-                                </ul>
+                                    <?php foreach (explode(',', $product->photo) as $photo) { ?>
+                                        <div class="wrapper">
+                                            <li><img onclick="changeImage(this)" data-value='<?php echo $photo ?>' src="<?php echo ($photo != '') ? 'http://joney-fyp-app.herokuapp.com/files/' . $photo : ''; ?>" width="50"></li>
+                                        </div>
+                                    <?php } ?>
+                                </ul>   
                             </div>
                         </div>
                     </div>

@@ -114,7 +114,7 @@
             <?php if ($product->product_status == '1') { ?>
                 <a href="<?php echo base_url('mainsite/product-details/' . $product->id) ?>">
                     <div class="card" style="width: 18rem;">
-                        <img class="bd-placeholder-img card-img-top" src="http://joney-fyp-app.herokuapp.com/files/<?php echo $product->photo?>"/>
+                        <img class="bd-placeholder-img card-img-top" src="http://joney-fyp-app.herokuapp.com/files/<?php echo explode(',', $product->photo)[0] ?>"/>
 
                         <div class="card-body">
                             <span class="card-title"><?php echo $product->name ?></span>
