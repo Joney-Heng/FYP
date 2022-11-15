@@ -42,7 +42,6 @@
 
         .card-container .card {
             margin: 0 5px 10px;
-            border: 1px solid #ffa500
         }
 
         .card-container .card:hover{

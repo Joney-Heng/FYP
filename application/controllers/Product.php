@@ -89,29 +89,6 @@ class Product extends CI_Controller
     echo json_encode(array("status" => true, "msg" => $response));
   }
 
-  public function uploadImage2()
-  {
-    // $target_dir = "uploads/";
-    // $target_file = $target_dir . basename($_FILES["multipartFile"]["name"]);
-
-    // move_uploaded_file($_FILES["multipartFile"]["tmp_name"], $target_file);
-
-    $postData = array(
-      "file" => new CURLFile($_FILES['multipartFile']['tmp_name'], $_FILES['multipartFile']['type'], $_FILES['multipartFile']['name'])
-    );
-    // echo json_encode($postData); exit;
-
-    $postHeaderData = array(
-      'Content-Type: multipart/form-data',
-      'Accept: */*'
-      // $this->session->userdata("key") . ': ' . $this->session->userdata("jwtToken")
-    );
-    // Prepare new cURL resource
-    $response = $this->initiateCurl('http://joney-fyp-app.herokuapp.com/files', $postData, $postHeaderData);
-
-    echo json_encode(array("status" => true, "msg" => $response));
-  }
-
   function initiateCurl($url, $postData, $postHeaderData)
   {
     // echo ($url); exit;

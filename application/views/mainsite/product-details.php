@@ -107,13 +107,25 @@
             justify-content: center;
             align-items: center
         }
-
-        .card .card-right .price {
-            padding-bottom: 12px;
+        .card .card-right .price-container{
+            display: flex;
+            flex-direction: column;
             border-bottom: 1px solid #ccc;
+            padding-bottom: 15px;
+        }
+        .card .card-right .price-container .selling-price {
             font-weight: 600;
             font-size: 20px;
             color: #cc9966;
+        }
+        .card .card-right .price-container .ori-price {
+            font-weight: 400;
+            font-size: 15px;
+            color: #979797;
+            text-decoration: line-through;
+        }
+        .card .card-right .ships-to{
+            padding-top: 15px;
         }
 
         .buttons .btn {
@@ -208,10 +220,13 @@
                             <span class="heart"><i class='bx bx-heart'></i></span>
                         </div>
 
-                        <div class="price">MYR <?php echo number_format($product->price, 2, '.', ''); ?></div>
-
+                        <div class="price-container">
+                            <span class="selling-price">MYR <?php echo number_format($product->price, 2, '.', ''); ?></span>
+                            <span class="ori-price">MYR <?php echo number_format($product->price, 2, '.', ''); ?></span>
+                        </div>
+                        
                         <div class="ships-to">
-                            <span>Ships To: </span>
+                            <span>Shipping:</span>
                             <span class="product-name"><?php echo $product->name; ?></span>
                         </div>
 
