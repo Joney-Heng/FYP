@@ -119,7 +119,7 @@
                 <div class="image-container">
                     <?php foreach (explode(',', $product->photo) as $photo) { ?>
                         <div class="wrapper">
-                            <img data-value='<?php echo $photo ?>' src="<?php echo ($photo != '') ? 'http://joney-fyp-app.herokuapp.com/files/' . $photo : ''; ?>" /><button class="btn btn-danger remove">Remove</button>
+                            <img data-value='<?php echo $photo ?>' src="<?php echo ($photo != '') ? 'http://joney-fyp-app.herokuapp.com/files/' . $photo : ''; ?>" />
                         </div>
                     <?php } ?>
                 </div>
