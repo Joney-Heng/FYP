@@ -93,7 +93,7 @@
         .card .card-right .product-title .product-name {
             margin-right: 10px;
             width: 100%;
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 700;
             flex: 1;
         }
@@ -107,24 +107,28 @@
             justify-content: center;
             align-items: center
         }
-        .card .card-right .price-container{
+
+        .card .card-right .price-container {
             display: flex;
             flex-direction: column;
             border-bottom: 1px solid #ccc;
             padding-bottom: 15px;
         }
+
         .card .card-right .price-container .selling-price {
             font-weight: 600;
             font-size: 20px;
             color: #cc9966;
         }
+
         .card .card-right .price-container .ori-price {
             font-weight: 400;
             font-size: 15px;
             color: #979797;
             text-decoration: line-through;
         }
-        .card .card-right .ships-to{
+
+        .card .card-right .ships-to {
             padding-top: 15px;
         }
 
@@ -134,10 +138,16 @@
             border-radius: 0px !important
         }
 
-        .cta {
+        .quantity-container {
             display: flex;
             align-items: center;
             margin-top: 20px;
+        }
+
+        .cta {
+            display: flex;
+            align-items: center;
+            margin-right: 10px;
         }
 
         .cta .quantity-minus,
@@ -159,6 +169,14 @@
         .cta .btn-primary {
             margin-left: 28px;
             flex: 1;
+        }
+
+        .button-container {
+            margin-top: 25px;
+        }
+
+        .button-container button {
+            margin-right: 5px;
         }
 
         .description-label .description-title {
@@ -203,7 +221,7 @@
                                             <li><img onclick="changeImage(this)" data-value='<?php echo $photo ?>' src="<?php echo ($photo != '') ? 'http://joney-fyp-app.herokuapp.com/files/' . $photo : ''; ?>" width="50"></li>
                                         </div>
                                     <?php } ?>
-                                </ul>   
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -224,7 +242,7 @@
                             <span class="selling-price">MYR <?php echo number_format($product->price, 2, '.', ''); ?></span>
                             <span class="ori-price">MYR <?php echo number_format($product->price, 2, '.', ''); ?></span>
                         </div>
-                        
+
                         <div class="ships-to">
                             <span>Shipping:</span>
                             <span class="product-name"><?php echo $product->name; ?></span>
@@ -234,18 +252,18 @@
 
                         </div>
 
-                        <div class="cta">
-                            <span>Quantity: </span>
-                            <button class="quantity-minus">-</button>
-                            <span class="quantity">1</span>
-                            <button class="quantity-plus">+</button>
+                        <div class="quantity-container">
+                            <div class="cta">
+                                <button class="quantity-minus">-</button>
+                                <span class="quantity">1</span>
+                                <button class="quantity-plus">+</button>
+                            </div>
+                            <span stock-quantity><?php echo $product->stock_quantity ?> unit available</span>
                         </div>
 
-                        <span stock-quantity><?php echo $product->stock_quantity ?> unit available</span>
-
-                        <div class="buttons d-flex flex-row mt-5 gap-3">
-                            <button class="btn btn-outline-dark">Buy Now</button>
-                            <button class="btn btn-dark"><?php echo $product->stock_quantity == 0 ? 'Out of Stock' : 'Add To Cart' ?></button>
+                        <div class="buttons button-container">
+                            <button class="btn btn-outline-dark buy-now">Buy Now</button>
+                            <?php echo $product->stock_quantity == 0 || $product->stock_quantity == null ? "<button class='btn btn-dark' disabled>OUT OF STOCK</button>" : "<button class='btn btn-dark addToCart'>ADD TO CART</button>" ?>
                         </div>
 
                     </div>
@@ -265,24 +283,62 @@
 
     </div>
 
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+
     <script>
+        $(document).ready(function($) {
+            $('.cta .quantity-plus').click(function(e) {
+                e.preventDefault();
+
+                let value = (parseInt($(this).closest('.cta').find('.quantity').html()) || 0)
+
+                $(this).closest('.cta').find('.quantity').html(value + 1);
+            });
+
+            $('.cta .quantity-minus').click(function(e) {
+                e.preventDefault();
+
+                let value = (parseInt($(this).closest('.cta').find('.quantity').html()) || 0)
+
+                $(this).closest('.cta').find('.quantity').html(value > 0 ? value - 1 : 0);
+            });
+
+            $('.button-container .addToCart').click(function(e) {
+                e.preventDefault();
+
+                var form_data = new FormData();
+
+                form_data.append("selected_quantity", $('.quantity').html());
+                form_data.append("product_id", <?php echo $product->id?>);
+
+                $.ajax({
+                    url: "<?php echo site_url('mainsite/add-to-cart') ?>",
+                    encrypt: "selected_quantity/form-data",
+                    data: form_data,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    method: "POST",
+                    success: function(data) {
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: 'Added to your cart Successful!',
+                            showConfirmButton: false,
+                            timer: 2000
+                        })
+                    }
+                });
+
+            })
+
+        }(jQuery));
+
         function changeImage(element) {
 
             var main_prodcut_image = document.getElementById('main_product_image');
             main_prodcut_image.src = element.src;
-        }
-
-        function _init_qtyClick() {
-            $('.qty').on('blur', function() {
-                validateQuantity();
-                updatePrice();
-            });
-
-            $('.qty-minus, .qty-plus').click(function(e) {
-                $('.qty').val($(e.target).closest('.quantity_option').find('.qty').val());
-                // validateQuantity();
-                // updatePrice();
-            });
         }
     </script>
 </body>

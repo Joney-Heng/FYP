@@ -74,3 +74,7 @@ $route['product/upload'] = "product/uploadImage";
 $route['mainsite'] = "mainsite/main/index";
 $route['mainsite/product-details/(:num)'] = "mainsite/main/show/$1";
 
+//Cart
+$route['mainsite/shopping-cart'] = "mainsite/cart/index";
+$route['mainsite/add-to-cart'] = "mainsite/cart/addtoCart";
+
