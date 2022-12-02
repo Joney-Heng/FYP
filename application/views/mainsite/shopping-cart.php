@@ -262,14 +262,14 @@
 
                             <div class="col">
                                 <span>MYR <?php echo number_format($shoppingCart['price'], 2, '.', ''); ?></span>
-                                <button class="close delete-cart-item" data-cartid="<?php echo $shoppingCart["id"]?>">&#10005;</button>
+                                <button class="close delete-cart-item" data-cartid="<?php echo $shoppingCart["id"] ?>">&#10005;</button>
                             </div>
                         </div>
                     </div>
                 <?php } ?>
 
                 <div class="back-to-shop">
-                    <a href="#">&leftarrow;</a>
+                    <a href="<?php echo base_url("mainsite") ?> ">&leftarrow;</a>
                     <span class="text-muted">Back to shop</span>
                 </div>
 
@@ -327,36 +327,40 @@
         });
 
         $('.delete-cart-item').click(function(e) {
+
             e.preventDefault();
 
             var form_data = new FormData();
 
-            // form_data.append("selected_quantity", $('.quantity').html());
             form_data.append("cart_id", $(this).attr("data-cartid"));
 
-            $.ajax({
-                url: "<?php echo site_url('mainsite/delete-cart') ?>",
-                encrypt: "selected_quantity/form-data",
-                data: form_data,
-                cache: false,
-                contentType: false,
-                processData: false,
-                method: "POST",
-                success: function(data) {
-                    console.log(data);
-                    Swal.fire({
-                        position: 'center',
-                        icon: 'success',
-                        title: 'Deleted Successful!',
-                        showConfirmButton: false,
-                        timer: 6000
-                    })
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "Remove this item from your Cart?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'REMOVE',
+                cancelButtonText: 'CANCEL'
+            }).then((result) => {
+                if (result.isConfirmed) {
 
-                    location.reload();
+                    $.ajax({
+                        url: "<?php echo site_url('mainsite/delete-cart') ?>",
+                        encrypt: "selected_quantity/form-data",
+                        data: form_data,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        method: "POST",
+                        success: function(data) {
+                                location.reload();
+                        }
+                    });
                 }
-            });
+            })
         });
-
     });
 </script>
 
