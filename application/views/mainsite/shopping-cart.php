@@ -2,19 +2,25 @@
 <html>
 
 <head>
-    <title>Products Management - CRUD</title>
+    <title>Shopping Cart</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.0/js/bootstrap.min.js" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
+    <link rel="apple-touch-icon" sizes="180x180" href="/application/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/application/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/application/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/application/favicon/site.webmanifest">
+
     <style>
         body {
-            background: #ddd;
-            min-height: 100vh;
-            vertical-align: middle;
             display: flex;
-            font-family: sans-serif;
+            padding: 30px;
+            min-height: 100vh;
+            background: #ddd;
             font-size: 0.8rem;
             font-weight: bold;
+            font-family: sans-serif;
+            vertical-align: middle;
         }
 
         .title {
@@ -37,10 +43,10 @@
         }
 
         .cart {
-            background-color: #fff;
-            padding: 4vh 5vh;
+            padding: 30px;
             border-bottom-left-radius: 1rem;
             border-top-left-radius: 1rem;
+            background-color: #fff;
         }
 
         @media(max-width:767px) {
@@ -184,6 +190,44 @@
             background-position-x: 95%;
             background-position-y: center;
         }
+
+        .img-fluid {
+            width: 150px;
+            border-radius: 5px;
+        }
+
+        .quantity-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .quantity-container .quantity-minus,
+        .quantity-container .quantity-plus {
+            padding: 0;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            border: 0 solid transparent;
+            font-size: 14px;
+            text-align: center;
+            color: #13221C;
+            background-color: #AA9479;
+        }
+
+        .quantity-container .quantity-minus:hover,
+        .quantity-container .quantity-plus:hover {
+            background: #ecd9c6;
+        }
+
+        .quantity-container .quantity-minus:focus,
+        .quantity-container .quantity-plus:focus {
+            outline: 0;
+        }
+
+        .quantity-container .quantity {
+            margin: 0 5px;
+        }
     </style>
 </head>
 
@@ -196,48 +240,33 @@
                         <div class="col">
                             <h4><b>Shopping Cart</b></h4>
                         </div>
-                        <div class="col align-self-center text-right text-muted">3 items</div>
+                        <div class="col align-self-center text-right text-muted"><?php echo count($shoppingCarts) ?> items</div>
                     </div>
                 </div>
-                <div class="row border-top border-bottom">
-                    <div class="row main align-items-center">
-                        <div class="col-2"><img class="img-fluid" src="https://i.imgur.com/1GrakTl.jpg"></div>
-                        <div class="col">
-                            <div class="row text-muted">Shirt</div>
-                            <div class="row">Cotton T-shirt</div>
+                <?php foreach ($shoppingCarts as $shoppingCart) { ?>
+                    <div class="row border-top border-bottom cart-item">
+                        <div class="row main align-items-center">
+                            <div class="col-2">
+                                <img class="img-fluid" src="http://joney-fyp-app.herokuapp.com/files/<?php echo explode(',', $shoppingCart['photo'])[0]; ?>">
+                            </div>
+
+                            <div class="col">
+                                <div class="row"><?php echo $shoppingCart['name'] ?></div>
+                            </div>
+
+                            <div class="quantity-container col">
+                                <button class="quantity-minus">-</button>
+                                <a href="#" class="quantity"><?php echo $shoppingCart['selected_quantity'] ?></a>
+                                <button class="quantity-plus">+</button>
+                            </div>
+
+                            <div class="col">
+                                <span>MYR <?php echo number_format($shoppingCart['price'], 2, '.', ''); ?></span>
+                                <button class="close delete-cart-item" data-cartid="<?php echo $shoppingCart["id"]?>">&#10005;</button>
+                            </div>
                         </div>
-                        <div class="col">
-                            <a href="#">-</a><a href="#" class="border">1</a><a href="#">+</a>
-                        </div>
-                        <div class="col">&euro; 44.00 <button class="close">&#10005;</button></div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="row main align-items-center">
-                        <div class="col-2"><img class="img-fluid" src="https://i.imgur.com/ba3tvGm.jpg"></div>
-                        <div class="col">
-                            <div class="row text-muted">Shirt</div>
-                            <div class="row">Cotton T-shirt</div>
-                        </div>
-                        <div class="col">
-                            <a href="#">-</a><a href="#" class="border">1</a><a href="#">+</a>
-                        </div>
-                        <div class="col">&euro; 44.00 <button class="close">&#10005;</button></div>
-                    </div>
-                </div>
-                <div class="row border-top border-bottom">
-                    <div class="row main align-items-center">
-                        <div class="col-2"><img class="img-fluid" src="https://i.imgur.com/pHQ3xT3.jpg"></div>
-                        <div class="col">
-                            <div class="row text-muted">Shirt</div>
-                            <div class="row">Cotton T-shirt</div>
-                        </div>
-                        <div class="col">
-                            <a href="#">-</a><a href="#" class="border">1</a><a href="#">+</a>
-                        </div>
-                        <div class="col">&euro; 44.00 <button class="close">&#10005;</button></div>
-                    </div>
-                </div>
+                <?php } ?>
 
                 <div class="back-to-shop">
                     <a href="#">&leftarrow;</a>
@@ -251,8 +280,8 @@
                 </div>
                 <hr>
                 <div class="row">
-                    <div class="col" style="padding-left:0;">ITEMS 3</div>
-                    <div class="col text-right">&euro; 132.00</div>
+                    <div class="col" style="padding-left:0;">ITEMS <?php echo count($shoppingCarts) ?></div>
+                    <div class="col text-right">MYR <?php echo "aaaA" ?></div>
                 </div>
                 <form>
                     <p>SHIPPING</p>
@@ -265,7 +294,7 @@
                 </form>
                 <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
                     <div class="col">TOTAL PRICE</div>
-                    <div class="col text-right">&euro; 137.00</div>
+                    <div class="col text-right">MYR 137.00</div>
                 </div>
                 <button class="btn">CHECKOUT</button>
             </div>
@@ -277,6 +306,58 @@
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 
+<script>
+    $(document).ready(function($) {
+        $('.quantity-container .quantity-plus').click(function(e) {
+            e.preventDefault();
 
+            let value = (parseInt($(this).closest('.quantity-container').find('.quantity').html()) || 0)
+
+            $(this).closest('.quantity-container').find('.quantity').html(value + 1);
+
+
+        });
+
+        $('.quantity-container .quantity-minus').click(function(e) {
+            e.preventDefault();
+
+            let value = (parseInt($(this).closest('.quantity-container').find('.quantity').html()) || 0)
+
+            $(this).closest('.quantity-container').find('.quantity').html(value > 0 ? value - 1 : 0);
+        });
+
+        $('.delete-cart-item').click(function(e) {
+            e.preventDefault();
+
+            var form_data = new FormData();
+
+            // form_data.append("selected_quantity", $('.quantity').html());
+            form_data.append("cart_id", $(this).attr("data-cartid"));
+
+            $.ajax({
+                url: "<?php echo site_url('mainsite/delete-cart') ?>",
+                encrypt: "selected_quantity/form-data",
+                data: form_data,
+                cache: false,
+                contentType: false,
+                processData: false,
+                method: "POST",
+                success: function(data) {
+                    console.log(data);
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Deleted Successful!',
+                        showConfirmButton: false,
+                        timer: 6000
+                    })
+
+                    location.reload();
+                }
+            });
+        });
+
+    });
+</script>
 
 </html>

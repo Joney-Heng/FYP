@@ -53,8 +53,14 @@ class Cart_model extends CI_Model{
 
     public function getCartbyUserId($id)
     {
-        $cart = $this->db->get_where('carts', ['user_id' => $id ])->row();
-        return $cart;
+        $this->db->select('carts.id,carts.selected_quantity,products.name,products.price,products.photo');
+        $this->db->from('carts');
+        $this->db->where('user_id', $id);
+        $this->db->join('products','carts.product_id = products.id');
+        $query=$this->db->get();
+        return $query->result_array();
+        // $cart = $this->db->result_array();
+        // return $cart;
     }
 
     public function getCartbyUserIDandProductId($product_id, $user_id)
@@ -67,7 +73,7 @@ class Cart_model extends CI_Model{
     // /*
     //     Destroy or Remove a record in the database
     // */
-    public function delete($id)
+    public function deleteCartbyCartId($id)
     {
         $result = $this->db->delete('carts', array('id' => $id));
         return $result;

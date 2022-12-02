@@ -18,23 +18,30 @@ class Cart extends CI_Controller
   {
     // $data['products'] = $this->Product_model->get_all();
     $data['title'] = 'Shopping Cart';
+    $data['shoppingCarts'] = $this->Cart_model->getCartbyUserId(1); 
+
     // $this->load->view('layout/header');
-    $this->load->view('mainsite/shopping_cart', $data);
+    $this->load->view('mainsite/shopping-cart', $data);
+    
+    // 
+    // echo json_encode($this->Cart_model->getCartbyUserId(1)); 
+    // $data["response"] = $this->Cart_model->getCartbyUserId(1);exit;
+    // $this->Cart_model->getCartbyUserId());
     // $this->load->view('layout/footer');
   }
 
   public function addtoCart()
   {
-    // $this->form_validation->set_rules('name', 'Name', 'required');
-    // $this->form_validation->set_rules('description', 'Description', 'required');
     $cart_item = $this->Cart_model->getCartbyUserIDandProductId($this->input->post('product_id'), 1);
     if ($cart_item) {
       //Update the new quantity to DB quantity
 
       // echo json_encode($cart_item->id);
       // exit;
+
       // echo json_encode((int)$this->input->post('selected_quantity'));
       // exit; //New quantity
+
       // echo json_encode((int)$cart_item->selected_quantity);
       // exit; //DB quantity
 
@@ -46,5 +53,10 @@ class Cart extends CI_Controller
       
     }
     echo json_encode(array());
+  }
+
+  public function deleteCart(){
+    $this->Cart_model->deleteCartbyCartId($this->input->post('cart_id'));
+    
   }
 }
