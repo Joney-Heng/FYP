@@ -84,7 +84,7 @@ class Product extends CI_Controller
       // $this->session->userdata("key") . ': ' . $this->session->userdata("jwtToken")
     );
     // Prepare new cURL resource
-    $response = $this->initiateCurl('http://joney-fyp-app.herokuapp.com/files', $postData, $postHeaderData);
+    $response = $this->initiateCurl('https://storage-api-ten.vercel.app/files/', $postData, $postHeaderData);
 
     echo json_encode(array("status" => true, "msg" => $response));
   }

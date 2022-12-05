@@ -213,12 +213,12 @@
                 <div class="row g-0">
                     <div class="col-md-5 border-end">
                         <div class="d-flex flex-column justify-content-center">
-                            <div class="main-image"><img src="http://joney-fyp-app.herokuapp.com/files/<?php echo explode(',', $product->photo)[0] ?>" id="main_product_image" width="350"> </div>
+                            <div class="main-image"><img src="https://storage-api-ten.vercel.app/files/<?php echo explode(',', $product->photo)[0] ?>" id="main_product_image" width="350"> </div>
                             <div class="thumbnail_images">
                                 <ul id="thumbnail">
                                     <?php foreach (explode(',', $product->photo) as $photo) { ?>
                                         <div class="wrapper">
-                                            <li><img onclick="changeImage(this)" data-value='<?php echo $photo ?>' src="<?php echo ($photo != '') ? 'http://joney-fyp-app.herokuapp.com/files/' . $photo : ''; ?>" width="50"></li>
+                                            <li><img onclick="changeImage(this)" data-value='<?php echo $photo ?>' src="<?php echo ($photo != '') ? 'https://storage-api-ten.vercel.app/files/' . $photo : ''; ?>" width="50"></li>
                                         </div>
                                     <?php } ?>
                                 </ul>

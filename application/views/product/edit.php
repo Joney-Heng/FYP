@@ -136,7 +136,7 @@
                         <div id="preview-photo">
                             <?php foreach (explode(',', $product->photo) as $photo) { ?>
                                 <div class="wrapper">
-                                    <img data-value='<?php echo $photo ?>' src="<?php echo ($photo != '') ? 'http://joney-fyp-app.herokuapp.com/files/' . $photo : ''; ?>" /><button class="btn btn-danger remove">Remove</button>
+                                    <img data-value='<?php echo $photo ?>' src="<?php echo ($photo != '') ? 'https://storage-api-ten.vercel.app/files/' . $photo : ''; ?>" /><button class="btn btn-danger remove">Remove</button>
                                 </div>
                             <?php } ?>
                         </div>
@@ -183,7 +183,7 @@
                     method: "POST",
                     success: function(data) {
                         data = JSON.parse(data);
-                        $('#preview-photo').append("<div class='wrapper'><img data-value='" + data.msg + "'src='http://joney-fyp-app.herokuapp.com/files/" + data.msg + "'><button class='btn btn-danger remove'>Remove</button></div>");
+                        $('#preview-photo').append("<div class='wrapper'><img data-value='" + data.msg + "'src='https://storage-api-ten.vercel.app/files/" + data.msg + "'><button class='btn btn-danger remove'>Remove</button></div>");
 
                         $('.remove').click(function(e) {
                             e.preventDefault();

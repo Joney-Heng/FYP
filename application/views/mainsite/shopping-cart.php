@@ -247,7 +247,7 @@
                     <div class="row border-top border-bottom cart-item">
                         <div class="row main align-items-center">
                             <div class="col-2">
-                                <img class="img-fluid" src="http://joney-fyp-app.herokuapp.com/files/<?php echo explode(',', $shoppingCart['photo'])[0]; ?>">
+                                <img class="img-fluid" src="https://storage-api-ten.vercel.app/files/<?php echo explode(',', $shoppingCart['photo'])[0]; ?>">
                             </div>
 
                             <div class="col">
@@ -313,8 +313,30 @@
 
             let value = (parseInt($(this).closest('.quantity-container').find('.quantity').html()) || 0)
 
-            $(this).closest('.quantity-container').find('.quantity').html(value + 1);
+            // $(this).closest('.quantity-container').find('.quantity').html(value + 1);
 
+            var form_data = new FormData();
+
+            form_data.append("selected_quantity", $(this).closest('.quantity-container').find('.quantity').html(value + 1));
+
+            $.ajax({
+                url: "<?php echo site_url('mainsite/add-to-cart') ?>",
+                encrypt: "selected_quantity/form-data",
+                data: form_data,
+                cache: false,
+                contentType: false,
+                processData: false,
+                method: "POST",
+                success: function(data) {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Added to your cart Successful!',
+                        showConfirmButton: false,
+                        timer: 2000
+                    })
+                }
+            });
 
         });
 
@@ -355,7 +377,7 @@
                         processData: false,
                         method: "POST",
                         success: function(data) {
-                                location.reload();
+                            location.reload();
                         }
                     });
                 }
