@@ -59,4 +59,22 @@ class Cart extends CI_Controller
     $this->Cart_model->deleteCartbyCartId($this->input->post('cart_id'));
     
   }
+
+  public function updateCart()
+  {
+    $cart_item = $this->Cart_model->getCartbyUserIDandProductId($this->input->post('product_id'), 1);
+    if ($cart_item) {
+
+      $this->Cart_model->updateQuantitybyID($cart_item->id, $this->input->post('selected_quantity'));
+
+    } else {
+      
+      $this->Cart_model->insert();
+      
+    }
+
+    echo json_encode(array());
+  }
+
+
 }

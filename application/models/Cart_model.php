@@ -53,7 +53,7 @@ class Cart_model extends CI_Model{
 
     public function getCartbyUserId($id)
     {
-        $this->db->select('carts.id,carts.selected_quantity,products.name,products.price,products.photo');
+        $this->db->select('carts.id,carts.selected_quantity,carts.product_id,products.name,products.price,products.photo');
         $this->db->from('carts');
         $this->db->where('user_id', $id);
         $this->db->join('products','carts.product_id = products.id');

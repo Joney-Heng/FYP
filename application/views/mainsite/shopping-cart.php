@@ -254,7 +254,7 @@
                                 <div class="row"><?php echo $shoppingCart['name'] ?></div>
                             </div>
 
-                            <div class="quantity-container col">
+                            <div class="quantity-container col" data-productid="<?php echo $shoppingCart['product_id'] ?>">
                                 <button class="quantity-minus">-</button>
                                 <a href="#" class="quantity"><?php echo $shoppingCart['selected_quantity'] ?></a>
                                 <button class="quantity-plus">+</button>
@@ -311,16 +311,14 @@
         $('.quantity-container .quantity-plus').click(function(e) {
             e.preventDefault();
 
-            let value = (parseInt($(this).closest('.quantity-container').find('.quantity').html()) || 0)
-
-            // $(this).closest('.quantity-container').find('.quantity').html(value + 1);
-
+            let value = (parseInt($(this).closest('.quantity-container').find('.quantity').html()) || 0) + 1;
             var form_data = new FormData();
 
-            form_data.append("selected_quantity", $(this).closest('.quantity-container').find('.quantity').html(value + 1));
+            form_data.append("selected_quantity", value);
+            form_data.append("product_id", $(this).closest('.quantity-container').attr("data-productid"));
 
             $.ajax({
-                url: "<?php echo site_url('mainsite/add-to-cart') ?>",
+                url: "<?php echo site_url('mainsite/update-cart') ?>",
                 encrypt: "selected_quantity/form-data",
                 data: form_data,
                 cache: false,
@@ -328,13 +326,7 @@
                 processData: false,
                 method: "POST",
                 success: function(data) {
-                    Swal.fire({
-                        position: 'center',
-                        icon: 'success',
-                        title: 'Added to your cart Successful!',
-                        showConfirmButton: false,
-                        timer: 2000
-                    })
+                    location.reload();
                 }
             });
 
@@ -343,9 +335,26 @@
         $('.quantity-container .quantity-minus').click(function(e) {
             e.preventDefault();
 
-            let value = (parseInt($(this).closest('.quantity-container').find('.quantity').html()) || 0)
+            var currentQuantity = $(this).closest('.quantity-container').find('.quantity').html();
+            let value = (parseInt(currentQuantity) > 0 ? currentQuantity -1 : 0 || 0);
 
-            $(this).closest('.quantity-container').find('.quantity').html(value > 0 ? value - 1 : 0);
+            var form_data = new FormData();
+
+            form_data.append("selected_quantity", value);
+            form_data.append("product_id", $(this).closest('.quantity-container').attr("data-productid"));
+
+            $.ajax({
+                url: "<?php echo site_url('mainsite/update-cart') ?>",
+                encrypt: "selected_quantity/form-data",
+                data: form_data,
+                cache: false,
+                contentType: false,
+                processData: false,
+                method: "POST",
+                success: function(data) {
+                    location.reload();
+                }
+            });
         });
 
         $('.delete-cart-item').click(function(e) {

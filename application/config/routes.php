@@ -60,7 +60,7 @@ $route['login']                 = 'login';
 $route['sign-up']               = 'signup';
 $route['google-login']          = 'googleLogin';
 
-//PRODUCT
+//PRODUCT MANAGEMENT
 $route['product'] = "product/index";
 $route['product/create'] = "product/create";
 $route['product/store'] = "product/store";
@@ -70,13 +70,14 @@ $route['product/update/(:num)'] = "product/update/$1";
 $route['product/delete/(:num)'] = "product/delete/$1";
 $route['product/upload'] = "product/uploadImage";
 
-//SHOPPING
+//SHOPPING MALL - MAINSITE
 $route['mainsite'] = "mainsite/main/index";
 $route['mainsite/product-details/(:num)'] = "mainsite/main/show/$1";
 
-//Cart
+//SHOPPING CART
 $route['mainsite/shopping-cart'] = "mainsite/cart/index";
 $route['mainsite/add-to-cart'] = "mainsite/cart/addtoCart";
 $route['mainsite/delete-cart'] = "mainsite/cart/deleteCart";
+$route['mainsite/update-cart'] = "mainsite/cart/updateCart";
 
 
