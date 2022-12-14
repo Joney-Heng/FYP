@@ -79,5 +79,6 @@ $route['mainsite/shopping-cart'] = "mainsite/cart/index";
 $route['mainsite/add-to-cart'] = "mainsite/cart/addtoCart";
 $route['mainsite/delete-cart'] = "mainsite/cart/deleteCart";
 $route['mainsite/update-cart'] = "mainsite/cart/updateCart";
+$route['mainsite/get-cart'] = "mainsite/cart/getCartDetails";
 
 

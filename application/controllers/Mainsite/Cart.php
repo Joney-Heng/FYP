@@ -18,11 +18,11 @@ class Cart extends CI_Controller
   {
     // $data['products'] = $this->Product_model->get_all();
     $data['title'] = 'Shopping Cart';
-    $data['shoppingCarts'] = $this->Cart_model->getCartbyUserId(1); 
+    $data['shoppingCarts'] = $this->Cart_model->getCartbyUserId(1);
 
     // $this->load->view('layout/header');
     $this->load->view('mainsite/shopping-cart', $data);
-    
+
     // 
     // echo json_encode($this->Cart_model->getCartbyUserId(1)); 
     // $data["response"] = $this->Cart_model->getCartbyUserId(1);exit;
@@ -46,18 +46,16 @@ class Cart extends CI_Controller
       // exit; //DB quantity
 
       $this->Cart_model->updateQuantitybyID($cart_item->id, (int)$this->input->post('selected_quantity') + (int)$cart_item->selected_quantity);
-
     } else {
-      
+
       $this->Cart_model->insert();
-      
     }
     echo json_encode(array());
   }
 
-  public function deleteCart(){
+  public function deleteCart()
+  {
     $this->Cart_model->deleteCartbyCartId($this->input->post('cart_id'));
-    
   }
 
   public function updateCart()
@@ -66,15 +64,16 @@ class Cart extends CI_Controller
     if ($cart_item) {
 
       $this->Cart_model->updateQuantitybyID($cart_item->id, $this->input->post('selected_quantity'));
-
     } else {
-      
+
       $this->Cart_model->insert();
-      
     }
 
     echo json_encode(array());
   }
 
-
+  public function getCartDetails()
+  {
+    echo json_encode($this->Cart_model->getCartbyUserId(1));
+  }
 }

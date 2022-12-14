@@ -24,7 +24,7 @@
         }
 
         .title {
-            margin-bottom: 5vh;
+            margin-bottom: 10px;
         }
 
         .card {
@@ -36,6 +36,15 @@
             border: transparent;
         }
 
+        .cart-items {
+            overflow-y: auto;
+            height: 350px;
+        }
+
+        .product-name {
+            margin-left: 10px;
+        }
+
         @media(max-width:767px) {
             .card {
                 margin: 3vh auto;
@@ -43,6 +52,9 @@
         }
 
         .cart {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
             padding: 30px;
             border-bottom-left-radius: 1rem;
             border-top-left-radius: 1rem;
@@ -90,7 +102,7 @@
 
         .main {
             margin: 0;
-            padding: 2vh 0;
+            padding: 2vh 10px;
             width: 100%;
         }
 
@@ -113,7 +125,7 @@
         }
 
         .back-to-shop {
-            margin-top: 4.5rem;
+            margin-top: 25px;
         }
 
         h5 {
@@ -228,6 +240,10 @@
         .quantity-container .quantity {
             margin: 0 5px;
         }
+
+        .checkout:hover{
+            background: #AA9479;
+        }
     </style>
 </head>
 
@@ -240,33 +256,11 @@
                         <div class="col">
                             <h4><b>Shopping Cart</b></h4>
                         </div>
-                        <div class="col align-self-center text-right text-muted"><?php echo count($shoppingCarts) ?> items</div>
+                        <span class="col align-self-center text-right text-muted item-count"></span>
                     </div>
                 </div>
-                <?php foreach ($shoppingCarts as $shoppingCart) { ?>
-                    <div class="row border-top border-bottom cart-item">
-                        <div class="row main align-items-center">
-                            <div class="col-2">
-                                <img class="img-fluid" src="https://storage-api-ten.vercel.app/files/<?php echo explode(',', $shoppingCart['photo'])[0]; ?>">
-                            </div>
 
-                            <div class="col">
-                                <div class="row"><?php echo $shoppingCart['name'] ?></div>
-                            </div>
-
-                            <div class="quantity-container col" data-productid="<?php echo $shoppingCart['product_id'] ?>">
-                                <button class="quantity-minus">-</button>
-                                <a href="#" class="quantity"><?php echo $shoppingCart['selected_quantity'] ?></a>
-                                <button class="quantity-plus">+</button>
-                            </div>
-
-                            <div class="col">
-                                <span>MYR <?php echo number_format($shoppingCart['price'], 2, '.', ''); ?></span>
-                                <button class="close delete-cart-item" data-cartid="<?php echo $shoppingCart["id"] ?>">&#10005;</button>
-                            </div>
-                        </div>
-                    </div>
-                <?php } ?>
+                <div class="cart-items"></div>
 
                 <div class="back-to-shop">
                     <a href="<?php echo base_url("mainsite") ?> ">&leftarrow;</a>
@@ -280,23 +274,32 @@
                 </div>
                 <hr>
                 <div class="row">
-                    <div class="col" style="padding-left:0;">ITEMS <?php echo count($shoppingCarts) ?></div>
-                    <div class="col text-right">MYR <?php echo "aaaA" ?></div>
+                    <span class="col item-count" style="padding-left:0;"></span>
+                    <div class="col text-right">MYR
+                        <span class="subtotal"><?php echo "aaaA" ?></span>
+                    </div>
                 </div>
                 <form>
-                    <p>SHIPPING</p>
-                    <select>
-                        <option class="text-muted">Standard-Delivery - MYR 5.00</option>
-                        <option class="text-muted">PGEON-Delivery - MYR 5.00</option>
-                    </select>
-                    <p>GIVE CODE</p>
-                    <input id="code" placeholder="Enter your code">
+                    <div class="">
+                        <span>SHIPPING</span>
+                        <select>
+                            <option class="text-muted">Standard-Delivery - MYR 5.00</option>
+                            <option class="text-muted">PGEON-Delivery - MYR 5.00</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <span>Voucher Code</span>
+                        <input id="code" placeholder="Enter your code">
+                    </div>
                 </form>
                 <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
-                    <div class="col">TOTAL PRICE</div>
-                    <div class="col text-right">MYR 137.00</div>
+                    <span class="col">TOTAL PRICE</span>
+                    <div class="col text-right">MYR
+                        <span class="product-total"></span>
+                    </div>
                 </div>
-                <button class="btn">CHECKOUT</button>
+                <button class="btn checkout">CHECKOUT</button>
             </div>
         </div>
 
@@ -308,77 +311,69 @@
 
 <script>
     $(document).ready(function($) {
-        $('.quantity-container .quantity-plus').click(function(e) {
-            e.preventDefault();
+        getCartItem();
 
-            let value = (parseInt($(this).closest('.quantity-container').find('.quantity').html()) || 0) + 1;
-            var form_data = new FormData();
+        // console.log('shengjinbing joney', $('.cart-item').length)
+    });
 
-            form_data.append("selected_quantity", value);
-            form_data.append("product_id", $(this).closest('.quantity-container').attr("data-productid"));
+    function getCartItem() {
+        $.ajax({
+            url: "<?php echo site_url('mainsite/get-cart') ?>",
+            encrypt: "",
+            // data: form_data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            method: "POST",
+            success: function(data) {
 
-            $.ajax({
-                url: "<?php echo site_url('mainsite/update-cart') ?>",
-                encrypt: "selected_quantity/form-data",
-                data: form_data,
-                cache: false,
-                contentType: false,
-                processData: false,
-                method: "POST",
-                success: function(data) {
-                    location.reload();
-                }
-            });
+                //Remove previous cart-item (No matter its empty or not)
+                $('.cart-items').children().remove();
 
-        });
+                // console.log('xiaobian joney', $('.cart-item').length)
 
-        $('.quantity-container .quantity-minus').click(function(e) {
-            e.preventDefault();
+                $.each(JSON.parse(data), function(i, value) {
+                    $('.cart-items').append(
+                        '<div class="row border-top border-bottom cart-item">' +
+                        '    <div class="row main align-items-center">' +
+                        '        <div class="col-2">' +
+                        '            <img class="img-fluid" src="https://storage-api-ten.vercel.app/files/' + value.photo.split(',')[0] + '">' +
+                        '        </div>' +
 
-            var currentQuantity = $(this).closest('.quantity-container').find('.quantity').html();
-            let value = (parseInt(currentQuantity) > 0 ? currentQuantity -1 : 0 || 0);
+                        '        <div class="col product-name">' +
+                        '            <div class="row">' + value.name + '</div>' +
+                        '        </div>' +
 
-            var form_data = new FormData();
+                        '        <div class="quantity-container col" data-productid="' + value.product_id + '">' +
+                        '            <button class="quantity-minus">-</button>' +
+                        '            <a href="#" class="quantity">' + value.selected_quantity + '</a>' +
+                        '            <button class="quantity-plus">+</button>' +
+                        '        </div>' +
 
-            form_data.append("selected_quantity", value);
-            form_data.append("product_id", $(this).closest('.quantity-container').attr("data-productid"));
+                        '        <div class="col">' +
+                        '            <span>MYR</span>' +
+                        '            <span class="item-price">' +
+                        '                ' + parseFloat(value.price * value.selected_quantity).toFixed(2) + ' ' +
+                        '            </span>' +
+                        '            <button class="close delete-cart-item" data-cartid="' + value.id + '">&#10005;</button>' +
+                        '        </div>' +
+                        '    </div>' +
+                        '</div>');
+                });
 
-            $.ajax({
-                url: "<?php echo site_url('mainsite/update-cart') ?>",
-                encrypt: "selected_quantity/form-data",
-                data: form_data,
-                cache: false,
-                contentType: false,
-                processData: false,
-                method: "POST",
-                success: function(data) {
-                    location.reload();
-                }
-            });
-        });
 
-        $('.delete-cart-item').click(function(e) {
+                //Update quantity - Plus to add
+                $('.quantity-container .quantity-plus').click(function(e) {
+                    e.preventDefault();
 
-            e.preventDefault();
+                    let value = (parseInt($(this).closest('.quantity-container').find('.quantity').html()) || 0) + 1;
+                    var form_data = new FormData();
 
-            var form_data = new FormData();
-
-            form_data.append("cart_id", $(this).attr("data-cartid"));
-
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "Remove this item from your Cart?",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'REMOVE',
-                cancelButtonText: 'CANCEL'
-            }).then((result) => {
-                if (result.isConfirmed) {
+                    form_data.append("selected_quantity", value);
+                    form_data.append("product_id", $(this).closest('.quantity-container').attr("data-productid"));
 
                     $.ajax({
-                        url: "<?php echo site_url('mainsite/delete-cart') ?>",
+                        url: "<?php echo site_url('mainsite/update-cart') ?>",
                         encrypt: "selected_quantity/form-data",
                         data: form_data,
                         cache: false,
@@ -386,13 +381,110 @@
                         processData: false,
                         method: "POST",
                         success: function(data) {
-                            location.reload();
+                            getCartItem();
                         }
                     });
-                }
-            })
+
+                });
+
+                //Update quantity - Minus to deduct
+                $('.quantity-container .quantity-minus').click(function(e) {
+                    e.preventDefault();
+
+                    var currentQuantity = $(this).closest('.quantity-container').find('.quantity').html();
+                    let value = (parseInt(currentQuantity) > 0 ? currentQuantity - 1 : 0 || 0);
+
+                    var form_data = new FormData();
+
+                    form_data.append("selected_quantity", value);
+                    form_data.append("product_id", $(this).closest('.quantity-container').attr("data-productid"));
+
+                    $.ajax({
+                        url: "<?php echo site_url('mainsite/update-cart') ?>",
+                        encrypt: "selected_quantity/form-data",
+                        data: form_data,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        method: "POST",
+                        success: function(data) {
+                            getCartItem();
+                        }
+                    });
+                });
+
+                //Delete cart item & Update Cart
+                $('.delete-cart-item').click(function(e) {
+                    e.preventDefault();
+
+                    var form_data = new FormData();
+
+                    form_data.append("cart_id", $(this).attr("data-cartid"));
+
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: "Remove this item from your Cart?",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'REMOVE',
+                        cancelButtonText: 'CANCEL'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+
+                            $.ajax({
+                                url: "<?php echo site_url('mainsite/delete-cart') ?>",
+                                encrypt: "selected_quantity/form-data",
+                                data: form_data,
+                                cache: false,
+                                contentType: false,
+                                processData: false,
+                                method: "POST",
+                                success: function(data) {
+                                    getCartItem();
+                                }
+                            });
+                        }
+                    })
+                });
+
+                //Update cart item count
+                $('.cart .item-count').html(' ' + $('.cart-item').length + ' ITEMS');
+                $('.summary .item-count').html(' ' + $('.cart-item').length + ' ITEMS');
+
+
+                // console.log('smart joney', $('.cart-item').length);
+
+                //After added everything then calculate the total
+                updateGrandTotal();
+            }
         });
-    });
+
+        // console.log('dabian joney', $('.cart-item').length)
+    }
+
+    //Update cart total
+    function updateGrandTotal() {
+        var subTotal = 0;
+
+        $.each($('.cart-item .item-price'), function(i, value) {
+            subTotal += parseFloat($(value).html().trim());
+        });
+        $('.subtotal').html(subTotal.toFixed(2));
+    }
+
+    function _toNumber(str) {
+        try {
+            return Number(str.toString().replace(/,/g, ''));
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    function _numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
 </script>
 
 </html>
