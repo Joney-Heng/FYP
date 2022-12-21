@@ -356,8 +356,9 @@
                 <div class="cart-items"></div>
 
                 <div class="back-to-shop">
-                    <a href="<?php echo base_url("mainsite") ?> ">&leftarrow;</a>
-                    <span class="text-muted">Back to shop</span>
+                    <a href="<?php echo base_url("mainsite") ?> ">&leftarrow;
+                        <span class="text-muted">Back to shop</span>
+                    </a>
                 </div>
 
             </div>
@@ -525,7 +526,7 @@
                         </div>
 
                         <hr style="padding:0;">
-                        
+
                         <div class="col-md-6">
                             <label for="validationCustom01" class="form-label">Contact name</label>
                             <input type="text" class="form-control" id="add-contact-name" placeholder="Mark Otto" required>
@@ -833,12 +834,12 @@
             success: function(data) {
                 // console.log(data);
                 $.each(JSON.parse(data), function(i, value) {
-                    console.log(value.default_address == 1 ? "Default" : "Bye" );
+                    console.log(value.default_address == 1 ? "Default" : "Bye");
                     $('.address-list').append(
                         "<a href='#' class='address-list-container'> " +
                         "   <span class='default-address'>" + (value.default_address == 1 ? "DEFAULT" : 'NOT-DEFAULT') + "</span> " +
-                        "   <span class='address-details'>" + value.address_line1 + value.address_line2 + value.postcode + value.country + value.state + "</span>"+
-                        
+                        "   <span class='address-details'>" + value.address_line1 + value.address_line2 + value.postcode + value.country + value.state + "</span>" +
+
                         "</a>"
                     );
                 });
