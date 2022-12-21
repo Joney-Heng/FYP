@@ -18,7 +18,6 @@ class Cart extends CI_Controller
   {
     // $data['products'] = $this->Product_model->get_all();
     $data['title'] = 'Shopping Cart';
-    $data['shoppingCarts'] = $this->Cart_model->getCartbyUserId(1);
 
     // $this->load->view('layout/header');
     $this->load->view('mainsite/shopping-cart', $data);

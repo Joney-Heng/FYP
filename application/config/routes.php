@@ -56,6 +56,8 @@ $route['translate_uri_dashes'] = FALSE;
 
 //URL                           = // Controller
 $route['home']                  = 'home';
+
+//LOGIN & SIGN-UP
 $route['login']                 = 'login';
 $route['sign-up']               = 'signup';
 $route['google-login']          = 'googleLogin';
@@ -80,5 +82,16 @@ $route['mainsite/add-to-cart'] = "mainsite/cart/addtoCart";
 $route['mainsite/delete-cart'] = "mainsite/cart/deleteCart";
 $route['mainsite/update-cart'] = "mainsite/cart/updateCart";
 $route['mainsite/get-cart'] = "mainsite/cart/getCartDetails";
+
+//ADDRESS BOOK
+$route['mainsite/address-book'] = "mainsite/address/index";
+$route['mainsite/add-new-address'] = "mainsite/address/addAddress";
+$route['mainsite/delete-address'] = "mainsite/address/deleteAddress";
+$route['mainsite/update-address'] = "mainsite/address/updateAddress";
+$route['mainsite/get-address-details'] = "mainsite/address/getAddressDetails";
+
+
+
+
 
 

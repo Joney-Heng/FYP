@@ -6,14 +6,16 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.0/js/bootstrap.min.js" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
-    <link rel="apple-touch-icon" sizes="180x180" href="/application/favicon/apple-touch-icon.png">
+    <!-- <link rel="apple-touch-icon" sizes="180x180" href="/application/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/application/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/application/favicon/favicon-16x16.png">
-    <link rel="manifest" href="/application/favicon/site.webmanifest">
+    <link rel="manifest" href="/application/favicon/site.webmanifest"> -->
 
     <style>
         body {
             display: flex;
+            flex-direction: column;
+            justify-content: center;
             padding: 30px;
             min-height: 100vh;
             background: #ddd;
@@ -27,7 +29,7 @@
             margin-bottom: 10px;
         }
 
-        .card {
+        .shopping-cart-container {
             margin: auto;
             max-width: 1200px;
             width: 100%;
@@ -38,6 +40,7 @@
 
         .cart-items {
             overflow-y: auto;
+            overflow-x: hidden;
             height: 350px;
         }
 
@@ -70,6 +73,8 @@
         }
 
         .summary {
+            display: flex;
+            flex-direction: column;
             background-color: #ddd;
             border-top-right-radius: 1rem;
             border-bottom-right-radius: 1rem;
@@ -128,6 +133,11 @@
             margin-top: 25px;
         }
 
+        .back-to-shop a {
+            color: #000;
+            text-decoration: none;
+        }
+
         h5 {
             margin-top: 4vh;
         }
@@ -137,7 +147,7 @@
         }
 
         form {
-            padding: 2vh 0;
+            padding: 4vh 0;
         }
 
         select {
@@ -152,7 +162,6 @@
         input {
             border: 1px solid rgba(0, 0, 0, 0.137);
             padding: 1vh;
-            margin-bottom: 4vh;
             outline: none;
             width: 100%;
             background-color: rgb(247, 247, 247);
@@ -160,17 +169,6 @@
 
         input:focus::-webkit-input-placeholder {
             color: transparent;
-        }
-
-        .btn {
-            background-color: #000;
-            border-color: #000;
-            color: white;
-            width: 100%;
-            font-size: 0.7rem;
-            margin-top: 4vh;
-            padding: 1vh;
-            border-radius: 0;
         }
 
         .btn:focus {
@@ -196,7 +194,37 @@
             text-decoration: none;
         }
 
-        #code {
+        .sub-cart {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .cta {
+            min-height: 250px;
+        }
+
+        .address-container .manage-button-row .btn-choose-address {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            padding: 0;
+            margin-bottom: 15px;
+            width: 160px;
+        }
+
+        .address-container .manage-button-row .btn-choose-address svg {
+            margin-right: 5px;
+        }
+
+        .shipping {
+            margin-bottom: 15px;
+        }
+
+        .voucher {
+            margin-bottom: 15px;
+        }
+
+        .voucher #voucher-code {
             background-image: linear-gradient(to left, rgba(255, 255, 255, 0.253), rgba(255, 255, 255, 0.185)), url("https://img.icons8.com/small/16/000000/long-arrow-right.png");
             background-repeat: no-repeat;
             background-position-x: 95%;
@@ -239,16 +267,81 @@
 
         .quantity-container .quantity {
             margin: 0 5px;
+            color: #000;
+            text-decoration: none;
         }
 
-        .checkout:hover{
+        .btn-checkout {
+            background-color: #000;
+            border-color: #000;
+            color: white;
+            width: 100%;
+            font-size: 18px;
+            font-weight: 600;
+            margin-top: 4vh;
+            padding: 10px;
+            border-radius: 0;
+        }
+
+        .btn-checkout:hover {
             background: #AA9479;
+            border: 1px solid transparent;
+        }
+
+        /* Modal - CSS */
+        #choose-address-modal .modal-body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        #choose-address-modal .modal-body .add-address-container .btn-add-address {
+            display: flex;
+            align-items: center;
+            padding: 0;
+            width: 132px;
+            float: right;
+            text-decoration: none;
+        }
+
+        #choose-address-modal .modal-body .add-address-container .btn-add-address svg {
+            margin-right: 5px;
+        }
+
+        #choose-address-modal .modal-body .preferred-address {
+            font-weight: 600;
+        }
+
+        #choose-address-modal .modal-body .address-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 10px;
+            overflow-y: auto;
+        }
+
+        #choose-address-modal .modal-body a.address-list-container {
+            width: 49%;
+            height: 80px;
+            margin-top: 10px;
+            border-radius: 5px;
+            background: #ddd;
+            color: black;
+            text-decoration: none;
+        }
+
+        #choose-address-modal .modal-body a.address-list-container:focus {
+            border: 1px solid orange;
+        }
+
+        #add-address-modal .modal-footer {
+            display: flex;
+            justify-content: space-between;
         }
     </style>
 </head>
 
 <body>
-    <div class="card">
+    <div class="shopping-cart-container">
         <div class="row">
             <div class="col-md-8 cart">
                 <div class="title">
@@ -272,48 +365,288 @@
                 <div>
                     <h5><b>Summary</b></h5>
                 </div>
+
                 <hr>
-                <div class="row">
-                    <span class="col item-count" style="padding-left:0;"></span>
-                    <div class="col text-right">MYR
-                        <span class="subtotal"><?php echo "aaaA" ?></span>
+
+                <div class="sub-cart">
+                    <span class="item-count"></span>
+                    <div class="text-right">MYR
+                        <span class="subtotal"></span>
                     </div>
                 </div>
-                <form>
-                    <div class="">
-                        <span>SHIPPING</span>
+
+                <form class="cta">
+                    <!-- choose address -->
+                    <div class="address-container">
+                        <div class="manage-button-row">
+                            <a href="" class="btn-choose-address">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" width="18px" height="18px">
+                                    <path d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 256c-35.3 0-64-28.7-64-64s28.7-64 64-64s64 28.7 64 64s-28.7 64-64 64z" />
+                                </svg>CHOOSE ADDRESS
+                            </a>
+                            <!-- show selected address -->
+                            <input type="hidden">
+                        </div>
+                    </div>
+
+                    <div class="shipping">
+                        <span>Courier Company</span>
                         <select>
                             <option class="text-muted">Standard-Delivery - MYR 5.00</option>
                             <option class="text-muted">PGEON-Delivery - MYR 5.00</option>
                         </select>
                     </div>
 
-                    <div>
+                    <div class="voucher">
                         <span>Voucher Code</span>
-                        <input id="code" placeholder="Enter your code">
+                        <input id="voucher-code" placeholder="Enter your code">
                     </div>
+
                 </form>
+
                 <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
                     <span class="col">TOTAL PRICE</span>
                     <div class="col text-right">MYR
                         <span class="product-total"></span>
                     </div>
                 </div>
-                <button class="btn checkout">CHECKOUT</button>
+
+                <!-- <div class="checkout-details">
+                    <div class="details">
+                        <span class="">Shipping Fee</span>
+                        <span>MYR</span>
+
+                        <span>Voucher Applied</span>
+                        <span>MYR</span>
+                    </div>
+
+                </div> -->
+
+                <button class="btn-checkout">CHECKOUT</button>
             </div>
         </div>
 
     </div>
+
+    <div class="modal fade" id="choose-address-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">ADDRESS BOOK</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="add-address-container">
+                        <a href="" class="btn-add-address">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="20px" height="20px">
+                                <path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zM200 344V280H136c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H248v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z" />
+                            </svg>NEW ADDRESS
+                        </a>
+                    </div>
+
+                    <hr>
+
+                    <span class="preferred-address">**CHOOSE YOUR PREFERRED ADDRESS</span>
+                    <div class="address-list"></div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary">Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal - Add Address Modal -->
+    <div class="modal fade" id="add-address-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">ADDRESS DETAILS</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <form class="row g-3 needs-validation" novalidate>
+                        <div class="col-md-12">
+                            <label for="validationCustom01" class="form-label">Address Line 1</label>
+                            <input type="text" class="form-control" id="add-address-line1" placeholder="Block, Unit, Street Name" required>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="validationCustom02" class="form-label">Address Line 2</label>
+                            <input type="text" class="form-control" id="add-address-line2" placeholder="Area, Industrial Park" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="validationCustom03" class="form-label">City</label>
+                            <input type="text" class="form-control" id="add-city" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="validationCustom04" class="form-label">State</label>
+                            <select class="form-select" id="add-state" required>
+                                <option selected disabled value="">Choose...</option>
+                                <option>Johor</option>
+                                <option>Kelantan</option>
+                                <option>Kedah</option>
+                                <option>Melaka</option>
+                                <option>Negeri Sembilan</option>
+                                <option>Pahang</option>
+                                <option>Perak</option>
+                                <option>Penang</option>
+                                <option>Perlis</option>
+                                <option>Sarawak</option>
+                                <option>Sabah</option>
+                                <option>Selangor</option>
+                                <option>Terengganu</option>
+                                <option>WP Kuala Lumpur</option>
+                                <option>WP Labuan</option>
+                                <option>WP Putrajaya</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="validationCustom05" class="form-label">Postcode</label>
+                            <input type="text" class="form-control" id="add-postcode" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="validationCustom03" class="form-label">Country</label>
+                            <select class="form-select" id="add-country" required>
+                                <option selected disabled value="">Choose...</option>
+                                <option>Malaysia</option>
+                            </select>
+                        </div>
+
+                        <hr style="padding:0;">
+                        
+                        <div class="col-md-6">
+                            <label for="validationCustom01" class="form-label">Contact name</label>
+                            <input type="text" class="form-control" id="add-contact-name" placeholder="Mark Otto" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="validationCustom02" class="form-label">Contact No.</label>
+                            <input type="text" class="form-control" id="add-contact-no" placeholder="0123456789" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="validationCustom02" class="form-label">Email</label>
+                            <input type="text" class="form-control" id="add-email" placeholder="xxx@gmail.com" required>
+                        </div>
+
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" role="switch" id="checked_default_address" checked>
+                        <label class="form-check-label" for="flexSwitchCheckChecked">Marked as Default Address</label>
+                    </div>
+
+                    <div class="button-group">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="submitAddress">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
+<!-- jquery & sweetalert -->
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+
+<!-- Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+
+<!-- form-validation -->
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
 
 <script>
     $(document).ready(function($) {
         getCartItem();
 
-        // console.log('shengjinbing joney', $('.cart-item').length)
+        //Modal - Choose Address
+        $('.btn-choose-address').click(function(e) {
+            e.preventDefault();
+
+            $('#choose-address-modal').modal('show');
+            getAddressDetails();
+
+        });
+
+        //Modal - Add address
+        $('.btn-add-address').click(function(e) {
+            e.preventDefault();
+
+            $('#add-address-line1').val('');
+            $('#add-address-line2').val('');
+            $('#add-postcode').val('');
+            $('#add-state').val('');
+            $('#add-city').val('');
+            $('#add-country').val('');
+            $('#add-contact-name').val('');
+            $('#add-contact-no').val('');
+            $('#add-email').val('');
+            $('#checked_default_address').prop("checked", false)
+
+            $('#add-address-modal').modal('show');
+        });
+
+        //Close Modal
+        $('[data-dismiss="modal"]').click(function(e) {
+            $(this).closest('.modal').modal('hide');
+        });
+
+        //Submit Address
+        $('#submitAddress').click(function(e) {
+            e.preventDefault();
+
+            var form_data = new FormData();
+
+            form_data.append("address_line1", $('#add-address-line1').val());
+            form_data.append("address_line2", $('#add-address-line2').val());
+            form_data.append("postcode", $('#add-postcode').val());
+            form_data.append("state", $('#add-state').val());
+            form_data.append("city", $('#add-city').val());
+            form_data.append("country", $('#add-country').val());
+            form_data.append("contact_name", $('#add-contact-name').val());
+            form_data.append("contact_no", $('#add-contact-no').val());
+            form_data.append("email", $('#add-email').val());
+            form_data.append("default_address", $('#checked_default_address').is(":checked") ? 1 : 0);
+
+            $.ajax({
+                url: "<?php echo site_url('mainsite/add-new-address') ?>",
+                encrypt: "",
+                data: form_data,
+                cache: false,
+                contentType: false,
+                processData: false,
+                method: "POST",
+                success: function(data) {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Create New Address Successful!',
+                        showConfirmButton: false,
+                        timer: 2000
+                    })
+
+                    $('#add-address-modal').modal('hide');
+                    getAddressDetails();
+                }
+            });
+
+        })
     });
 
     function getCartItem() {
@@ -453,7 +786,6 @@
                 $('.cart .item-count').html(' ' + $('.cart-item').length + ' ITEMS');
                 $('.summary .item-count').html(' ' + $('.cart-item').length + ' ITEMS');
 
-
                 // console.log('smart joney', $('.cart-item').length);
 
                 //After added everything then calculate the total
@@ -484,6 +816,35 @@
 
     function _numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    // Get address details
+    function getAddressDetails() {
+
+        $('.address-list').children().remove();
+
+        $.ajax({
+            url: "<?php echo site_url('mainsite/get-address-details') ?>",
+            encrypt: "",
+            cache: false,
+            contentType: false,
+            processData: false,
+            method: "POST",
+            success: function(data) {
+                // console.log(data);
+                $.each(JSON.parse(data), function(i, value) {
+                    console.log(value.default_address == 1 ? "Default" : "Bye" );
+                    $('.address-list').append(
+                        "<a href='#' class='address-list-container'> " +
+                        "   <span class='default-address'>" + (value.default_address == 1 ? "DEFAULT" : 'NOT-DEFAULT') + "</span> " +
+                        "   <span class='address-details'>" + value.address_line1 + value.address_line2 + value.postcode + value.country + value.state + "</span>"+
+                        
+                        "</a>"
+                    );
+                });
+
+            }
+        });
     }
 </script>
 
