@@ -303,6 +303,11 @@
             text-decoration: none;
         }
 
+        .content-row {
+            display: flex;
+            align-items: center;
+        }
+
         .btn-checkout {
             background-color: #000;
             border-color: #000;
@@ -902,7 +907,7 @@
                         '            <button class="quantity-plus">+</button>' +
                         '        </div>' +
 
-                        '        <div class="col">' +
+                        '        <div class="col content-row">' +
                         '            <span>MYR</span>' +
                         '            <span class="item-price">' +
                         '                ' + parseFloat(value.price * value.selected_quantity).toFixed(2) + ' ' +
