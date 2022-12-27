@@ -11,23 +11,14 @@ class Address extends CI_Controller
     $this->load->model('Address_model');
   }
 
-  /*
-      Display all records in page
-   */
   public function index()
   {
     // $data['products'] = $this->Product_model->get_all();
     $data['title'] = 'Address Book';
-    $data['addressBook'] = $this->Address_model->getAddressbyUserId(1);
+    $data['addressbooks'] = $this->Address_model->getAddressbyUserId(1);
 
     // $this->load->view('layout/header');
     $this->load->view('mainsite/shopping-cart', $data);
-
-    // 
-    // echo json_encode($this->Cart_model->getCartbyUserId(1)); 
-    // $data["response"] = $this->Cart_model->getCartbyUserId(1);exit;
-    // $this->Cart_model->getCartbyUserId());
-    // $this->load->view('layout/footer');
   }
 
   public function addAddress()
@@ -57,6 +48,12 @@ class Address extends CI_Controller
   public function getAddressDetails()
   {
     echo json_encode($this->Address_model->getAddressbyUserId(1));
+
+  }
+
+  public function getDefaultAddressDetails()
+  {
+    echo json_encode($this->Address_model->getDefaultAddressbyUserId(1));
 
   }
 }

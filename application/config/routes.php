@@ -89,6 +89,7 @@ $route['mainsite/add-new-address'] = "mainsite/address/addAddress";
 $route['mainsite/delete-address'] = "mainsite/address/deleteAddress";
 $route['mainsite/update-address'] = "mainsite/address/updateAddress";
 $route['mainsite/get-address-details'] = "mainsite/address/getAddressDetails";
+$route['mainsite/get-default-address-details'] = "mainsite/address/getDefaultAddressDetails";
 
 
 

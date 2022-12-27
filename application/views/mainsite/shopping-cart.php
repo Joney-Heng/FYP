@@ -216,6 +216,38 @@
             margin-right: 5px;
         }
 
+        .address-container .manage-button-row .selected-address {
+            margin-bottom: 10px;
+            background: #f2f2f2;
+        }
+
+        .address-container .manage-button-row .selected-address span {
+            display: block;
+            width: 100%;
+            font-size: 12px;
+            padding: 0 10px;
+
+        }
+
+        .address-container .manage-button-row .selected-address .title {
+            padding-top: 10px;
+            font-size: 12px;
+            font-weight: 700;
+            color: #13221C;
+        }
+
+        .address-container .manage-button-row .selected-address .contact {
+            font-weight: 700;
+            color: #007bff;
+        }
+
+        .address-container .manage-button-row .selected-address .note {
+            padding: 10px;
+            font-size: 10px;
+            font-weight: 700;
+            color: #ff8080;
+        }
+
         .shipping {
             margin-bottom: 15px;
         }
@@ -308,29 +340,89 @@
         }
 
         #choose-address-modal .modal-body .preferred-address {
+            padding: 10px;
             font-weight: 600;
         }
 
         #choose-address-modal .modal-body .address-list {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
+            max-height: 500px;
             padding: 10px;
             overflow-y: auto;
         }
 
-        #choose-address-modal .modal-body a.address-list-container {
-            width: 49%;
-            height: 80px;
+        #choose-address-modal .modal-body .address-list-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
             margin-top: 10px;
+            padding: 20px;
             border-radius: 5px;
+            min-height: 100px;
             background: #ddd;
             color: black;
             text-decoration: none;
         }
 
-        #choose-address-modal .modal-body a.address-list-container:focus {
+        #choose-address-modal .modal-body .address-list-container:focus {
             border: 1px solid orange;
+        }
+
+        #choose-address-modal .modal-body .address-list-container .default-address {
+            margin-bottom: 10px;
+            padding: 5px;
+            width: 70px;
+            text-align: center;
+            font-size: 12px;
+            font-weight: 700;
+            background: beige;
+            border-radius: 10px;
+        }
+
+        #choose-address-modal .modal-body .address-list-container .contact-details {
+            display: flex;
+            flex-direction: column;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        #choose-address-modal .modal-body .address-list-container .contact-details .contact-name {
+            font-weight: 700;
+        }
+
+        #choose-address-modal .modal-body .address-list-container .address-details {
+            display: flex;
+            flex-direction: column;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #007bff;
+        }
+
+        #choose-address-modal .modal-body .address-list-container .address-action {
+            display: flex;
+        }
+
+        #choose-address-modal .modal-body .address-list-container .address-action #chooseAddressBtn {
+            margin-right: 10px;
+            border: 0 solid transparent;
+            width: 80px;
+            background: #fc8800;
+            cursor: pointer;
+        }
+
+        #choose-address-modal .modal-body .address-list-container .address-action #chooseAddressBtn:hover {
+            background: #e37a00;
+        }
+
+        #choose-address-modal .modal-body .address-list-container .address-action #editAddressBtn {
+            border: 0 solid transparent;
+            width: 80px;
+            background: #cc4400;
+            cursor: pointer
+        }
+
+        #choose-address-modal .modal-body .address-list-container .address-action #editAddressBtn:hover {
+            background: #802b00;
         }
 
         #add-address-modal .modal-footer {
@@ -386,7 +478,7 @@
                                 </svg>CHOOSE ADDRESS
                             </a>
                             <!-- show selected address -->
-                            <input type="hidden">
+                            <div class="selected-address"></div>
                         </div>
                     </div>
 
@@ -429,6 +521,7 @@
 
     </div>
 
+    <!-- Modal - Choose Address Modal -->
     <div class="modal fade" id="choose-address-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -450,13 +543,12 @@
 
                     <hr>
 
-                    <span class="preferred-address">**CHOOSE YOUR PREFERRED ADDRESS</span>
+                    <span class="preferred-address">CHOOSE YOUR PREFERRED ADDRESS</span>
                     <div class="address-list"></div>
 
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary">Save</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
@@ -494,22 +586,22 @@
                             <label for="validationCustom04" class="form-label">State</label>
                             <select class="form-select" id="add-state" required>
                                 <option selected disabled value="">Choose...</option>
-                                <option>Johor</option>
-                                <option>Kelantan</option>
-                                <option>Kedah</option>
-                                <option>Melaka</option>
-                                <option>Negeri Sembilan</option>
-                                <option>Pahang</option>
-                                <option>Perak</option>
-                                <option>Penang</option>
-                                <option>Perlis</option>
-                                <option>Sarawak</option>
-                                <option>Sabah</option>
-                                <option>Selangor</option>
-                                <option>Terengganu</option>
-                                <option>WP Kuala Lumpur</option>
-                                <option>WP Labuan</option>
-                                <option>WP Putrajaya</option>
+                                <option>JOHOR</option>
+                                <option>KELANTAN</option>
+                                <option>KEDAH</option>
+                                <option>MELAKA</option>
+                                <option>NEGERI SEMBILAN</option>
+                                <option>PAHANG</option>
+                                <option>PERAK</option>
+                                <option>PENANG</option>
+                                <option>PERLIS</option>
+                                <option>SARAWAK</option>
+                                <option>SABAH</option>
+                                <option>SELANGOR</option>
+                                <option>TERENGGANU</option>
+                                <option>WP KUALA LUMPUR</option>
+                                <option>WP LABUAN</option>
+                                <option>WP PUTRAJAYA</option>
                             </select>
                         </div>
                         <div class="col-md-6">
@@ -521,7 +613,7 @@
                             <label for="validationCustom03" class="form-label">Country</label>
                             <select class="form-select" id="add-country" required>
                                 <option selected disabled value="">Choose...</option>
-                                <option>Malaysia</option>
+                                <option>MALAYSIA</option>
                             </select>
                         </div>
 
@@ -648,6 +740,31 @@
             });
 
         })
+
+        //Display Default Address
+        getDefaultAddressDetails()
+
+        //Choose Address
+        $(document).on('click', '#chooseAddressBtn', function(e) {
+            e.preventDefault();
+
+            $('.selected-address').children().remove();
+
+            address = JSON.parse($(this).closest('.address-list-container').attr('data-address'));
+
+            $('.selected-address').append(
+                "<span class='title'>Selected Address: " + (address.default_address == 1 ? '(Default Address)' : '') + " </span>" +
+                "<span class='contact'>" + address.contact_name + "</span>" +
+                "<span class='contact'>" + address.contact_no + "</span>" +
+
+                "<span class='details'>" + address.address_line1 + "," + address.address_line2 + "," + "</span>" +
+                "<span class='details'>" + address.city + "," + address.postcode + "," + address.state + "," + address.country + "</span>" +
+                "<span class='note'>Note: Kindly make sure your selected address is correct.</span>"
+
+            );
+
+            $('#choose-address-modal').modal('hide');
+        })
     });
 
     function getCartItem() {
@@ -672,7 +789,7 @@
                         '    <div class="row main align-items-center">' +
                         '        <div class="col-2">' +
                         '            <img class="img-fluid" src="https://storage-api-ten.vercel.app/files/' + value.photo.split(',')[0] + '">' +
-                        '        </div>' +
+                        '       </div>' +
 
                         '        <div class="col product-name">' +
                         '            <div class="row">' + value.name + '</div>' +
@@ -694,7 +811,6 @@
                         '    </div>' +
                         '</div>');
                 });
-
 
                 //Update quantity - Plus to add
                 $('.quantity-container .quantity-plus').click(function(e) {
@@ -834,13 +950,59 @@
             success: function(data) {
                 // console.log(data);
                 $.each(JSON.parse(data), function(i, value) {
-                    console.log(value.default_address == 1 ? "Default" : "Bye");
-                    $('.address-list').append(
-                        "<a href='#' class='address-list-container'> " +
-                        "   <span class='default-address'>" + (value.default_address == 1 ? "DEFAULT" : 'NOT-DEFAULT') + "</span> " +
-                        "   <span class='address-details'>" + value.address_line1 + value.address_line2 + value.postcode + value.country + value.state + "</span>" +
 
-                        "</a>"
+                    $('.address-list').append(
+                        "<div class='address-list-container' data-address='" + JSON.stringify(value) + "'> " +
+                        "   <div class='checkout-address-row'> " +
+                        "       <span class='default-address'>" + (value.default_address == 1 ? "Default" : 'Not-Default') + "</span> " +
+                        "       <div class='contact-details'> " +
+                        "           <span class='contact-name'>" + value.contact_name + "</span>" +
+                        "           <span >" + value.contact_no + "</span>" +
+                        "           <span>" + value.email + "</span>" +
+                        "       </div>" +
+
+                        "       <div class='address-details'>" +
+                        "           <span>" + value.address_line1 + ", " + value.address_line2 + ", " + "</span>" +
+                        "           <span>" + value.postcode + ", " + value.state + ", " + value.country + "</span>" +
+                        "       </div>" +
+                        "   </div>" +
+
+                        "   <div class='address-action'> " +
+                        "       <span class='btn btn-primary chooseAddress' id='chooseAddressBtn'>Choose</span>" +
+                        "   <span class='btn btn-primary' id='editAddressBtn'>Edit</span>" +
+                        "   </div>" +
+                        "</div>",
+                    );
+                });
+
+            }
+        });
+    }
+
+    //Display default address
+    function getDefaultAddressDetails() {
+        
+        $.ajax({
+            url: "<?php echo site_url('mainsite/get-default-address-details') ?>",
+            encrypt: "",
+            cache: false,
+            contentType: false,
+            processData: false,
+            method: "POST",
+            success: function(data) {
+                console.log(JSON.parse(data));
+
+                $.each(JSON.parse(data), function(i, value) {
+
+                    $('.selected-address').append(
+                        "<span class='title'>Selected Address: " + (value.default_address == 1 ? '(Default Address)' : '') + " </span>" +
+                        "<span class='contact'>" + value.contact_name + "</span>" +
+                        "<span class='contact'>" + value.contact_no + "</span>" +
+
+                        "<span class='details'>" + value.address_line1 + "," + value.address_line2 + "," + "</span>" +
+                        "<span class='details'>" + value.city + "," + value.postcode + "," + value.state + "," + data.country + "</span>" +
+                        "<span class='note'>Note: Kindly make sure your selected address is correct.</span>"
+
                     );
                 });
 

@@ -58,17 +58,29 @@ class Address_model extends CI_Model{
         return $query->result_array();
     }
 
-    public function getCartbyUserIDandProductId($product_id, $user_id)
-    {
+    // public function getCartbyUserIDandProductId($product_id, $user_id)
+    // {
         
-        $cart = $this->db->get_where('carts', ['product_id' => $product_id,'user_id' => $user_id ])->row();
-        return $cart;
-    }
+    //     $cart = $this->db->get_where('carts', ['product_id' => $product_id,'user_id' => $user_id ])->row();
+    //     return $cart;
+    // }
 
-    public function deleteCartbyCartId($id)
+    // public function deleteCartbyCartId($id)
+    // {
+    //     $result = $this->db->delete('carts', array('id' => $id));
+    //     return $result;
+    // }
+
+    public function getDefaultAddressbyUserId($id)
     {
-        $result = $this->db->delete('carts', array('id' => $id));
-        return $result;
+        $this->db->select('id,address_line1,address_line2,postcode,state,city,country,contact_name,contact_no,email,default_address');
+        $this->db->from('address');
+        $this->db->where('default_address', 1);
+        $this->db->where('user_id', $id);
+
+        $query=$this->db->get();
+        return $query->result_array();
     }
+     
      
 }
