@@ -477,13 +477,13 @@
                 </div>
 
                 <form class="cta">
-                    <!-- choose address -->
+                    <!-- change address -->
                     <div class="address-container">
                         <div class="manage-button-row">
                             <a href="" class="btn-choose-address">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" width="18px" height="18px">
                                     <path d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 256c-35.3 0-64-28.7-64-64s28.7-64 64-64s64 28.7 64 64s-28.7 64-64 64z" />
-                                </svg>CHOOSE ADDRESS
+                                </svg>CHANGE ADDRESS
                             </a>
                             <!-- show selected address -->
                             <div class="selected-address"></div>
@@ -741,6 +741,13 @@
                     processData: false,
                     method: "POST",
                     success: function(data) {
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: 'Update Address Successful!',
+                            showConfirmButton: false,
+                            timer: 2000
+                        })
                         getAddressDetails();
 
                         $('#add-address-modal').modal('hide');
@@ -854,7 +861,7 @@
             $('#add-contact-no').val(addressDetails.contact_no);
             $('#add-email').val(addressDetails.email);
             $('#checked_default_address').prop('checked', addressDetails.default_address == 1 ? 'checked' : false).trigger('change');
-            
+
             $('#add-address-modal').modal('show');
         });
 
