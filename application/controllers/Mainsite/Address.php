@@ -28,21 +28,12 @@ class Address extends CI_Controller
 
   public function deleteAddress()
   {
-    $this->Address_model->deleteAddressbyAddressId($this->input->post('address_id'));
+    $this->Address_model->deleteAddressbyId($this->input->post('address_id'));
   }
 
   public function updateAddress()
   {
-    $cart_item = $this->Address_model->getCartbyUserIDandProductId($this->input->post('product_id'), 1);
-    if ($cart_item) {
-
-      $this->Address_model->updateQuantitybyID($cart_item->id, $this->input->post('selected_quantity'));
-    } else {
-
-      $this->Address_model->insert();
-    }
-
-    echo json_encode(array());
+    echo json_encode($this->Address_model->updateAddressbyID($this->input->post('address_id')));
   }
 
   public function getAddressDetails()

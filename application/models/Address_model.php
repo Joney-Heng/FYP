@@ -38,13 +38,34 @@ class Address_model extends CI_Model{
         return $result;
     }
 
-    public function updateQuantitybyID($id,$quantity) 
+    public function updateAddressbyID($id) 
     {
+        if ($this->input->post('default_address'))
+        {
+            $data = [
+                'default_address'     => 0
+            ];
+
+            $this->db->where('user_id', 1)->update('address', $data);
+        }
+
         $data = [
-            'selected_quantity'     => $quantity
+            'address_line1'         => $this->input->post('address_line1'),
+            'address_line2'         => $this->input->post('address_line2'),
+            'postcode'              => $this->input->post('postcode'),
+            'state'                 => $this->input->post('state'),
+            'city'                  => $this->input->post('city'),
+            'country'               => $this->input->post('country'),
+            'contact_name'          => $this->input->post('contact_name'),
+            'contact_no'            => $this->input->post('contact_no'),
+            'email'                 => $this->input->post('email'),
+            'default_address'       => $this->input->post('default_address'),
+            'user_id'               => 1,
         ];
 
-        $result = $this->db->where('id',$id)->update('carts',$data);
+        $this->db->where('id', $id);
+        $result = $this->db->where('user_id', 1)->update('address', $data);
+
         return $result;
                  
     }
@@ -58,18 +79,11 @@ class Address_model extends CI_Model{
         return $query->result_array();
     }
 
-    // public function getCartbyUserIDandProductId($product_id, $user_id)
-    // {
-        
-    //     $cart = $this->db->get_where('carts', ['product_id' => $product_id,'user_id' => $user_id ])->row();
-    //     return $cart;
-    // }
-
-    // public function deleteCartbyCartId($id)
-    // {
-    //     $result = $this->db->delete('carts', array('id' => $id));
-    //     return $result;
-    // }
+    public function deleteAddressbyId($id)
+    {
+        $result = $this->db->delete('address', array('id' => $id));
+        return $result;
+    }
 
     public function getDefaultAddressbyUserId($id)
     {

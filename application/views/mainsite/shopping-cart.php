@@ -345,7 +345,7 @@
         }
 
         #choose-address-modal .modal-body .address-list {
-            max-height: 500px;
+            max-height: 300px;
             padding: 10px;
             overflow-y: auto;
         }
@@ -400,13 +400,15 @@
 
         #choose-address-modal .modal-body .address-list-container .address-action {
             display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         #choose-address-modal .modal-body .address-list-container .address-action #chooseAddressBtn {
             margin-right: 10px;
             border: 0 solid transparent;
             width: 80px;
-            background: #fc8800;
+            background: #ffa31a;
             cursor: pointer;
         }
 
@@ -415,14 +417,20 @@
         }
 
         #choose-address-modal .modal-body .address-list-container .address-action #editAddressBtn {
+            margin-right: 10px;
             border: 0 solid transparent;
             width: 80px;
-            background: #cc4400;
+            background: #adad85;
             cursor: pointer
         }
 
         #choose-address-modal .modal-body .address-list-container .address-action #editAddressBtn:hover {
-            background: #802b00;
+            background: #999966;
+        }
+
+        #choose-address-modal .modal-body .address-list-container .address-action .btn-delete img {
+            width: 12px;
+            cursor: pointer;
         }
 
         #add-address-modal .modal-footer {
@@ -568,6 +576,8 @@
 
                 <div class="modal-body">
                     <form class="row g-3 needs-validation" novalidate>
+                        <input type="hidden" id="add-address-id">
+
                         <div class="col-md-12">
                             <label for="validationCustom01" class="form-label">Address Line 1</label>
                             <input type="text" class="form-control" id="add-address-line1" placeholder="Block, Unit, Street Name" required>
@@ -681,6 +691,7 @@
         $('.btn-add-address').click(function(e) {
             e.preventDefault();
 
+            $('#add-address-id').val('');
             $('#add-address-line1').val('');
             $('#add-address-line2').val('');
             $('#add-postcode').val('');
@@ -717,32 +728,55 @@
             form_data.append("email", $('#add-email').val());
             form_data.append("default_address", $('#checked_default_address').is(":checked") ? 1 : 0);
 
-            $.ajax({
-                url: "<?php echo site_url('mainsite/add-new-address') ?>",
-                encrypt: "",
-                data: form_data,
-                cache: false,
-                contentType: false,
-                processData: false,
-                method: "POST",
-                success: function(data) {
-                    Swal.fire({
-                        position: 'center',
-                        icon: 'success',
-                        title: 'Create New Address Successful!',
-                        showConfirmButton: false,
-                        timer: 2000
-                    })
+            if ($('#add-address-id').val()) {
+                //UPDATE
+                form_data.append("address_id", $('#add-address-id').val());
 
-                    $('#add-address-modal').modal('hide');
-                    getAddressDetails();
-                }
-            });
+                $.ajax({
+                    url: "<?php echo site_url('mainsite/update-address') ?>",
+                    data: form_data,
+                    encrypt: "",
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    method: "POST",
+                    success: function(data) {
+                        getAddressDetails();
+
+                        $('#add-address-modal').modal('hide');
+                    }
+                });
+            } else {
+                //ADD
+
+                $.ajax({
+                    url: "<?php echo site_url('mainsite/add-new-address') ?>",
+                    encrypt: "",
+                    data: form_data,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    method: "POST",
+                    success: function(data) {
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: 'Create New Address Successful!',
+                            showConfirmButton: false,
+                            timer: 2000
+                        })
+
+                        getAddressDetails();
+
+                        $('#add-address-modal').modal('hide');
+                    }
+                });
+            }
 
         })
 
         //Display Default Address
-        getDefaultAddressDetails()
+        getDefaultAddressDetails();
 
         //Choose Address
         $(document).on('click', '#chooseAddressBtn', function(e) {
@@ -764,7 +798,67 @@
             );
 
             $('#choose-address-modal').modal('hide');
-        })
+        });
+
+        //Delete Address
+        $(document).on('click', '.btn-delete', function(e) {
+            e.preventDefault();
+
+            var form_data = new FormData();
+
+            form_data.append("address_id", $(this).closest('.address-list-container').attr('data-address-id'));
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "Remove this ADDRESS?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'REMOVE',
+                cancelButtonText: 'CANCEL'
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                    $.ajax({
+                        url: "<?php echo site_url('mainsite/delete-address') ?>",
+                        data: form_data,
+                        encrypt: "",
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        method: "POST",
+                        success: function(data) {
+                            getAddressDetails();
+                        }
+                    });
+                }
+            })
+
+        });
+
+        $(document).on('click', '#editAddressBtn', function(e) {
+            e.preventDefault();
+
+            var addressDetails = JSON.parse($(this).closest('.address-list-container').attr('data-address'));
+
+            // console.log(addressDetails);
+            $('#add-address-id').val(addressDetails.id);
+            $('#add-address-line1').val(addressDetails.address_line1);
+            $('#add-address-line2').val(addressDetails.address_line2);
+            $('#add-city').val(addressDetails.city);
+            $('#add-state').val(addressDetails.state);
+            $('#add-postcode').val(addressDetails.postcode);
+            $('#add-country').val(addressDetails.country);
+            $('#add-contact-name').val(addressDetails.contact_name);
+            $('#add-contact-no').val(addressDetails.contact_no);
+            $('#add-email').val(addressDetails.email);
+            $('#checked_default_address').prop('checked', addressDetails.default_address == 1 ? 'checked' : false).trigger('change');
+            
+            $('#add-address-modal').modal('show');
+        });
+
+
     });
 
     function getCartItem() {
@@ -909,7 +1003,6 @@
                 updateGrandTotal();
             }
         });
-
         // console.log('dabian joney', $('.cart-item').length)
     }
 
@@ -952,7 +1045,7 @@
                 $.each(JSON.parse(data), function(i, value) {
 
                     $('.address-list').append(
-                        "<div class='address-list-container' data-address='" + JSON.stringify(value) + "'> " +
+                        "<div class='address-list-container' data-address-id='" + value.id + "' data-address='" + JSON.stringify(value) + "'> " +
                         "   <div class='checkout-address-row'> " +
                         "       <span class='default-address'>" + (value.default_address == 1 ? "Default" : 'Not-Default') + "</span> " +
                         "       <div class='contact-details'> " +
@@ -969,7 +1062,8 @@
 
                         "   <div class='address-action'> " +
                         "       <span class='btn btn-primary chooseAddress' id='chooseAddressBtn'>Choose</span>" +
-                        "   <span class='btn btn-primary' id='editAddressBtn'>Edit</span>" +
+                        "       <span class='btn btn-primary' id='editAddressBtn'>Edit</span>" +
+                        "       <span class='btn-delete'><img src='https://img.icons8.com/small/18/null/delete-sign.png'/></span>" +
                         "   </div>" +
                         "</div>",
                     );
@@ -981,7 +1075,7 @@
 
     //Display default address
     function getDefaultAddressDetails() {
-        
+
         $.ajax({
             url: "<?php echo site_url('mainsite/get-default-address-details') ?>",
             encrypt: "",
@@ -990,7 +1084,6 @@
             processData: false,
             method: "POST",
             success: function(data) {
-                console.log(JSON.parse(data));
 
                 $.each(JSON.parse(data), function(i, value) {
 
