@@ -63,14 +63,23 @@ $route['sign-up']               = 'signup';
 $route['google-login']          = 'googleLogin';
 
 //PRODUCT MANAGEMENT
-$route['product'] = "product/index";
-$route['product/create'] = "product/create";
-$route['product/store'] = "product/store";
-$route['product/edit/(:num)'] = "product/edit/$1";
-$route['product/show/(:num)'] = "product/show/$1";
-$route['product/update/(:num)'] = "product/update/$1";
-$route['product/delete/(:num)'] = "product/delete/$1";
-$route['product/upload'] = "product/uploadImage";
+// $route['product'] = "product/index";
+// $route['product/create'] = "product/create";
+// $route['product/store'] = "product/store";
+// $route['product/edit/(:num)'] = "product/edit/$1";
+// $route['product/show/(:num)'] = "product/show/$1";
+// $route['product/update/(:num)'] = "product/update/$1";
+// $route['product/delete/(:num)'] = "product/delete/$1";
+// $route['product/upload'] = "product/uploadImage";
+
+$route['product'] = "admin/product/index";
+$route['product/create'] = "admin/product/create";
+$route['product/store'] = "admin/product/store";
+$route['product/edit/(:num)'] = "admin/product/edit/$1";
+$route['product/show/(:num)'] = "admin/product/show/$1";
+$route['product/update/(:num)'] = "admin/product/update/$1";
+$route['product/delete/(:num)'] = "admin/product/delete/$1";
+$route['product/upload'] = "admin/product/uploadImage";
 
 //SHOPPING MALL - MAINSITE
 $route['mainsite'] = "mainsite/main/index";
