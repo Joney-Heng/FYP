@@ -19,8 +19,6 @@
             display: flex;
             justify-content: center;
             padding: 0;
-            background: #f0fff3;
-
         }
 
         body .create-voucher-page .card-body .voucher-form {
