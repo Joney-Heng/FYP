@@ -179,86 +179,84 @@
                             <?php echo $this->session->flashdata('errors'); ?>
                         </div>
                     <?php } ?> -->
-                    <form action="<?php echo base_url('voucher/store'); ?>" method="POST">
 
-                        <div class="form-group" class="voucher-type">
+                    <div class="form-group" class="voucher-type">
 
-                            <label for="description">Voucher Type</label>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="voucherType" id="shippingVoucher" value="Shipping" checked>
-                                <label class="form-check-label" for="shippingVoucher">
-                                    Shipping Voucher
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="voucherType" id="discountVoucher" value="Discount">
-                                <label class="form-check-label" for="discountVoucher">
-                                    Discount Voucher
-                                </label>
-                            </div>
+                        <label for="description">Voucher Type</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="voucherType" id="shippingVoucher" value="Shipping" checked>
+                            <label class="form-check-label" for="shippingVoucher">
+                                Shipping Voucher
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="voucherType" id="discountVoucher" value="Discount">
+                            <label class="form-check-label" for="discountVoucher">
+                                Discount Voucher
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="campaignName">Campaign Name</label>
+                        <input type="text" class="form-control" id="campaignName" name="campaignName">
+                    </div>
+
+                    <div class="form-group" class="discount-type">
+
+                        <label for="description">Discount Type</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="discountType" id="typeAmount" value="Amount" checked>
+                            <label class="form-check-label" for="typeAmount">
+                                Amount (MYR)
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="discountType" id="typePercentage" value="Percentage" disabled>
+                            <label class="form-check-label" for="typePercentage">
+                                Percentage (%)
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="minSpend">Minimum Spend Amount (MYR)</label>
+                        <input type="number" class="form-control" id="minSpend" name="minSpend" min="0.00" value="0.00" step="any"></input>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cappedAmount">Capped Amount (MYR)</label>
+                        <input type="number" class="form-control" id="cappedAmount" name="cappedAmount" min="0.00" value="0.00" step="any"></input>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="voucherCode">Voucher Code</label>
+                        <input type="text" class="form-control" id="voucherCode" name="voucherCode"></input>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="voucherQuantity">Voucher Quantity </label>
+                        <input type="number" class="form-control" id="voucherQuantity" name="voucherQuantity"></input>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="startDate">Start Date</label>
+                        <input type="datetime-local" class="form-control" id="startDate" name="startDate"></input>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="endDate">End Date</label>
+                        <input type="datetime-local" class="form-control" id="endDate" name="endDate"></input>
+                    </div>
+
+                    <div class="cta">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="voucher_status" name="voucher_status">
+                            <label class="custom-control-label" for="voucher_status">Published This <b>Voucher</b>?</label>
                         </div>
 
-                        <div class="form-group">
-                            <label for="campaignName">Campaign Name</label>
-                            <input type="text" class="form-control" id="campaignName" name="campaignName">
-                        </div>
-
-                        <div class="form-group" class="discount-type">
-
-                            <label for="description">Discount Type</label>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="discountType" id="typeAmount" value="Amount" checked>
-                                <label class="form-check-label" for="typeAmount">
-                                    Amount (MYR)
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="discountType" id="typePercentage" value="Percentage" disabled >
-                                <label class="form-check-label" for="typePercentage">
-                                    Percentage (%)
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="minSpend">Minimum Spend Amount (MYR)</label>
-                            <input type="number" class="form-control" id="minSpend" name="minSpend" min="0.00" value="0.00" step="any"></input>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="cappedAmount">Capped Amount (MYR)</label>
-                            <input type="number" class="form-control" id="cappedAmount" name="cappedAmount" min="0.00" value="0.00" step="any"></input>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="voucherCode">Voucher Code</label>
-                            <input type="text" class="form-control" id="voucherCode" name="voucherCode"></input>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="voucherQuantity">Voucher Quantity </label>
-                            <input type="number" class="form-control" id="voucherQuantity" name="voucherQuantity"></input>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="startDate">Start Date</label>
-                            <input type="datetime-local" class="form-control" id="startDate" name="startDate"></input>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="endDate">End Date</label>
-                            <input type="datetime-local" class="form-control" id="endDate" name="endDate"></input>
-                        </div>
-
-                        <div class="cta">
-                            <div class="custom-control custom-switch">
-                                <input type="checkbox" class="custom-control-input" id="voucher_status" name="voucher_status">
-                                <label class="custom-control-label" for="voucher_status">Published This <b>Voucher</b>?</label>
-                            </div>
-
-                            <button class="btn btn-save btn-outline-primary" id="submitBtn">Save Voucher</button>
-                        </div>
-                    </form>
+                        <button class="btn btn-save btn-outline-primary" id="submitBtn">Save Voucher</button>
+                    </div>
                 </div>
 
                 <div class="voucher-view">
@@ -358,8 +356,11 @@
                     icon: 'success',
                     title: 'Create Voucher Successful!',
                     showConfirmButton: false,
-                    timer: 2000
+                    timer: 2000,
                 })
+                window.setTimeout(function() {
+                    window.location.href = "<?php echo site_url('voucher') ?>";
+                }, 1000);
             }
         });
     });
