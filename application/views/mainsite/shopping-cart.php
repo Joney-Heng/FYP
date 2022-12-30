@@ -308,6 +308,18 @@
             align-items: center;
         }
 
+        .cta .voucher .voucher-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cta .voucher .voucher-title #view-voucher {
+            font-size: 12px;
+            color: #007bff;
+            cursor: pointer;
+        }
+
         .btn-checkout {
             background-color: #000;
             border-color: #000;
@@ -442,6 +454,135 @@
             display: flex;
             justify-content: space-between;
         }
+
+        /* Available Modal CSS */
+        #available-voucher-modal .modal-dialog {
+            max-width: 922px;
+        }
+
+        #available-voucher-modal .modal-header .modal-title{
+            width: 100%;
+            text-align: center;
+            font-weight: 700;
+            font-size: 25px;
+        }
+
+        #available-voucher-modal .modal-body {
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+
+        }
+
+        #available-voucher-modal .modal-body .shipping-voucher {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        #available-voucher-modal .modal-body .discount-voucher {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        #available-voucher-modal .modal-body .title {
+            display: block;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        #available-voucher-modal .modal-body .coupon-card {
+            margin: 0 20px 20px 0;
+            padding: 20px;
+            width: 200px;
+            height: 250px;
+            text-align: center;
+            color: #fff;
+            background: linear-gradient(135deg, #ff9933, #e67300);
+            border-radius: 15px;
+            box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.15);
+        }
+
+        #available-voucher-modal .modal-body .coupon-card .voucher-icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 10px;
+            height: 120px;
+            border-radius: 5px;
+            background: #ffe6cc;
+        }
+
+        #available-voucher-modal .modal-body .coupon-card .voucher-icon img {
+            width: 50px;
+            height: 50px;
+        }
+
+        #available-voucher-modal .modal-body .coupon-card .voucher-icon .discount-value {
+            font-size: 16px;
+            font-weight: 700;
+            color: #13221C;
+        }
+
+        #available-voucher-modal .modal-body .coupon-card .voucher-icon .discount-type {
+            font-weight: 700;
+            color: #13221C;
+        }
+
+        #available-voucher-modal .modal-body .coupon-card .voucher-icon .min-spend {
+            font-size: 10px;
+            font-weight: 300;
+            color: #13221C;
+        }
+
+        #available-voucher-modal .modal-body .coupon-card .valid-date {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        #available-voucher-modal .modal-body .coupon-card .tnc {
+            font-weight: 600;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        #available-voucher-modal .modal-body .coupon-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+            width: 100%;
+        }
+
+        #available-voucher-modal .modal-body #cpnCode {
+            padding: 10px;
+            border: 1px dashed #fff;
+            border-right: 0;
+            width: 60%;
+            font-size: 12px;
+        }
+
+        #available-voucher-modal .modal-body #cpnBtn {
+            border: 1px solid #fff;
+            padding: 10px;
+            width: 40%;
+            font-size: 12px;
+            color: #007bff;
+            background: #fff;
+            cursor: pointer;
+        }
+
+        #available-voucher-modal .modal-body #cpnBtn:hover {
+            background: #e6e6e6;
+            color: #ff5c33;
+        }
+
+        #available-voucher-modal .modal-body .tnc {
+            margin-top: 20px;
+            font-weight: 600;
+            font-size: 16px;
+            color: #d6d6c2;
+            text-decoration: none;
+        }
     </style>
 </head>
 
@@ -504,7 +645,10 @@
                     </div>
 
                     <div class="voucher">
-                        <span>Voucher Code</span>
+                        <div class="voucher-title">
+                            <span>Voucher Code</span>
+                            <span id="view-voucher">View Voucher</span>
+                        </div>
                         <input id="voucher-code" placeholder="Enter your code">
                     </div>
 
@@ -665,6 +809,43 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal - Available Vouchers Modal -->
+    <div class="modal fade" id="available-voucher-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">AVAILABLE VOUCHERS</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <!-- <div class="add-address-container">
+                        <a href="" class="btn-add-address">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="20px" height="20px">
+                                <path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zM200 344V280H136c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H248v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z" />
+                            </svg>NEW ADDRESS
+                        </a>
+                    </div>
+
+                    <hr> -->
+
+                    <span class='title'>SHIPPING VOUCHER</span>
+                    <div class="shipping-voucher"></div>
+                    <hr>
+                    <span class='title'>DISCOUNT VOUCHER</span>
+                    <div class="discount-voucher"></div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 <!-- jquery & sweetalert -->
@@ -709,6 +890,15 @@
             $('#checked_default_address').prop("checked", false)
 
             $('#add-address-modal').modal('show');
+        });
+
+        //Modal - Available Vouchers
+        $('#view-voucher').click(function(e) {
+            e.preventDefault();
+
+            getAvailableVouchers();
+            $('#available-voucher-modal').modal('show');
+
         });
 
         //Close Modal
@@ -1105,10 +1295,80 @@
                         "<span class='contact'>" + value.contact_no + "</span>" +
 
                         "<span class='details'>" + value.address_line1 + "," + value.address_line2 + "," + "</span>" +
-                        "<span class='details'>" + value.city + "," + value.postcode + "," + value.state + "," + data.country + "</span>" +
+                        "<span class='details'>" + value.city + "," + value.postcode + "," + value.state + "," + value.country + "</span>" +
                         "<span class='note'>Note: Kindly make sure your selected address is correct.</span>"
-
                     );
+                });
+
+            }
+        });
+    }
+
+    function getAvailableVouchers() {
+
+        $.ajax({
+            url: "<?php echo site_url('voucher/get-available-vouchers') ?>",
+            encrypt: "",
+            cache: false,
+            contentType: false,
+            processData: false,
+            method: "POST",
+            success: function(data) {
+
+                $('.shipping-voucher').children().remove();
+                $('.discount-voucher').children().remove();
+
+                $.each(JSON.parse(data), function(i, value) {
+
+                    if (value.voucher_type == 'Shipping') {
+                        $('.shipping-voucher').append(
+                            "   <div class='coupon-card'>" +
+                            "       <div class='voucher-icon'>" +
+                            "           <img class='logo' src='https://img.icons8.com/material-rounded/96/null/truck--v1.png' />" +
+                            "           <span class='discount-value'>MYR" + value.capped_amount + " OFF</span>" +
+                            "           <span class='discount-type'>SHIPPING</span>" +
+                            "           <span class='min-spend'>(Min.spend MYR" + value.min_spend + ")</span>" +
+                            "       </div>" +
+
+                            "       <div class='coupon-row'>" +
+                            "           <span id='cpnCode'> " + value.voucher_code + " </span>" +
+                            "           <span id='cpnBtn'>Apply</span>" +
+                            "       </div>" +
+
+                            "       <div class='valid-date'>" +
+                            "           <span class='expired-date'> " + value.end_date + " </span><br>" +
+                            "       </div>" +
+                            "       <a href='' class='tnc'>T&C Apply</a>" +
+
+                            "</div>" +
+                            "<hr>",
+                        );
+
+
+                    } else if (value.voucher_type == 'Discount') {
+                        $('.discount-voucher').append(
+                            "<div class='coupon-card'>" +
+                            "   <div class='voucher-icon'>" +
+                            "       <img class='logo' src='https://img.icons8.com/glyph-neue/64/null/discount-ticket.png' />" +
+                            "       <span class='discount-value'>MYR" + value.capped_amount + " OFF</span>" +
+                            "       <span class='discount-type'>PRODUCT</span>" +
+                            "       <span class='min-spend'>(Min.spend MYR" + value.min_spend + ")</span>" +
+                            "   </div>" +
+
+                            "   <div class='coupon-row'>" +
+                            "       <span id='cpnCode'> " + value.voucher_code + " </span>" +
+                            "       <span id='cpnBtn'>Apply</span>" +
+                            "   </div>" +
+
+                            "   <div class='valid-date'>" +
+                            "       <span class='expired-date'> " + value.end_date + " </span><br>" +
+                            "   </div>" +
+                            "   <span class='tnc'>T&C Apply</span>" +
+
+                            "</div>",
+
+                        );
+                    }
                 });
 
             }

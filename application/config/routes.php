@@ -63,15 +63,6 @@ $route['sign-up']               = 'signup';
 $route['google-login']          = 'googleLogin';
 
 //PRODUCT MANAGEMENT
-// $route['product'] = "product/index";
-// $route['product/create'] = "product/create";
-// $route['product/store'] = "product/store";
-// $route['product/edit/(:num)'] = "product/edit/$1";
-// $route['product/show/(:num)'] = "product/show/$1";
-// $route['product/update/(:num)'] = "product/update/$1";
-// $route['product/delete/(:num)'] = "product/delete/$1";
-// $route['product/upload'] = "product/uploadImage";
-
 $route['product'] = "admin/product/index";
 $route['product/create'] = "admin/product/create";
 $route['product/store'] = "admin/product/store";
@@ -100,8 +91,16 @@ $route['mainsite/update-address'] = "mainsite/address/updateAddress";
 $route['mainsite/get-address-details'] = "mainsite/address/getAddressDetails";
 $route['mainsite/get-default-address-details'] = "mainsite/address/getDefaultAddressDetails";
 
+//VOUCHER MANAGEMENT
+$route['voucher'] = "admin/voucher/index";
+$route['voucher/create'] = "admin/voucher/create";
+$route['voucher/store'] = "admin/voucher/store";
+$route['voucher/edit/(:num)'] = "admin/voucher/edit/$1";
+$route['voucher/update/(:num)'] = "admin/voucher/update/$1";
+$route['voucher/get-available-vouchers'] = "admin/voucher/getAvailableVouchers";
 
-
+$route['voucher/delete/(:num)'] = "admin/voucher/delete/$1";
+$route['voucher/show/(:num)'] = "admin/voucher/show/$1";
 
 
 
