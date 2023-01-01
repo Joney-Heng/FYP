@@ -39,9 +39,8 @@
         }
 
         .cart-items {
-            overflow-y: auto;
             overflow-x: hidden;
-            height: 350px;
+            min-height: 350px;
         }
 
         .product-name {
@@ -68,6 +67,7 @@
             display: flex;
             flex-direction: column;
         }
+
         .price-per-unit {
             font-size: 12px;
             font-weight: 300;
@@ -219,7 +219,7 @@
             align-items: center;
             text-decoration: none;
             padding: 0;
-            margin-bottom: 15px;
+            margin-bottom: 5px;
             width: 160px;
         }
 
@@ -228,16 +228,17 @@
         }
 
         .address-container .manage-button-row .selected-address {
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             background: #f2f2f2;
         }
 
         .address-container .manage-button-row .selected-address span {
             display: block;
+            padding: 0 10px;
             width: 100%;
             font-size: 12px;
-            padding: 0 10px;
             font-weight: 500;
+            color: #999966;
         }
 
         .address-container .manage-button-row .selected-address .title {
@@ -249,7 +250,7 @@
 
         .address-container .manage-button-row .selected-address .contact {
             font-weight: 700;
-            color: #007bff;
+            color: #59b300;
         }
 
         .address-container .manage-button-row .selected-address .note {
@@ -260,7 +261,19 @@
         }
 
         .shipping {
+            padding: 0;
             margin-bottom: 15px;
+        }
+
+        .shipping .form-select {
+            padding: 10px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #59b300;
+        }
+
+        .title-content {
+            margin-bottom: 5px;
         }
 
         .voucher {
@@ -293,6 +306,7 @@
             border-radius: 50%;
             border: 0 solid transparent;
             font-size: 14px;
+            font-weight: 700;
             text-align: center;
             color: #13221C;
             background-color: #AA9479;
@@ -353,20 +367,42 @@
             margin-top: 5px;
             padding: 10px;
             color: #ff8080;
-            background: #f2f2f2;
+            background: #fff;
             font-size: 12px;
+            border-radius: 5px;
+        }
+
+        .checkout-details div {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .checkout-details .title {
+            font-weight: 600;
+        }
+
+        .checkout-details .checkout-content {
+            font-weight: 700;
+            font-size: 20px;
         }
 
         .btn-checkout {
-            background-color: #000;
-            border-color: #000;
-            color: white;
+            margin-top: 10px;
+            padding: 10px;
             width: 100%;
             font-size: 18px;
             font-weight: 600;
-            margin-top: 4vh;
-            padding: 10px;
-            border-radius: 0;
+            background: #AA9479;
+            color: white;
+            border-color: #AA9479;
+            border-radius: 5px;
+        }
+
+        .powered-by {
+            margin: 5px 2px 0 5px;
+            font-weight: 300;
+            font-size: 12px;
+            text-align: right;
         }
 
         .btn-checkout:hover {
@@ -550,6 +586,8 @@
             height: 120px;
             border-radius: 5px;
             background: #ffe6cc;
+            border-image-slice: 33% 10%;
+            border-image: url("<?php echo base_url() ?>images/voucher-design.png") 6 round;
         }
 
         #available-voucher-modal .modal-body .coupon-card .voucher-icon img {
@@ -605,14 +643,14 @@
             padding: 10px;
             width: 40%;
             font-size: 12px;
-            color: #007bff;
+            color: #ff5c33;
             background: #fff;
             cursor: pointer;
         }
 
         #available-voucher-modal .modal-body #cpnBtn:hover {
-            background: #e6e6e6;
-            color: #ff5c33;
+            background: #f2f2f2;
+            color: #59b300;
         }
 
         #available-voucher-modal .modal-body .tnc {
@@ -668,53 +706,61 @@
                             <a href="" class="btn-choose-address">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" width="18px" height="18px">
                                     <path d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 256c-35.3 0-64-28.7-64-64s28.7-64 64-64s64 28.7 64 64s-28.7 64-64 64z" />
-                                </svg>CHANGE ADDRESS
+                                </svg>Change Address
                             </a>
                             <!-- show selected address -->
                             <div class="selected-address"></div>
                         </div>
                     </div>
 
-                    <div class="shipping">
-                        <span>Courier Company</span>
-                        <select>
-                            <option class="text-muted">Standard-Delivery - MYR 5.00</option>
-                            <option class="text-muted">PGEON-Delivery - MYR 5.00</option>
-                        </select>
+                    <div class="col-md-12 shipping">
+                        <div class="title-content">
+
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" viewBox="0 0 640 512" style="margin-bottom:2px">
+                                <path d="M112 0C85.5 0 64 21.5 64 48V96H16c-8.8 0-16 7.2-16 16s7.2 16 16 16H64 272c8.8 0 16 7.2 16 16s-7.2 16-16 16H64 48c-8.8 0-16 7.2-16 16s7.2 16 16 16H64 240c8.8 0 16 7.2 16 16s-7.2 16-16 16H64 16c-8.8 0-16 7.2-16 16s7.2 16 16 16H64 208c8.8 0 16 7.2 16 16s-7.2 16-16 16H64V416c0 53 43 96 96 96s96-43 96-96H384c0 53 43 96 96 96s96-43 96-96h32c17.7 0 32-14.3 32-32s-14.3-32-32-32V288 256 237.3c0-17-6.7-33.3-18.7-45.3L512 114.7c-12-12-28.3-18.7-45.3-18.7H416V48c0-26.5-21.5-48-48-48H112zM544 237.3V256H416V160h50.7L544 237.3zM160 464c-26.5 0-48-21.5-48-48s21.5-48 48-48s48 21.5 48 48s-21.5 48-48 48zm368-48c0 26.5-21.5 48-48 48s-48-21.5-48-48s21.5-48 48-48s48 21.5 48 48z" />
+                            </svg>
+                            <label for="validationCustom04" class="form-label">Courier Company</label>
+                            <select class="form-select" id="choose-courier" required>
+                                <option selected value="8.00">Standard Delivery - MYR 8.00</option>
+                                <option value="8.50">J&T Expredd - MYR 8.50 </option>
+                                <option value="10.00">Easy Parcel - MYR 10.00 </option>
+                                <option value="12.00">PGeon Delivery - MYR 12.00 </option>
+                            </select>
+                        </div>
                     </div>
+
 
                     <div class="voucher">
                         <div class="voucher-title">
                             <div>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" viewBox="0 0 448 512"><path d="M0 80V229.5c0 17 6.7 33.3 18.7 45.3l176 176c25 25 65.5 25 90.5 0L418.7 317.3c25-25 25-65.5 0-90.5l-176-176c-12-12-28.3-18.7-45.3-18.7H48C21.5 32 0 53.5 0 80zm112 96c-17.7 0-32-14.3-32-32s14.3-32 32-32s32 14.3 32 32s-14.3 32-32 32z"/></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" viewBox="0 0 448 512" style="margin-bottom:2px">
+                                    <path d="M0 80V229.5c0 17 6.7 33.3 18.7 45.3l176 176c25 25 65.5 25 90.5 0L418.7 317.3c25-25 25-65.5 0-90.5l-176-176c-12-12-28.3-18.7-45.3-18.7H48C21.5 32 0 53.5 0 80zm112 96c-17.7 0-32-14.3-32-32s14.3-32 32-32s32 14.3 32 32s-14.3 32-32 32z" />
+                                </svg>
                                 <span class="title">Voucher</span>
                             </div>
                             <span id="view-voucher">View Voucher</span>
                         </div>
                         <div class="voucher-code">
-                            <span>- No Voucher Apply -</span>
+                            <span class="without-voucher" data-voucher-amount="0">- No Voucher Apply -</span>
                         </div>
                     </div>
 
                 </form>
 
                 <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
-                    <span class="col">TOTAL</span>
-                    <div class="col text-right">MYR
-                        <span class="product-total"></span>
+                    <!-- <span class="col">TOTAL</span> -->
+                    <div class="col text-right ">
+                        <div class="checkout-details"></div>
                     </div>
                 </div>
 
-                <div class="checkout-details">
-                    <!-- <div class="details">
-                        <span class="">Shipping Fee</span>
-                        <span>MYR</span>
-                    </div> -->
-
-                    <div class="voucher-applied"></div>
-                </div>
-
+                
                 <button class="btn-checkout">CHECKOUT</button>
+                <div class="powered-by">Powered by
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" width="25px" height="25px" style="margin-bottom:3px">
+                        <path d="M186.3 258.2c0 12.2-9.7 21.5-22 21.5-9.2 0-16-5.2-16-15 0-12.2 9.5-22 21.7-22 9.3 0 16.3 5.7 16.3 15.5zM80.5 209.7h-4.7c-1.5 0-3 1-3.2 2.7l-4.3 26.7 8.2-.3c11 0 19.5-1.5 21.5-14.2 2.3-13.4-6.2-14.9-17.5-14.9zm284 0H360c-1.8 0-3 1-3.2 2.7l-4.2 26.7 8-.3c13 0 22-3 22-18-.1-10.6-9.6-11.1-18.1-11.1zM576 80v352c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V80c0-26.5 21.5-48 48-48h480c26.5 0 48 21.5 48 48zM128.3 215.4c0-21-16.2-28-34.7-28h-40c-2.5 0-5 2-5.2 4.7L32 294.2c-.3 2 1.2 4 3.2 4h19c2.7 0 5.2-2.9 5.5-5.7l4.5-26.6c1-7.2 13.2-4.7 18-4.7 28.6 0 46.1-17 46.1-45.8zm84.2 8.8h-19c-3.8 0-4 5.5-4.2 8.2-5.8-8.5-14.2-10-23.7-10-24.5 0-43.2 21.5-43.2 45.2 0 19.5 12.2 32.2 31.7 32.2 9 0 20.2-4.9 26.5-11.9-.5 1.5-1 4.7-1 6.2 0 2.3 1 4 3.2 4H200c2.7 0 5-2.9 5.5-5.7l10.2-64.3c.3-1.9-1.2-3.9-3.2-3.9zm40.5 97.9l63.7-92.6c.5-.5.5-1 .5-1.7 0-1.7-1.5-3.5-3.2-3.5h-19.2c-1.7 0-3.5 1-4.5 2.5l-26.5 39-11-37.5c-.8-2.2-3-4-5.5-4h-18.7c-1.7 0-3.2 1.8-3.2 3.5 0 1.2 19.5 56.8 21.2 62.1-2.7 3.8-20.5 28.6-20.5 31.6 0 1.8 1.5 3.2 3.2 3.2h19.2c1.8-.1 3.5-1.1 4.5-2.6zm159.3-106.7c0-21-16.2-28-34.7-28h-39.7c-2.7 0-5.2 2-5.5 4.7l-16.2 102c-.2 2 1.3 4 3.2 4h20.5c2 0 3.5-1.5 4-3.2l4.5-29c1-7.2 13.2-4.7 18-4.7 28.4 0 45.9-17 45.9-45.8zm84.2 8.8h-19c-3.8 0-4 5.5-4.3 8.2-5.5-8.5-14-10-23.7-10-24.5 0-43.2 21.5-43.2 45.2 0 19.5 12.2 32.2 31.7 32.2 9.3 0 20.5-4.9 26.5-11.9-.3 1.5-1 4.7-1 6.2 0 2.3 1 4 3.2 4H484c2.7 0 5-2.9 5.5-5.7l10.2-64.3c.3-1.9-1.2-3.9-3.2-3.9zm47.5-33.3c0-2-1.5-3.5-3.2-3.5h-18.5c-1.5 0-3 1.2-3.2 2.7l-16.2 104-.3.5c0 1.8 1.5 3.5 3.5 3.5h16.5c2.5 0 5-2.9 5.2-5.7L544 191.2v-.3zm-90 51.8c-12.2 0-21.7 9.7-21.7 22 0 9.7 7 15 16.2 15 12 0 21.7-9.2 21.7-21.5.1-9.8-6.9-15.5-16.2-15.5z" />
+                    </svg>
+                </div>
             </div>
         </div>
 
@@ -805,6 +851,7 @@
                                 <option>WP PUTRAJAYA</option>
                             </select>
                         </div>
+
                         <div class="col-md-6">
                             <label for="validationCustom05" class="form-label">Postcode</label>
                             <input type="text" class="form-control" id="add-postcode" required>
@@ -864,19 +911,11 @@
                 </div>
 
                 <div class="modal-body">
-                    <!-- <div class="add-address-container">
-                        <a href="" class="btn-add-address">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="20px" height="20px">
-                                <path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zM200 344V280H136c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H248v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z" />
-                            </svg>NEW ADDRESS
-                        </a>
-                    </div>
-
-                    <hr> -->
-
                     <span class='title'>SHIPPING VOUCHER</span>
                     <div class="shipping-voucher"></div>
+
                     <hr>
+
                     <span class='title'>DISCOUNT VOUCHER</span>
                     <div class="discount-voucher"></div>
 
@@ -1034,9 +1073,10 @@
                 "<span class='title'>Selected Address: " + (address.default_address == 1 ? '(Default Address)' : '') + " </span>" +
                 "<span class='contact'>" + address.contact_name + "</span>" +
                 "<span class='contact'>" + address.contact_no + "</span>" +
+                "<span class='contact'>" + address.email + "</span>" +
 
-                "<span class='details'>" + address.address_line1 + "," + address.address_line2 + "," + "</span>" +
-                "<span class='details'>" + address.city + "," + address.postcode + "," + address.state + "," + address.country + "</span>" +
+                "<span class='details'>" + address.address_line1 + ", " + address.address_line2 + ", " + "</span>" +
+                "<span class='details'>" + address.city + ", " + address.postcode + ", " + address.state + ", " + address.country + "</span>" +
                 "<span class='note'>Note: Kindly make sure your selected address is correct.</span>"
 
             );
@@ -1103,7 +1143,7 @@
             $('#add-address-modal').modal('show');
         });
 
-        // Apply Voucher
+        //Apply Voucher
         $(document).on('click', '#cpnBtn', function(e) {
             e.preventDefault();
 
@@ -1126,32 +1166,34 @@
                 success: function(data) {
                     $.each(JSON.parse(data), function(i, value) {
 
-                        console.log(((value.min_spend - subtotal)));
-
                         if (parseFloat(subtotal) >= parseFloat(value.min_spend)) {
                             $('.voucher-code').append(
                                 "<span style='color:#59b300'> " + value.voucher_type + " (Code# " + value.voucher_code + ")</span>" +
-                                "<span  style='color:#59b300'>(-)MYR" + parseFloat(value.capped_amount).toFixed(2) + "</span>"
-                            );
-
-                            $('.voucher-applied').append(
-                                "<span>Voucher Code Applied</span>" +
-                                "<span>(-)MYR " + parseFloat(value.capped_amount).toFixed(2) + "</span>",
+                                "<span  class='applied-voucher-value' data-voucher-amount='" + value.capped_amount + "' style='color:#59b300'><b>(-)MYR" + parseFloat(value.capped_amount).toFixed(2) + "</b></span>"
                             );
                         } else {
                             $('.voucher-code').children().remove();
 
                             $('.voucher-code').append(
-                                "<span><img style='width:18px; margin-right:4px; margin-bottom:2px;' src='https://img.icons8.com/external-compact-zufarizal-robiyanto/18/FA5252/external-caution-compact-ui-essential-vol2-compact-zufarizal-robiyanto.png'/>Add more MYR " + (parseFloat(value.min_spend) - parseFloat(subtotal)).toFixed(2) + " to enjoy this voucher. </span>",
+                                "<span class='insufficient-amount' data-voucher-amount='0'><img style='width:18px; margin-right:4px; margin-bottom:2px;' src='https://img.icons8.com/external-compact-zufarizal-robiyanto/18/FA5252/external-caution-compact-ui-essential-vol2-compact-zufarizal-robiyanto.png'/>Add more <b>MYR " + (parseFloat(value.min_spend) - parseFloat(subtotal)).toFixed(2) + "</b> to enjoy this voucher. </span>",
                             );
                         }
                     });
 
+                    calculatePaymentTotal();
                     $('#available-voucher-modal').modal('hide');
-
                 }
+
             });
         });
+
+        //Choose courier shipping and update total
+        $(document).on('click', '#choose-courier', function(e) {
+            e.preventDefault();
+
+            calculatePaymentTotal()
+        });
+
     });
 
     function getCartItem() {
@@ -1211,7 +1253,7 @@
                     $('.voucher-code').children().remove();
 
                     $('.voucher-code').append(
-                        "<span>- No Voucher Apply -</span>"
+                        "<span class='without-voucher' data-voucher-amount='0'>- No Voucher Apply -</span>"
                     );
 
                     let value = (parseInt($(this).closest('.quantity-container').find('.quantity').html()) || 0) + 1;
@@ -1242,7 +1284,7 @@
                     $('.voucher-code').children().remove();
 
                     $('.voucher-code').append(
-                        "<span>- No Voucher Apply -</span>"
+                        "<span class='without-voucher' data-voucher-amount='0'>- No Voucher Apply -</span>"
                     );
 
                     var currentQuantity = $(this).closest('.quantity-container').find('.quantity').html();
@@ -1316,7 +1358,7 @@
         // console.log('dabian joney', $('.cart-item').length)
     }
 
-    //Update cart total
+    //Update cart sub total
     function updateGrandTotal() {
         var subTotal = 0;
 
@@ -1324,6 +1366,8 @@
             subTotal += parseFloat($(value).html().trim());
         });
         $('.subtotal').html(subTotal.toFixed(2));
+
+        calculatePaymentTotal();
     }
 
     function _toNumber(str) {
@@ -1401,9 +1445,10 @@
                         "<span class='title'>Selected Address: " + (value.default_address == 1 ? '(Default Address)' : '') + " </span>" +
                         "<span class='contact'>" + value.contact_name + "</span>" +
                         "<span class='contact'>" + value.contact_no + "</span>" +
+                        "<span class='contact'>" + value.email + "</span>" +
 
-                        "<span class='details'>" + value.address_line1 + "," + value.address_line2 + "," + "</span>" +
-                        "<span class='details'>" + value.city + "," + value.postcode + "," + value.state + "," + value.country + "</span>" +
+                        "<span class='details'>" + value.address_line1 + ", " + value.address_line2 + ", " + "</span>" +
+                        "<span class='details'>" + value.city + ", " + value.postcode + ", " + value.state + ", " + value.country + "</span>" +
                         "<span class='note'>Note: Kindly make sure your selected address is correct.</span>"
                     );
                 });
@@ -1412,6 +1457,7 @@
         });
     }
 
+    // Display available voucher
     function getAvailableVouchers() {
 
         $.ajax({
@@ -1436,7 +1482,7 @@
                     if (new Date(value.end_date) >= new Date(dateTime) && new Date(value.start_date) <= new Date(dateTime)) {
                         if (value.voucher_type == 'Shipping') {
                             $('.shipping-voucher').append(
-                                "   <div class='coupon-card' data-voucher=' " + value.id + " '>" +
+                                "   <div class='coupon-card' data-voucher='" + value.id + "'>" +
                                 "       <div class='voucher-icon'>" +
                                 "           <img class='logo' src='https://img.icons8.com/material-rounded/96/null/truck--v1.png' />" +
                                 "           <span class='discount-value'>MYR" + value.capped_amount + " OFF</span>" +
@@ -1484,9 +1530,65 @@
                         }
                     }
                 });
-
             }
         });
+    }
+
+    //Calculate Payment Total
+    function calculatePaymentTotal() {
+        var sub_total = parseFloat($('.subtotal').html());
+        var shipping_amount = parseFloat($('#choose-courier').val());
+        var voucher_amount = parseFloat($('.applied-voucher-value').attr('data-voucher-amount'));
+        var voucher_zero = parseFloat($('.without-voucher').attr('data-voucher-amount'));
+        var voucher_notEnough = parseFloat($('.insufficient-amount').attr('data-voucher-amount'));
+
+        // console.log(sub_total);
+        // console.log(shipping_amount);
+        // console.log(voucher_amount);
+        // console.log(voucher_zero);
+
+        $('.checkout-details').children().remove();
+
+        if (voucher_zero == 0 || voucher_notEnough == 0) {
+            $('.checkout-details').append(
+                "<div>" +
+                "   <span class='title'>Subtotal</span>" +
+                "   <span class='subtotal-amount'>MYR " + sub_total.toFixed(2) + "</span>" +
+                "</div>" +
+
+                "<div>" +
+                "   <span class='title'>Shipping Fee</span>" +
+                "   <span class='shipping-amount'>(+) MYR " + shipping_amount.toFixed(2) + "</span>" +
+                "</div>" +
+
+                "<div class='checkout-content'>" +
+                "   <span class='title'>Total</span>" +
+                "   <span class='checkout-total'>MYR " + (sub_total + shipping_amount).toFixed(2) + "</span>" +
+                "</div>",
+            );
+        } else {
+            $('.checkout-details').append(
+                "<div>" +
+                "   <span class='title'>Subtotal</span>" +
+                "   <span class='subtotal-amount'>MYR " + sub_total.toFixed(2) + "</span>" +
+                "</div>" +
+
+                "<div>" +
+                "   <span class='title'>Shipping Fee</span>" +
+                "   <span class='shipping-amount'>(+) MYR " + shipping_amount.toFixed(2) + "</span>" +
+                "</div>" +
+
+                "<div>" +
+                "   <span class='title'>Voucher Applied</span>" +
+                "   <span class='voucher-amount'>(-) MYR " + voucher_amount.toFixed(2) + "</span>" +
+                "</div>" +
+
+                "<div class='checkout-content'>" +
+                "   <span class='title'>Total</span>" +
+                "   <span class='checkout-total'>MYR " + (sub_total + shipping_amount - voucher_amount).toFixed(2) + "</span>" +
+                "</div>",
+            );
+        }
     }
 </script>
 

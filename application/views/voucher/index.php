@@ -76,8 +76,6 @@
                             <td><?php echo $voucher->end_date; ?></td>
                             <td><?php echo $voucher->voucher_status == 1 ? 'ENABLE' : 'DISABLE' ?></td>
 
-                            <!-- <td><?php echo number_format($voucher->price, 2, '.', ''); ?></td> -->
-
                             <td class="action-container">
                                 <a href="<?php echo base_url('voucher/show/' . $voucher->id) ?>">
                                     <img src="https://img.icons8.com/color/48/000000/ingredients-list.png" />
@@ -124,7 +122,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: "<?php echo base_url('product/delete/' . $product->id) ?>",
+                        url: "#",
                         cache: false,
                         type: 'POST',
                     });

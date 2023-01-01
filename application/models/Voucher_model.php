@@ -86,7 +86,6 @@ class Voucher_model extends CI_Model{
         
         $vouchers = $this->db->get();
         return $vouchers->result_array();
-
     }
      
 }
