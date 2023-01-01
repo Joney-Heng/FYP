@@ -53,7 +53,6 @@ class Voucher extends CI_Controller
     public function store()
     {
         $this->Voucher_model->store();
-        // echo json_encode(array());
     }
 
     /*
@@ -99,5 +98,10 @@ class Voucher extends CI_Controller
     public function getAvailableVouchers()
     {
         echo json_encode($this->Voucher_model->getAvailableVouchersbyDate());
+    }
+
+    public function getAppliedVoucherDetails()
+    {
+        echo json_encode($this->Voucher_model->getAppliedVoucherbyID($this->input->post('voucher_id')));
     }
 }

@@ -64,6 +64,16 @@
             background-color: #fff;
         }
 
+        .price-content {
+            display: flex;
+            flex-direction: column;
+        }
+        .price-per-unit {
+            font-size: 12px;
+            font-weight: 300;
+            color: #999966;
+        }
+
         @media(max-width:767px) {
             .cart {
                 padding: 4vh;
@@ -201,6 +211,7 @@
 
         .cta {
             min-height: 250px;
+            padding: 10px 0;
         }
 
         .address-container .manage-button-row .btn-choose-address {
@@ -226,7 +237,7 @@
             width: 100%;
             font-size: 12px;
             padding: 0 10px;
-
+            font-weight: 500;
         }
 
         .address-container .manage-button-row .selected-address .title {
@@ -243,8 +254,8 @@
 
         .address-container .manage-button-row .selected-address .note {
             padding: 10px;
-            font-size: 10px;
-            font-weight: 700;
+            font-size: 12px;
+            font-weight: 400;
             color: #ff8080;
         }
 
@@ -314,10 +325,36 @@
             align-items: center;
         }
 
+        .cta .voucher .voucher-title img {
+            width: 18px;
+            height: 18px;
+            margin-bottom: 2px;
+        }
+
+        .cta .voucher .voucher-title .title {
+            font-size: 16px;
+            font-weight: 600;
+
+        }
+
         .cta .voucher .voucher-title #view-voucher {
             font-size: 12px;
             color: #007bff;
             cursor: pointer;
+        }
+
+        .cta .voucher .voucher-title #view-voucher:hover {
+            color: #0a58ca;
+        }
+
+        .cta .voucher .voucher-code {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 5px;
+            padding: 10px;
+            color: #ff8080;
+            background: #f2f2f2;
+            font-size: 12px;
         }
 
         .btn-checkout {
@@ -338,6 +375,8 @@
         }
 
         /* Modal - CSS */
+
+        /* Choose-Address Modal */
         #choose-address-modal .modal-body {
             display: flex;
             flex-direction: column;
@@ -460,7 +499,7 @@
             max-width: 922px;
         }
 
-        #available-voucher-modal .modal-header .modal-title{
+        #available-voucher-modal .modal-header .modal-title {
             width: 100%;
             text-align: center;
             font-weight: 700;
@@ -646,31 +685,34 @@
 
                     <div class="voucher">
                         <div class="voucher-title">
-                            <span>Voucher Code</span>
+                            <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" viewBox="0 0 448 512"><path d="M0 80V229.5c0 17 6.7 33.3 18.7 45.3l176 176c25 25 65.5 25 90.5 0L418.7 317.3c25-25 25-65.5 0-90.5l-176-176c-12-12-28.3-18.7-45.3-18.7H48C21.5 32 0 53.5 0 80zm112 96c-17.7 0-32-14.3-32-32s14.3-32 32-32s32 14.3 32 32s-14.3 32-32 32z"/></svg>
+                                <span class="title">Voucher</span>
+                            </div>
                             <span id="view-voucher">View Voucher</span>
                         </div>
-                        <input id="voucher-code" placeholder="Enter your code">
+                        <div class="voucher-code">
+                            <span>- No Voucher Apply -</span>
+                        </div>
                     </div>
 
                 </form>
 
                 <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
-                    <span class="col">TOTAL PRICE</span>
+                    <span class="col">TOTAL</span>
                     <div class="col text-right">MYR
                         <span class="product-total"></span>
                     </div>
                 </div>
 
-                <!-- <div class="checkout-details">
-                    <div class="details">
+                <div class="checkout-details">
+                    <!-- <div class="details">
                         <span class="">Shipping Fee</span>
                         <span>MYR</span>
+                    </div> -->
 
-                        <span>Voucher Applied</span>
-                        <span>MYR</span>
-                    </div>
-
-                </div> -->
+                    <div class="voucher-applied"></div>
+                </div>
 
                 <button class="btn-checkout">CHECKOUT</button>
             </div>
@@ -897,11 +939,11 @@
             e.preventDefault();
 
             getAvailableVouchers();
-            $('#available-voucher-modal').modal('show');
 
+            $('#available-voucher-modal').modal('show');
         });
 
-        //Close Modal
+        //Modal - Close Modal
         $('[data-dismiss="modal"]').click(function(e) {
             $(this).closest('.modal').modal('hide');
         });
@@ -1039,6 +1081,7 @@
 
         });
 
+        //Edit Address
         $(document).on('click', '#editAddressBtn', function(e) {
             e.preventDefault();
 
@@ -1060,7 +1103,55 @@
             $('#add-address-modal').modal('show');
         });
 
+        // Apply Voucher
+        $(document).on('click', '#cpnBtn', function(e) {
+            e.preventDefault();
 
+            $('.voucher-code').children().remove();
+            $('.voucher-applied').children().remove();
+
+            var subtotal = $('.subtotal').html();
+
+            var form_data = new FormData();
+            form_data.append("voucher_id", $(this).closest('.coupon-card').attr('data-voucher'));
+
+            $.ajax({
+                url: "<?php echo site_url('voucher/get-applied-voucher-details') ?>",
+                data: form_data,
+                encrypt: "",
+                cache: false,
+                contentType: false,
+                processData: false,
+                method: "POST",
+                success: function(data) {
+                    $.each(JSON.parse(data), function(i, value) {
+
+                        console.log(((value.min_spend - subtotal)));
+
+                        if (parseFloat(subtotal) >= parseFloat(value.min_spend)) {
+                            $('.voucher-code').append(
+                                "<span style='color:#59b300'> " + value.voucher_type + " (Code# " + value.voucher_code + ")</span>" +
+                                "<span  style='color:#59b300'>(-)MYR" + parseFloat(value.capped_amount).toFixed(2) + "</span>"
+                            );
+
+                            $('.voucher-applied').append(
+                                "<span>Voucher Code Applied</span>" +
+                                "<span>(-)MYR " + parseFloat(value.capped_amount).toFixed(2) + "</span>",
+                            );
+                        } else {
+                            $('.voucher-code').children().remove();
+
+                            $('.voucher-code').append(
+                                "<span><img style='width:18px; margin-right:4px; margin-bottom:2px;' src='https://img.icons8.com/external-compact-zufarizal-robiyanto/18/FA5252/external-caution-compact-ui-essential-vol2-compact-zufarizal-robiyanto.png'/>Add more MYR " + (parseFloat(value.min_spend) - parseFloat(subtotal)).toFixed(2) + " to enjoy this voucher. </span>",
+                            );
+                        }
+                    });
+
+                    $('#available-voucher-modal').modal('hide');
+
+                }
+            });
+        });
     });
 
     function getCartItem() {
@@ -1088,7 +1179,7 @@
                         '       </div>' +
 
                         '        <div class="col product-name">' +
-                        '            <div class="row">' + value.name + '</div>' +
+                        '            <span class="row" style="color:#663300; font-weight:500">' + value.name + '</span>' +
                         '        </div>' +
 
                         '        <div class="quantity-container col" data-productid="' + value.product_id + '">' +
@@ -1098,10 +1189,15 @@
                         '        </div>' +
 
                         '        <div class="col content-row">' +
-                        '            <span>MYR</span>' +
-                        '            <span class="item-price">' +
-                        '                ' + parseFloat(value.price * value.selected_quantity).toFixed(2) + ' ' +
-                        '            </span>' +
+                        '           <div class="price-content">' +
+                        '               <span>MYR <span class="item-price">' +
+                        '                   ' + parseFloat(value.price * value.selected_quantity).toFixed(2) + ' ' +
+                        '               </span></span>' +
+                        '               <span class="price-per-unit">' +
+                        '                   MYR ' + parseFloat(value.price).toFixed(2) + '/unit ' +
+                        '               </span>' +
+                        '           </div>' +
+
                         '            <button class="close delete-cart-item" data-cartid="' + value.id + '">&#10005;</button>' +
                         '        </div>' +
                         '    </div>' +
@@ -1111,6 +1207,12 @@
                 //Update quantity - Plus to add
                 $('.quantity-container .quantity-plus').click(function(e) {
                     e.preventDefault();
+
+                    $('.voucher-code').children().remove();
+
+                    $('.voucher-code').append(
+                        "<span>- No Voucher Apply -</span>"
+                    );
 
                     let value = (parseInt($(this).closest('.quantity-container').find('.quantity').html()) || 0) + 1;
                     var form_data = new FormData();
@@ -1136,6 +1238,12 @@
                 //Update quantity - Minus to deduct
                 $('.quantity-container .quantity-minus').click(function(e) {
                     e.preventDefault();
+
+                    $('.voucher-code').children().remove();
+
+                    $('.voucher-code').append(
+                        "<span>- No Voucher Apply -</span>"
+                    );
 
                     var currentQuantity = $(this).closest('.quantity-container').find('.quantity').html();
                     let value = (parseInt(currentQuantity) > 0 ? currentQuantity - 1 : 0 || 0);
@@ -1320,54 +1428,60 @@
 
                 $.each(JSON.parse(data), function(i, value) {
 
-                    if (value.voucher_type == 'Shipping') {
-                        $('.shipping-voucher').append(
-                            "   <div class='coupon-card'>" +
-                            "       <div class='voucher-icon'>" +
-                            "           <img class='logo' src='https://img.icons8.com/material-rounded/96/null/truck--v1.png' />" +
-                            "           <span class='discount-value'>MYR" + value.capped_amount + " OFF</span>" +
-                            "           <span class='discount-type'>SHIPPING</span>" +
-                            "           <span class='min-spend'>(Min.spend MYR" + value.min_spend + ")</span>" +
-                            "       </div>" +
+                    var today = new Date();
+                    var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+                    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+                    var dateTime = date + ' ' + time;
 
-                            "       <div class='coupon-row'>" +
-                            "           <span id='cpnCode'> " + value.voucher_code + " </span>" +
-                            "           <span id='cpnBtn'>Apply</span>" +
-                            "       </div>" +
+                    if (new Date(value.end_date) >= new Date(dateTime) && new Date(value.start_date) <= new Date(dateTime)) {
+                        if (value.voucher_type == 'Shipping') {
+                            $('.shipping-voucher').append(
+                                "   <div class='coupon-card' data-voucher=' " + value.id + " '>" +
+                                "       <div class='voucher-icon'>" +
+                                "           <img class='logo' src='https://img.icons8.com/material-rounded/96/null/truck--v1.png' />" +
+                                "           <span class='discount-value'>MYR" + value.capped_amount + " OFF</span>" +
+                                "           <span class='discount-type'>SHIPPING</span>" +
+                                "           <span class='min-spend'>(Min.spend MYR" + value.min_spend + ")</span>" +
+                                "       </div>" +
 
-                            "       <div class='valid-date'>" +
-                            "           <span class='expired-date'> " + value.end_date + " </span><br>" +
-                            "       </div>" +
-                            "       <a href='' class='tnc'>T&C Apply</a>" +
+                                "       <div class='coupon-row'>" +
+                                "           <span id='cpnCode'> " + value.voucher_code + " </span>" +
+                                "           <span id='cpnBtn'>Apply</span>" +
+                                "       </div>" +
 
-                            "</div>" +
-                            "<hr>",
-                        );
+                                "       <div class='valid-date'>" +
+                                "           <span class='expired-date'> " + value.end_date + " </span><br>" +
+                                "       </div>" +
+                                "       <a href='' class='tnc'>T&C Apply</a>" +
 
+                                "</div>" +
+                                "<hr>",
+                            );
 
-                    } else if (value.voucher_type == 'Discount') {
-                        $('.discount-voucher').append(
-                            "<div class='coupon-card'>" +
-                            "   <div class='voucher-icon'>" +
-                            "       <img class='logo' src='https://img.icons8.com/glyph-neue/64/null/discount-ticket.png' />" +
-                            "       <span class='discount-value'>MYR" + value.capped_amount + " OFF</span>" +
-                            "       <span class='discount-type'>PRODUCT</span>" +
-                            "       <span class='min-spend'>(Min.spend MYR" + value.min_spend + ")</span>" +
-                            "   </div>" +
+                        } else if (value.voucher_type == 'Discount') {
+                            $('.discount-voucher').append(
+                                "<div class='coupon-card' data-voucher='" + value.id + "'>" +
+                                "   <div class='voucher-icon'>" +
+                                "       <img class='logo' src='https://img.icons8.com/glyph-neue/64/null/discount-ticket.png' />" +
+                                "       <span class='discount-value'>MYR" + value.capped_amount + " OFF</span>" +
+                                "       <span class='discount-type'>PRODUCT</span>" +
+                                "       <span class='min-spend'>(Min.spend MYR" + value.min_spend + ")</span>" +
+                                "   </div>" +
 
-                            "   <div class='coupon-row'>" +
-                            "       <span id='cpnCode'> " + value.voucher_code + " </span>" +
-                            "       <span id='cpnBtn'>Apply</span>" +
-                            "   </div>" +
+                                "   <div class='coupon-row'>" +
+                                "       <span id='cpnCode'> " + value.voucher_code + " </span>" +
+                                "       <span id='cpnBtn'>Apply</span>" +
+                                "   </div>" +
 
-                            "   <div class='valid-date'>" +
-                            "       <span class='expired-date'> " + value.end_date + " </span><br>" +
-                            "   </div>" +
-                            "   <span class='tnc'>T&C Apply</span>" +
+                                "   <div class='valid-date'>" +
+                                "       <span class='expired-date'> " + value.end_date + " </span><br>" +
+                                "   </div>" +
+                                "   <span class='tnc'>T&C Apply</span>" +
 
-                            "</div>",
+                                "</div>",
 
-                        );
+                            );
+                        }
                     }
                 });
 

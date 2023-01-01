@@ -98,6 +98,8 @@ $route['voucher/store'] = "admin/voucher/store";
 $route['voucher/edit/(:num)'] = "admin/voucher/edit/$1";
 $route['voucher/update/(:num)'] = "admin/voucher/update/$1";
 $route['voucher/get-available-vouchers'] = "admin/voucher/getAvailableVouchers";
+$route['voucher/get-applied-voucher-details'] = "admin/voucher/getAppliedVoucherDetails";
+
 
 $route['voucher/delete/(:num)'] = "admin/voucher/delete/$1";
 $route['voucher/show/(:num)'] = "admin/voucher/show/$1";
