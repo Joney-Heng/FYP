@@ -83,7 +83,7 @@
                                 <a href="<?php echo base_url('voucher/edit/' . $voucher->id) ?>">
                                     <img src="https://img.icons8.com/color/48/000000/edit-property.png" />
                                 </a>
-                                <a class="delete" href="#">
+                                <a class="delete" href="#" data-voucher-id="<?php echo $voucher->id ?>">
                                     <img src="https://img.icons8.com/color-glass/48/000000/delete-forever.png" />
                                 </a>
                             </td>
@@ -121,16 +121,26 @@
                 confirmButtonText: 'Yes, delete it!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    $.ajax({
-                        url: "#",
-                        cache: false,
-                        type: 'POST',
-                    });
-                    location.reload();
-                }
-            })
-        });
 
+                    var form_data = new FormData();
+                    form_data.append("voucher_id", $(this).closest('.delete').attr('data-voucher-id'));
+
+                    $.ajax({
+                        url: "<?php echo site_url('voucher/delete')?>",
+                        data: form_data,
+                        encrypt: "",
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        method: "POST",
+                        success: function(data) {
+                            location.reload();
+                        }
+                    });
+                }
+            });
+
+        });
     });
 </script>
 

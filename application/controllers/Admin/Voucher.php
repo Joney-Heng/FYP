@@ -85,14 +85,9 @@ class Voucher extends CI_Controller
         }
     }
 
-    /*
-    Delete a record
-  */
-    public function delete($id)
+    public function deleteVoucher()
     {
-        $item = $this->Product_model->delete($id);
-        $this->session->set_flashdata('success', "Deleted Successfully!");
-        redirect(base_url('product'));
+      echo json_encode( $this->Voucher_model->deleteVoucherbyID($this->input->post('voucher_id')));
     }
 
     public function getAvailableVouchers()

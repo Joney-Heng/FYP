@@ -60,9 +60,9 @@ class Voucher_model extends CI_Model{
                  
     }
 
-    public function delete($id)
+    public function deleteVoucherbyID($id)
     {
-        $result = $this->db->delete('products', array('id' => $id));
+        $result = $this->db->delete('vouchers', array('id' => $id));
         return $result;
     }
 
