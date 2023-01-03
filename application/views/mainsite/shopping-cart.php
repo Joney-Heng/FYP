@@ -532,7 +532,7 @@
 
         /* Available Modal CSS */
         #available-voucher-modal .modal-dialog {
-            max-width: 922px;
+            max-width: 702px;
         }
 
         #available-voucher-modal .modal-header .modal-title {
@@ -561,9 +561,10 @@
 
         #available-voucher-modal .modal-body .title {
             display: block;
+            margin-bottom: 10px;
             font-size: 18px;
             font-weight: 700;
-            margin-bottom: 10px;
+            color: #DEB887;
         }
 
         #available-voucher-modal .modal-body .coupon-card {
@@ -605,7 +606,7 @@
         }
 
         #available-voucher-modal .modal-body .coupon-card .voucher-icon .min-spend {
-            font-size: 10px;
+            font-size: 12px;
             font-weight: 300;
             color: #13221C;
         }
@@ -902,19 +903,19 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">AVAILABLE VOUCHERS</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">-- AVAILABLE VOUCHERS --</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
 
                 <div class="modal-body">
-                    <span class='title'>SHIPPING VOUCHER</span>
+                    <span class='title'>Shipping Voucher</span>
                     <div class="shipping-voucher"></div>
 
                     <hr>
 
-                    <span class='title'>DISCOUNT VOUCHER</span>
+                    <span class='title'>Discount Voucher</span>
                     <div class="discount-voucher"></div>
 
                 </div>
