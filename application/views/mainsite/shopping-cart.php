@@ -586,8 +586,6 @@
             height: 120px;
             border-radius: 5px;
             background: #ffe6cc;
-            border-image-slice: 33% 10%;
-            border-image: url("<?php echo base_url() ?>images/voucher-design.png") 6 round;
         }
 
         #available-voucher-modal .modal-body .coupon-card .voucher-icon img {

@@ -29,7 +29,7 @@ class Voucher extends CI_Controller
   */
     public function show($id)
     {
-        $data['voucher'] = $this->Voucher_model->getVoucherDetails($id);
+        $data['vouchers'] = $this->Voucher_model->getVoucherDetails($id);
         $data['title'] = "Show Voucher";
         // $this->load->view('layout/header');
         $this->load->view('voucher/show', $data);

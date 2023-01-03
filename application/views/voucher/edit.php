@@ -19,8 +19,6 @@
             display: flex;
             justify-content: center;
             padding: 0;
-            background: #f0fff3;
-
         }
 
         body .create-voucher-page .card-body .voucher-form {
@@ -32,50 +30,132 @@
         }
 
         body .create-voucher-page .card-body .voucher-view {
-            display: flex;
-            flex-direction: column;
             width: 50%;
             padding: 40px;
         }
 
-        body .create-voucher-page .card-body .voucher-view .coupon-card {
-            background: linear-gradient(135deg, #ff9933, #e67300);
-            color: #fff;
+        body .create-voucher-page .card-body .voucher-view .view-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 30px 40px 0;
+            border: 1px dashed #999966;
+            background: #eee;
+        }
+
+        body .create-voucher-page .card-body .voucher-view .title {
+            display: block;
+            margin-bottom: 20px;
+            font-size: 30px;
+            font-weight: 600;
             text-align: center;
-            padding: 20px 80px;
+        }
+
+        body .create-voucher-page .card-body .voucher-view .coupon-card {
+            padding: 20px;
+            margin-bottom: 10px;
+            width: 200px;
+            height: 250px;
+            text-align: center;
+            color: #fff;
+            background: linear-gradient(135deg, #ff9933, #e67300);
             border-radius: 15px;
             box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.15);
-            position: relative;
-
         }
 
         body .create-voucher-page .card-body .voucher-view .coupon-card .voucher-icon {
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 20px;
-            background: #ffe6cc;
-            border-radius: 5px;
-        }
-
-        body .create-voucher-page .card-body .voucher-view .coupon-card .voucher-icon .logo {
             margin-bottom: 10px;
+            height: 120px;
+            border-radius: 5px;
+            background: #ffe6cc;
+        }
+
+        body .create-voucher-page .card-body .voucher-view .coupon-card .voucher-icon img {
+            width: 50px;
+            height: 50px;
         }
 
         body .create-voucher-page .card-body .voucher-view .coupon-card .voucher-icon .discount-value {
-            font-weight: 600;
-            font-size: 16px;
+            font-size: 18px;
+            font-weight: 700;
+            color: #13221C;
         }
 
-        body .create-voucher-page .card-body .voucher-view .coupon-card .voucher-icon .discount-value {
+        body .create-voucher-page .card-body .voucher-view .coupon-card .voucher-icon .discount-type {
+            font-size: 15px;
+            font-weight: 700;
+            color: #13221C;
+        }
+
+        body .create-voucher-page .card-body .voucher-view .coupon-card .voucher-icon .min-spend {
+            font-size: 12px;
+            font-weight: 300;
+            color: #13221C;
+        }
+
+        body .create-voucher-page .card-body .voucher-view .coupon-card .valid-date {
             font-weight: 600;
-            font-size: 16px;
+            font-size: 14px;
+        }
+
+        body .create-voucher-page .card-body .voucher-view .coupon-card .valid-date .tnc {
+            font-weight: 600;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        body .create-voucher-page .card-body .voucher-view .coupon-card .coupon-row {
+            display: flex;
+            align-items: center;
+            margin: 0 0 5px 0;
+            width: 100%;
+        }
+
+        body .create-voucher-page .card-body .voucher-view .coupon-card #cpnCode {
+            padding: 10px;
+            border: 1px dashed #fff;
+            border-right: 0;
+            width: 60%;
+            height: 38px;
+            font-size: 12px;
+        }
+
+        body .create-voucher-page .card-body .voucher-view .coupon-card #cpnBtn {
+            border: 1px solid #fff;
+            padding: 10px;
+            width: 40%;
+            font-size: 12px;
+            color: #ff5c33;
+            background: #fff;
+            cursor: pointer;
+        }
+
+        body .create-voucher-page .card-body .voucher-view .coupon-card #cpnBtn:hover {
+            background: #f2f2f2;
+            color: #59b300;
+        }
+
+        .voucher-view .tnc-details {
+            font-size: 14px;
+            margin-left: 40px;
+        }
+
+        body .create-voucher-page .card-body .voucher-view .coupon-card .tnc {
+            margin-top: 20px;
+            font-weight: 600;
+            font-size: 14px;
+            color: #d6d6c2;
+            text-decoration: none;
         }
 
         body .create-voucher-page .card-body .voucher-view .tnc {
-            margin-top: 20px;
+            margin: 10px 0;
             font-weight: 600;
-            font-size: 16px;
+            font-size: 18px;
         }
 
         .coupon-card h3 {
@@ -112,27 +192,6 @@
             color: #7158fe;
             cursor: pointer;
         }
-
-        .circle1,
-        .circle2 {
-            background: #f0fff3;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-
-        }
-
-        .circle1 {
-            left: -25px;
-        }
-
-        .circle2 {
-            right: -25px;
-        }
-
 
         body .create-voucher-page a.back-btn {
             display: flex;
@@ -196,7 +255,7 @@
             </div>
 
             <div class="card-body">
-                <!-- <?php echo json_encode($voucherDetails)?> -->
+                <!-- <?php echo json_encode($voucherDetails) ?> -->
                 <div class="voucher-form">
                     <!-- <?php if ($this->session->flashdata('errors')) { ?>
                         <div class="alert alert-danger">
@@ -210,13 +269,13 @@
 
                             <label for="description">Voucher Type</label>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="voucherType" id="shippingVoucher" value="Shipping" <?php echo $voucherDetails->voucher_type == 'Shipping' ? "checked=checked" : "" ;?> >
+                                <input class="form-check-input" type="radio" name="voucherType" id="shippingVoucher" value="Shipping" <?php echo $voucherDetails->voucher_type == 'Shipping' ? "checked=checked" : ""; ?>>
                                 <label class="form-check-label" for="shippingVoucher">
                                     Shipping Voucher
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="voucherType" id="discountVoucher" value="Discount" <?php echo $voucherDetails->voucher_type == 'Discount' ? "checked=checked" : "" ;?>>
+                                <input class="form-check-input" type="radio" name="voucherType" id="discountVoucher" value="Discount" <?php echo $voucherDetails->voucher_type == 'Discount' ? "checked=checked" : ""; ?>>
                                 <label class="form-check-label" for="discountVoucher">
                                     Discount Voucher
                                 </label>
@@ -225,20 +284,20 @@
 
                         <div class="form-group">
                             <label for="campaignName">Campaign Name</label>
-                            <input type="text" class="form-control" id="campaignName" name="campaignName" value="<?php echo $voucherDetails->campaign_name?>">
+                            <input type="text" class="form-control" id="campaignName" name="campaignName" value="<?php echo $voucherDetails->campaign_name ?>">
                         </div>
 
                         <div class="form-group" class="discount-type">
 
                             <label for="description">Discount Type</label>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="discountType" id="typePercentage" value="Percentage" <?php echo $voucherDetails->discount_type == 'Percentage' ? "checked=checked" : "" ;?>>
+                                <input class="form-check-input" type="radio" name="discountType" id="typePercentage" value="Percentage" <?php echo $voucherDetails->discount_type == 'Percentage' ? "checked=checked" : ""; ?>>
                                 <label class="form-check-label" for="typePercentage">
                                     Percentage (%)
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="discountType" id="typeAmount" value="Amount" <?php echo $voucherDetails->discount_type == 'Amount' ? "checked=checked" : "" ;?> >
+                                <input class="form-check-input" type="radio" name="discountType" id="typeAmount" value="Amount" <?php echo $voucherDetails->discount_type == 'Amount' ? "checked=checked" : ""; ?>>
                                 <label class="form-check-label" for="typeAmount">
                                     Amount (MYR)
                                 </label>
@@ -288,34 +347,47 @@
 
                 <div class="voucher-view">
                     <span class="title">Voucher Preview</span>
-                    <div class="coupon-card">
-                        <div class="voucher-icon">
-                            <!-- <img class="logo" src="https://img.icons8.com/external-others-zufarizal-robiyanto/64/null/external-coupon-online-shopping-others-zufarizal-robiyanto.png" /> -->
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" width="120px" height="60px" class="logo">
-                                <path d="M48 0C21.5 0 0 21.5 0 48V368c0 26.5 21.5 48 48 48H64c0 53 43 96 96 96s96-43 96-96H384c0 53 43 96 96 96s96-43 96-96h32c17.7 0 32-14.3 32-32s-14.3-32-32-32V288 256 237.3c0-17-6.7-33.3-18.7-45.3L512 114.7c-12-12-28.3-18.7-45.3-18.7H416V48c0-26.5-21.5-48-48-48H48zM416 160h50.7L544 237.3V256H416V160zM208 416c0 26.5-21.5 48-48 48s-48-21.5-48-48s21.5-48 48-48s48 21.5 48 48zm272 48c-26.5 0-48-21.5-48-48s21.5-48 48-48s48 21.5 48 48s-21.5 48-48 48z" />
-                            </svg>
-                            <span class="discount-value">10% OFF</span>
-                            <span class="discount-type">SHIPPING</span>
+                    <div class="view-container">
+                        <div class="coupon-card">
+                            <div class="voucher-icon">
+                                <div class="voucher-image">
+                                    <?php if ($voucherDetails->voucher_type == "Shipping") { ?>
+                                        <img class='logo' src='https://img.icons8.com/material-rounded/96/null/truck--v1.png' />
+                                    <?php } else { ?>
+                                        <img class='logo' src='https://img.icons8.com/glyph-neue/64/null/discount-ticket.png' />
+                                    <?php } ?>
+                                </div>
+                                <span class="discount-value">MYR<?php echo $voucherDetails->capped_amount ?> OFF</span>
+                                <span class="discount-type"><?php echo $voucherDetails->voucher_type == "Shipping" ? "SHIPPING" : "PRODUCT" ?></span>
+                                <span class="min-spend">( Min.spend MYR <?php echo $voucherDetails->min_spend ?> )</span>
+                            </div>
+
+                            <div class="coupon-row">
+                                <span id="cpnCode"><?php echo $voucherDetails->voucher_code ?></span>
+                                <span id="cpnBtn">Apply</span>
+                            </div>
+
+                            <div class="valid-date">
+                                <span class='expired-date'><?php echo $voucherDetails->end_date ?></span>
+                                <br>
+                                <a href='#' class='tnc'>T&C Apply</a>
+                            </div>
                         </div>
 
-                        <span class="title"></span>
-                        <span class="description"></span>
-
-                        <div class="coupon-row">
-                            <span id="cpnCode">STEALDEAL20</span>
-                            <span id="cpnBtn">Copy Code</span>
-                        </div>
-
-                        <div>Valid Till:
-                            <span class="expired-date"> 20 Dec, 2022</span><br>
-                            <span>T&C Apply</span>
-                        </div>
-
-                        <span class="circle1"></span>
-                        <span class="circle2"></span>
+                        <span class="tnc">Terms & Conditions Apply.</span>
+                        <ol class="tnc-details">
+                            <li>Enjoy <b>MYR<span class="tnc-discount-value"><?php echo $voucherDetails->capped_amount ?></span> off</b> with minimum <b>MYR<span class="tnc-min-spend"><?php echo $voucherDetails->min_spend ?></span> spend</b>.</li>
+                            <li>Voucher usage is limited, on a first come first served basis.</li>
+                            <li>Voucher Application :</li>
+                            <ol type="a" style="padding-left:14px">
+                                <li>No. of times usable: 999 times</li>
+                                <li>Store : Jolles' Mainsite Only</li>
+                                <li>Eligibility : All Buyers</li>
+                                <li>Brands : Selected Sellers Only</li>
+                                <li>Delivery Locations : Nationwide</li>
+                            </ol>
+                        </ol>
                     </div>
-
-                    <span class="tnc">Terms & Conditions Apply.</span>
                 </div>
             </div>
         </div>
@@ -337,54 +409,59 @@
 <script>
     $(document).ready(function($) {
 
+        $("#discountVoucher").click(function(e) {
+            $('.voucher-image').children().remove();
+
+            $('.voucher-image').html(
+                "<img class='logo' src='https://img.icons8.com/glyph-neue/64/null/discount-ticket.png' />",
+            );
+
+            $('.discount-type').html(
+                "PRODUCT",
+            );
+        });
+
+        $("#shippingVoucher").click(function(e) {
+            $('.voucher-image').children().remove();
+
+            $('.voucher-image').html(
+                "<img class='logo' src='https://img.icons8.com/material-rounded/96/null/truck--v1.png' />",
+            );
+
+            $('.discount-type').html(
+                "SHIPPING",
+            );
+        });
+
+        //Key up function - Display while texting
+        $('#voucherCode').keyup(function() {
+            $('#cpnCode').html($('#voucherCode').val())
+        });
+
+        $('#minSpend').keyup(function() {
+            $('.min-spend').html("(Min.spend MYR" + $('#minSpend').val() + ")");
+        });
+
+        $('#cappedAmount').keyup(function() {
+            $('.discount-value').html("MYR" + $('#cappedAmount').val() + " OFF");
+        });
+
+        $('#minSpend').keyup(function() {
+            $('.tnc-min-spend').html($('#minSpend').val());
+        });
+
+        $('#cappedAmount').keyup(function() {
+            $('.tnc-discount-value').html($('#cappedAmount').val());
+        });
+
+        $('#endDate').on("keyup change", function() {
+            var end_date = $('#endDate').val();
+
+            var copy_end_date = end_date.replace('T', ' ');
+            $('.expired-date').html(copy_end_date);
+
+        });
     });
-
-    //Store - created new voucher
-    // $('#submitBtn').click(function(e) {
-    //     e.preventDefault();
-
-    //     var form_data = new FormData();
-
-    //     form_data.append("voucher_type", $("[name='voucherType']:checked").val());
-    //     form_data.append("campaign_name", $('#campaignName').val());
-    //     form_data.append("discount_type", $("[name='discountType']:checked").val());
-    //     form_data.append("min_spend", $('#minSpend').val());
-    //     form_data.append("capped_amount", $('#cappedAmount').val());
-    //     form_data.append("voucher_code", $('#voucherCode').val());
-    //     form_data.append("voucher_quantity", $('#voucherQuantity').val());
-    //     form_data.append("start_date", $('#startDate').val());
-    //     form_data.append("end_date", $('#endDate').val());
-
-    //     $.ajax({
-    //         url: "<?php  ?>",
-    //         data: form_data,
-    //         encrypt: "",
-    //         cache: false,
-    //         contentType: false,
-    //         processData: false,
-    //         method: "POST",
-    //         success: function(data) {
-    //             Swal.fire({
-    //                 position: 'center',
-    //                 icon: 'success',
-    //                 title: 'Update Address Successful!',
-    //                 showConfirmButton: false,
-    //                 timer: 2000
-    //             })
-    //         }
-    //     });
-    // });
-
-    var cpnBtn = document.getElementById("cpnBtn");
-    var cpnCode = document.getElementById("cpnCode");
-
-    cpnBtn.onclick = function() {
-        navigator.clipboard.writeText(cpnCode.innerHTML);
-        cpnBtn.innerHTML = "COPIED";
-        setTimeout(function() {
-            cpnBtn.innerHTML = "COPY CODE";
-        }, 3000);
-    }
 </script>
 
 </html>
