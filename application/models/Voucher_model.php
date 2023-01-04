@@ -85,7 +85,7 @@ class Voucher_model extends CI_Model{
         $this->db->where('id', $id);
         
         $vouchers = $this->db->get();
-        return $vouchers->result_array();
+        return $vouchers->row();
     }
      
 }

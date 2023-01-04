@@ -719,7 +719,7 @@
                                 <path d="M112 0C85.5 0 64 21.5 64 48V96H16c-8.8 0-16 7.2-16 16s7.2 16 16 16H64 272c8.8 0 16 7.2 16 16s-7.2 16-16 16H64 48c-8.8 0-16 7.2-16 16s7.2 16 16 16H64 240c8.8 0 16 7.2 16 16s-7.2 16-16 16H64 16c-8.8 0-16 7.2-16 16s7.2 16 16 16H64 208c8.8 0 16 7.2 16 16s-7.2 16-16 16H64V416c0 53 43 96 96 96s96-43 96-96H384c0 53 43 96 96 96s96-43 96-96h32c17.7 0 32-14.3 32-32s-14.3-32-32-32V288 256 237.3c0-17-6.7-33.3-18.7-45.3L512 114.7c-12-12-28.3-18.7-45.3-18.7H416V48c0-26.5-21.5-48-48-48H112zM544 237.3V256H416V160h50.7L544 237.3zM160 464c-26.5 0-48-21.5-48-48s21.5-48 48-48s48 21.5 48 48s-21.5 48-48 48zm368-48c0 26.5-21.5 48-48 48s-48-21.5-48-48s21.5-48 48-48s48 21.5 48 48z" />
                             </svg>
                             <label for="validationCustom04" class="form-label">Courier Company</label>
-                            <select class="form-select" id="choose-courier" required>
+                            <select class="form-select select-courier" id="choose-courier" required>
                                 <option selected value="8.00">Standard Delivery - MYR 8.00</option>
                                 <option value="8.50">J&T Expredd - MYR 8.50 </option>
                                 <option value="10.00">Easy Parcel - MYR 10.00 </option>
@@ -753,7 +753,7 @@
                     </div>
                 </div>
 
-                
+
                 <button class="btn-checkout">Checkout</button>
                 <div class="powered-by">Powered by
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" width="25px" height="25px" style="margin-bottom:3px">
@@ -1143,13 +1143,10 @@
         });
 
         //Apply Voucher
-        $(document).on('click', '#cpnBtn', function(e) {
+        $(document).on('click', '.apply-btn', function(e) {
             e.preventDefault();
 
             $('.voucher-code').children().remove();
-            $('.voucher-applied').children().remove();
-
-            var subtotal = $('.subtotal').html();
 
             var form_data = new FormData();
             form_data.append("voucher_id", $(this).closest('.coupon-card').attr('data-voucher'));
@@ -1163,21 +1160,19 @@
                 processData: false,
                 method: "POST",
                 success: function(data) {
-                    $.each(JSON.parse(data), function(i, value) {
+                    var data = JSON.parse(data);
+                    var subtotal = $('.subtotal').html();
 
-                        if (parseFloat(subtotal) >= parseFloat(value.min_spend)) {
-                            $('.voucher-code').append(
-                                "<span style='color:#59b300'> " + value.voucher_type + " (Code# " + value.voucher_code + ")</span>" +
-                                "<span  class='applied-voucher-value' data-voucher-amount='" + value.capped_amount + "' style='color:#59b300'><b>(-)MYR" + parseFloat(value.capped_amount).toFixed(2) + "</b></span>"
-                            );
-                        } else {
-                            $('.voucher-code').children().remove();
-
-                            $('.voucher-code').append(
-                                "<span class='insufficient-amount' data-voucher-amount='0'><img style='width:18px; margin-right:4px; margin-bottom:2px;' src='https://img.icons8.com/external-compact-zufarizal-robiyanto/18/FA5252/external-caution-compact-ui-essential-vol2-compact-zufarizal-robiyanto.png'/>Add more <b>MYR " + (parseFloat(value.min_spend) - parseFloat(subtotal)).toFixed(2) + "</b> to enjoy this voucher. </span>",
-                            );
-                        }
-                    });
+                    if (parseFloat(subtotal) >= parseFloat(data.min_spend)) {
+                        $('.voucher-code').append(
+                            "<span style='color:#59b300'> " + data.voucher_type + " (Code# " + data.voucher_code + ")</span>" +
+                            "<span  class='applied-voucher-value' data-voucher-type='"+ data.voucher_type +"' data-voucher-amount='" + data.capped_amount + "' style='color:#59b300'><b>(-)MYR" + parseFloat(data.capped_amount).toFixed(2) + "</b></span>"
+                        );
+                    } else {
+                        $('.voucher-code').append(
+                            "<span class='insufficient-amount'><img style='width:18px; margin-right:4px; margin-bottom:2px;' src='<?php echo base_url()?>images/warning-icon.png'/>Add more <b>MYR " + (parseFloat(data.min_spend) - parseFloat(subtotal)).toFixed(2) + "</b> to enjoy this voucher. </span>",
+                        );
+                    }
 
                     calculatePaymentTotal();
                     $('#available-voucher-modal').modal('hide');
@@ -1187,7 +1182,7 @@
         });
 
         //Choose courier shipping and update total
-        $(document).on('click', '#choose-courier', function(e) {
+        $(document).on('click', '.select-courier', function(e) {
             e.preventDefault();
 
             calculatePaymentTotal()
@@ -1491,7 +1486,7 @@
 
                                 "       <div class='coupon-row'>" +
                                 "           <span id='cpnCode'> " + value.voucher_code + " </span>" +
-                                "           <span id='cpnBtn'>Apply</span>" +
+                                "           <span id='cpnBtn' class='apply-btn' >Apply</span>" +
                                 "       </div>" +
 
                                 "       <div class='valid-date'>" +
@@ -1515,7 +1510,7 @@
 
                                 "   <div class='coupon-row'>" +
                                 "       <span id='cpnCode'> " + value.voucher_code + " </span>" +
-                                "       <span id='cpnBtn'>Apply</span>" +
+                                "       <span id='cpnBtn' class='apply-btn'>Apply</span>" +
                                 "   </div>" +
 
                                 "   <div class='valid-date'>" +
@@ -1538,56 +1533,45 @@
         var sub_total = parseFloat($('.subtotal').html());
         var shipping_amount = parseFloat($('#choose-courier').val());
         var voucher_amount = parseFloat($('.applied-voucher-value').attr('data-voucher-amount'));
-        var voucher_zero = parseFloat($('.without-voucher').attr('data-voucher-amount'));
-        var voucher_notEnough = parseFloat($('.insufficient-amount').attr('data-voucher-amount'));
-
-        // console.log(sub_total);
-        // console.log(shipping_amount);
-        // console.log(voucher_amount);
-        // console.log(voucher_zero);
+        if (isNaN(voucher_amount)) {
+            voucher_amount = 0;
+        }
 
         $('.checkout-details').children().remove();
 
-        if (voucher_zero == 0 || voucher_notEnough == 0) {
+        $('.checkout-details').append(
+            "<div>" +
+            "   <span class='title'>Subtotal</span>" +
+            "   <span class='subtotal-amount'>MYR " + sub_total.toFixed(2) + "</span>" +
+            "</div>" +
+
+            "<div>" +
+            "   <span class='title'>Shipping Fee</span>" +
+            "   <span class='shipping-amount'>(+) MYR " + shipping_amount.toFixed(2) + "</span>" +
+            "</div>"
+        );
+
+        if (voucher_amount > 0) {
+            if ($('.applied-voucher-value').attr('data-voucher-type') == "Shipping") {
+                voucher_amount = Math.min(voucher_amount, shipping_amount); //Compare two amount and get the smallest amount
+            } else if ($('.applied-voucher-value').attr('data-voucher-type') == "Discount") {
+                voucher_amount = Math.min(voucher_amount, sub_total); //Compare two amount and get the smallest amount
+            }
+
             $('.checkout-details').append(
-                "<div>" +
-                "   <span class='title'>Subtotal</span>" +
-                "   <span class='subtotal-amount'>MYR " + sub_total.toFixed(2) + "</span>" +
-                "</div>" +
-
-                "<div>" +
-                "   <span class='title'>Shipping Fee</span>" +
-                "   <span class='shipping-amount'>(+) MYR " + shipping_amount.toFixed(2) + "</span>" +
-                "</div>" +
-
-                "<div class='checkout-content'>" +
-                "   <span class='title'>Total</span>" +
-                "   <span class='checkout-total'>MYR " + (sub_total + shipping_amount).toFixed(2) + "</span>" +
-                "</div>",
-            );
-        } else {
-            $('.checkout-details').append(
-                "<div>" +
-                "   <span class='title'>Subtotal</span>" +
-                "   <span class='subtotal-amount'>MYR " + sub_total.toFixed(2) + "</span>" +
-                "</div>" +
-
-                "<div>" +
-                "   <span class='title'>Shipping Fee</span>" +
-                "   <span class='shipping-amount'>(+) MYR " + shipping_amount.toFixed(2) + "</span>" +
-                "</div>" +
-
                 "<div>" +
                 "   <span class='title'>Voucher Applied</span>" +
                 "   <span class='voucher-amount'>(-) MYR " + voucher_amount.toFixed(2) + "</span>" +
-                "</div>" +
-
-                "<div class='checkout-content'>" +
-                "   <span class='title'>Total</span>" +
-                "   <span class='checkout-total'>MYR " + (sub_total + shipping_amount - voucher_amount).toFixed(2) + "</span>" +
-                "</div>",
+                "</div>"
             );
         }
+
+        $('.checkout-details').append(
+            "<div class='checkout-content'>" +
+            "   <span class='title'>Total</span>" +
+            "   <span class='checkout-total'>MYR " + (sub_total + shipping_amount - voucher_amount).toFixed(2) + "</span>" +
+            "</div>"
+        );
     }
 </script>
 
