@@ -661,7 +661,7 @@
     </style>
 </head>
 
-<body>
+<body style="background:#fff7e6">
     <div class="shopping-cart-container">
         <div class="row">
             <div class="col-md-8 cart">

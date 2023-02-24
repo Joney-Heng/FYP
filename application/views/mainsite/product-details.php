@@ -13,11 +13,12 @@
 
     <style>
         body {
-            background: #ecedee
+            background: #fff7e6;
         }
 
         body .product-details ol.breadcrumb {
             margin: 16px 0;
+            background: #fff7e6;
         }
 
         body .product-details .card {
@@ -202,7 +203,7 @@
             <div class="breadcrumb-container">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="<?php echo base_url('home') ?>">Home</a></li>
+                        <li class="breadcrumb-item"><a href="<?php echo base_url('mainsite/shopping-cart') ?>">Cart</a></li>
                         <li class="breadcrumb-item"><a href="<?php echo base_url('mainsite') ?>">Mainsite</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Product-Details</li>
                     </ol>

@@ -2,541 +2,232 @@
 <html>
 
 <head>
-    <title>Shopping Cart</title>
+    <title>Header</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.0/js/bootstrap.min.js" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
     <style>
         .header {
+            display: flex;
+            flex-direction: row;
+            background: #13221C;
             position: sticky;
             top: 0;
             left: 0;
             height: 91px;
-            background: #999966;
             z-index: 999;
         }
-        .header .content {
+
+        .header .logo {
             display: flex;
+            flex-direction: row;
             align-items: center;
-            margin: 0 auto;
-            padding: 20px 50px;
-            max-width: 1560px;
-        }
-        .header .content >a img {
-            width: 218px;
-        }
-        .header .content .horizontal-line {
-            margin: 0 30px;
-            height: 25px;
-            border-left: 1px solid #ccccb3;
-        }
-        .header .content .site {
+            padding: 20px;
+            background: #4D4D33;
             flex: 1;
-            padding-right: 20px;
-            font-size: 12px;
+        }
+
+        .header .logo img{
+            width: 100px;
+            height: 90px;
+        }
+
+        .header .logo .horizontal-line {
+            margin: 0 10px;
+            height: 25px;
+            border-left: 2px solid #CC9900;
+        }
+
+        .header .logo .site {
+            color: #CC9900;
             font-weight: 600;
-            line-height: 14px;
-            color: #ccccb3;
+            font-size: 18px;
         }
-        .header .content nav {
-            display: flex;
-        }
-        .header .content nav a {
-            padding-right: 34px;
-            font-size: 14px;
-            font-weight: 600;
-            text-decoration: none;
-            color: #fff;
-        }
-        .header .content nav a:last-child {
-            padding-right: 0;
-        }
-            .header .content .search,
-            .header .content .cart,
-        .header .content .user {
-            padding: 4px;
-        }
-            .header .content .search img,
-            .header .content .cart img,
-        .header .content .user img {
-            width: 28px;
-        }
-            .header .content .search,
-        .header .content .cart {
-            margin-right: 22px;
-        }
-        .header .content .search {
-            margin-left: 53px;
-        }
-        .header .content .cart >a {
-            position: relative;
-        }
-        .header .content .cart >a .cart-quantity {
-            position: absolute;
-            left: 8px;
-            top: 1px;
-            width: 12px;
-            text-align: center;
-            font-size: 10px;
-            font-weight: 700;
-            line-height: 14px;
-            color: #999966;
-        }
-        .header .content .hamburger {
-            display: none;
-        }
-        #modal-shopping-cart {
-            display: flex;
-            flex-direction: column;
-        }
-        #modal-shopping-cart .modal-dialog .modal-content .modal-header {
-            display: flex;
-            align-items: center;
-            padding: 35px 25px;
-            border-bottom: 1px solid #88cc00;
-            background-color: #fff;
-        }
-        #modal-shopping-cart .modal-dialog .modal-content .modal-header h5 {
-            margin: 0;
-            font-size: 15px;
-            font-weight: 700;
-        }
-        #modal-shopping-cart .modal-dialog .modal-content .modal-header .close {
-            background-color: #fff;
-        }
-        #modal-shopping-cart .modal-dialog .modal-content .modal-header .close:before {
-            content: url("../icons/black-close.svg");
-        }
-        #modal-shopping-cart .modal-dialog .modal-content .modal-body {
-            padding: 0;
-        }
-        #modal-shopping-cart .modal-dialog .modal-content .modal-body .cart-header {
-            margin: 0 auto;
-            padding: 36px 20px;
-            background-image: url("../images/banner-pattern.png");
-            background-size: 55px;
-            font-size: 14px;
-            font-weight: 700;
-            line-height: 23px;
-            text-align: center;
-            color: #dfbf9f;
-        }
-        #modal-shopping-cart .modal-dialog .modal-content .modal-body .cart-header .code {
-            display: inline-block;
-            margin-top: 10px;
-            padding: 3px 9px;
-            color: #fff;
-            background-color: #000000;
-        }
-        #modal-shopping-cart .modal-dialog .modal-content .modal-footer {
-            display: flex;
-            flex-direction: column;
-            align-items: stretch;
-            padding: 20px 25px 30px;
-            box-shadow: 0px -10px 10px rgba(106,116,112,0.2);
-        }
-        #modal-shopping-cart .modal-dialog .modal-content .modal-footer .order-summary .order-summary-item {
+
+        .header .search {
             display: flex;
             flex-direction: row;
             justify-content: space-between;
-        }
-        #modal-shopping-cart .modal-dialog .modal-content .modal-footer .order-summary .order-summary-item.pv-container {
-            justify-content: flex-end;
-            margin-top: 5px;
-        }
-            #modal-shopping-cart .modal-dialog .modal-content .modal-footer .order-summary .order-summary-item.pv-container .pv strong,
-        #modal-shopping-cart .modal-dialog .modal-content .modal-footer .order-summary .order-summary-item.pv-container .bv strong {
-            margin-right: 2px;
-        }
-        #modal-shopping-cart .modal-dialog .modal-content .modal-footer .order-summary .order-summary-item.pv-container .pv {
-            color:#e6ccff;
-        }
-        #modal-shopping-cart .modal-dialog .modal-content .modal-footer .order-summary .order-summary-item.pv-container .bv {
-            margin-left: 10px;
-            color: #b3d9ff;
-        }
-        #modal-shopping-cart .modal-dialog .modal-content .modal-footer .order-summary .order-summary-item .title {
-            display: inline-block;
-            width: 75px;
-            font-size: 14px;
-            font-weight: 700;
-        }
-        #modal-shopping-cart .modal-dialog .modal-content .modal-footer .order-summary .order-summary-item .amount {
-            display: flex;
-            flex-direction: column;
-            font-size: 22px;
-            text-align: right;
-        }
-        #modal-shopping-cart .modal-dialog .modal-content .modal-footer .order-summary .order-summary-item .amount .price {
-            display: block;
-            font-weight: 700;
-            line-height: 28px;
-        }
-        #modal-shopping-cart .modal-dialog .modal-content .modal-footer .order-summary .order-summary-item .amount .market-price {
-            font-size: 14px;
-            line-height: 20px;
-            text-decoration: line-through;
-        }
-        #modal-shopping-cart .modal-dialog .modal-content .modal-footer .note {
-            margin-top: 5px;
-            font-size: 12px;
-            text-align: center;
-        }
-        #modal-shopping-cart .modal-dialog .modal-content .modal-footer .btn-primary {
-            margin-top: 5px;
-            border: 0 solid transparent;
-            background-color: #ffe0b3;
-        }
-        #modal-search-product {
-            display: flex;
-            flex-direction: column;
-        }
-        #modal-search-product .modal-dialog {
-            position: absolute;
-            top: calc(50% - 100px);
-            left: calc(50% - 250px);
-            width: 100%;
-        }
-        #modal-search-product .modal-dialog .modal-content .modal-header {
-            display: none;
             align-items: center;
-            padding: 35px 25px;
-            border-bottom: 1px solid #88cc00;
+            background: #7a7a52;
+            width: 450px;
         }
-        #modal-search-product .modal-dialog .modal-content .modal-header h5 {
-            margin: 0;
-            font-size: 15px;
-            font-weight: 700;
-        }
-        #modal-search-product .modal-dialog .modal-content .modal-header .close {
-            background-color: #fff;
-        }
-        #modal-search-product .modal-dialog .modal-content .modal-header .close:before {
-            content: url("../icons/black-close.svg");
-        }
-        #modal-search-product .modal-dialog .modal-content .modal-body {
+
+        .header .search #search-container {
             display: flex;
-            flex-direction: column;
-            padding: 0;
+            align-items: center;
+            margin-left: 20px;
+            flex: 1;
         }
-        #modal-search-product .modal-dialog .modal-content .modal-body .form-group {
-            display: flex;
+
+        .header .search #search-container>img {
+            width: 30px;
+            height: 30px;
+            margin-bottom: 2px;
+            margin-right: 12px;
         }
-        #modal-search-product .modal-dialog .modal-content .modal-body .form-group .form-control {
-            padding: 35px 20px;
-            border: 0px solid transparent;
-            font-size: 16px;
-            font-weight: 500;
-            color: #999966;
+
+        .header .search #search-container .search-product {
+            background: transparent;
+            color: #fff;
+            border: 0;
+            flex: 1;
         }
-            #modal-search-product .modal-dialog .modal-content .modal-body .form-group .form-control:active,
-            #modal-search-product .modal-dialog .modal-content .modal-body .form-group .form-control:focus,
-        #modal-search-product .modal-dialog .modal-content .modal-body .form-group .form-control:hover {
+
+        .header .search #search-container .search-product:focus-visible {
             outline: none;
             box-shadow: none;
-            border: 0px solid transparent;
         }
-        #modal-search-product .modal-dialog .modal-content .modal-body .form-group .form-control::placeholder {
-            color: $mzy_green_medium_color;
+
+        .header .search #search-container .search-product::placeholder {
+            color: #fff;
         }
-        #modal-search-product .modal-dialog .modal-content .modal-body .form-group button {
-            width: 75px;
-            padding: 25px;
-            background-color: transparent;
-            border: 0 solid transparent;
+
+        .header .search #search-container .btn-search {
+            display: flex;
+            align-items: center;
+            padding: 0;
+            margin-left: 10px;
+            cursor: pointer;
+            border: 0;
         }
-        #modal-search-product .modal-dialog .modal-content .modal-body .form-group button:before {
-            content: url("../icons/black-search-900.svg");
+
+        .header .search #search-container .btn-search:focus-visible {
+            outline: none;
+            box-shadow: none;
         }
-        #modal-search-product .modal-dialog .modal-content .modal-body .search-result .item {
+
+        .header .search #search-container .btn-search >span {
+            display: none;
+        }
+
+        .header .search #search-container .btn-search.active >span {
             display: block;
-            padding: 11px 20px;
-            border-bottom: 1px solid #88cc00;
-            border-left: 1px solid #88cc00;
-            border-right: 1px solid #88cc00;
-            color: #999966;
-            text-decoration: none;
-            background-color: #fff;
+            color: #1F6247;
+            font-weight: 700;
+            margin-right: 5px;
         }
-        body.mobile .header .content {
-            padding: 20px;
+
+        .header .search #search-container .btn-search.active >svg {
+            display: none;
         }
-        body.mobile .header .content >a img {
-            width: 50px;
-            content: url("../images/logo-mobile.svg");
+
+        .header .search #search-container .btn-search >svg {
+            display: block;
+            margin-right: 20px;
         }
-        body.mobile .header .content .horizontal-line {
+
+        .header .search #search-container .btn-search >img {
+            display: none;
+        }
+
+        .header .search #search-container .btn-search.active >img {
+            display: block;
+            margin-right: 20px;
+        }
+
+        .header .search #search-container .btn-search >img {
+            display: none;
+            background: #1F6247;
+            width: 40px;
+            height: 40px;
+            padding: 8px;
+        }
+
+        .header .search .product-selected {
+            display: none;
+        }
+
+        .header .search .product-selected.active {
+            display: flex;
+            align-items: center;
+            flex: 1;
             margin: 0 15px;
         }
-        body.mobile .header .content nav {
-            display: none;
+
+        .header .search .product-selected .product-details {
+            margin-left: 12px;
+            color: #4EB600;
+            font-weight: 700;
+            line-height: 19px;
+            flex: 1;
         }
-            body.mobile .header .content .search img,
-            body.mobile .header .content .cart img,
-        body.mobile .header .content .user img {
-            width: 36px;
+
+        .header .product-selected .cancel {
+            cursor: pointer;
         }
-            body.mobile .header .content .search,
-        body.mobile .header .content .cart {
-            margin-right: 10px;
-        }
-        body.mobile .header .content .search {
-            margin-left: 0;
-        }
-        body.mobile .header .content .cart >a .cart-quantity {
-            left: 10px;
-            top: 0;
-            width: 16px;
-        }
-        body.mobile .header .content .user {
-            display: none;
-        }
-        body.mobile .header .content .hamburger {
-            display: block;
-        }
-        body.mobile #modal-search-product .modal-dialog {
-            top: 0;
-            left: 0;
-        }
-        body.mobile #modal-search-product .modal-dialog .modal-content .modal-header {
+        
+        .header .user-options {
             display: flex;
-        }
-        body.mobile #modal-search-product .modal-dialog .modal-content .modal-body .search-result {
-            flex-direction: column;
-        }
-        #modal-hamburger-menu {
-            display: flex;
-            flex-direction: column;
-        }
-        #modal-hamburger-menu .modal-dialog .modal-content .modal-header {
-            display: flex;
+            justify-content: space-between;
+            padding: 20px;
             align-items: center;
-            padding: 35px 25px;
-            border-bottom: 1px solid #88cc00;
+            min-width: 180px;
+            background: #4D4D33;
         }
-        #modal-hamburger-menu .modal-dialog .modal-content .modal-header h5 {
-            margin: 0;
-            font-size: 15px;
-            font-weight: 700;
-        }
-        #modal-hamburger-menu .modal-dialog .modal-content .modal-header .close {
-            background-color: #fff;
-        }
-        #modal-hamburger-menu .modal-dialog .modal-content .modal-header .close:before {
-            content: url("../icons/black-close.svg");
-        }
-        #modal-hamburger-menu .modal-dialog .modal-content .modal-body {
-            display: flex;
-            flex-direction: column;
-            padding: 0;
-            background-color: #fff;
-        }
-        #modal-hamburger-menu .modal-dialog .modal-content .modal-body a {
-            padding: 15px;
-            border-top: 1px solid #88cc00;
-            width: 100%;
-            font-size: 20px;
-            font-weight: 700;
-            text-align: center;
+
+        .header .user-options a {
             text-decoration: none;
-            color: #999966;
+            cursor: pointer;
         }
-        #modal-hamburger-menu .modal-dialog .modal-content .modal-body a:last-child:visible {
-            border-bottom: 1px solid #88cc00;
+
+        .header .user-options img {
+            width: 25px;           
+            height: 25px;
         }
-        #modal-hamburger-menu .modal-dialog .modal-content .modal-body a.gray {
-            background-color: #fff;
-            border-top: 0 solid transparent;
-        }
-        #modal-hamburger-menu .modal-dialog .modal-content .modal-body a.cart {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        #modal-hamburger-menu .modal-dialog .modal-content .modal-body a.cart:after {
-            content: attr(data-cart-item-quantity);
-            display: inline-block;
-            margin-left: 10px;
-            padding-top: 2px;
-            border-radius: 50%;
-            width: 18px;
-            height: 18px;
-            font-size: 10px;
-            font-weight: 700;
-            text-align: center;
-            color: #fff;
-            background-color: #ccccb3;
-        }
-        #modal-hamburger-menu .modal-dialog .modal-content .modal-body a.my-account {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-bottom: 1px solid #88cc00;
-        }
-        #modal-hamburger-menu .modal-dialog .modal-content .modal-body a.my-account:after {
-            content: '';
-            background-image: url("../icons/black-arrow-down.svg");
-            background-repeat: no-repeat;
-            background-position: center;
-            margin-left: 10px;
-            width: 20px;
-            height: 20px;
-        }
-        #modal-hamburger-menu .modal-dialog .modal-content .modal-body a.my-account.show {
-            border-bottom: 0 solid transparent;
-        }
-        #modal-hamburger-menu .modal-dialog .modal-content .modal-body .my-account-pages {
-            display: none;
-            flex-direction: column;
-        }
-        #modal-hamburger-menu .modal-dialog .modal-content .modal-body .my-account-pages a {
-            border-top: 0 solid transparent;
-            font-size: 16px;
-            font-weight: 600;}
 
     </style>
 </head>
-
-    <div class="header">
-    <div class="content">
-        <a href="index.php"><img src="assets/market/images/logo.svg"></a>
+<div class="header">
+    <div class="logo">
+        
+        <a href="<?php echo base_url("mainsite") ?>"><img src="<?php echo base_url()?>images/store-logo.png"/></a>
+            
         <div class="horizontal-line"></div>
-        <span class="site">SHOP<br>SINGAPORE</span>
-
-        <nav>
-            <a href="series.php">KANG SERIES</a>
-            <a href="series.php">GOLD SERIES</a>
-            <a href="specialised-series.php">SPECIALISED SERIES</a>
-        </nav>
-
-        <div class="search">
-            <a href="#"><img src="assets/market/images/search-icon.svg"></a>
-        </div>
-        <div class="cart">
-            <a href="shopping-cart.php">
-                <img src="assets/market/images/cart-icon.svg">
-                <span class="cart-quantity">5</span>
-            </a>
-        </div>
-        <div class="user">
-            <a href="account-dashboard.php"><img src="assets/market/images/profile-icon.svg"></a>
-        </div>
-        <div class="hamburger">
-            <a href="#"><img src="assets/market/images/hamburger-menu.svg"></a>
-        </div>
-    </div>
+        <span class="site"><i>Explore Your Needs.</i></span>
     </div>
 
-    <!-- <div class="modal fade" id="modal-hamburger-menu" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">MENU</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <a class="gray" href="index.php">HOME</a>
-                <a class="gray" href="series.php">KANG</a>
-                <a class="gray" href="series.php">GOLD</a>
-                <a class="gray" href="specialised-series.php">SPECIALISED</a>
-                <a class="cart" href="shopping-cart.php" data-cart-item-quantity="5">MY CART</a>
-                <a class="my-account" href="#">MY ACCOUNT</a>
-                <div class="my-account-pages">
-                    <a href="account-voucher-herbal-soup.php">RM20 Cash Voucher</a>
-                    <a href="account-dashboard.php">Dashboard</a>
-                    <a href="account-profile.php">Profile</a>
-                    <a href="account-order.php">Orders</a>
-                    <a href="account-address.php">Addresses</a>
-                    <a href="account-network.php">Network</a>
-                    <a href="account-income.php">Income</a>
-                    <a href="#">Bonus Calculator</a>
-                </div>
-            </div>
+    <div class="search got-product">
+        <form id="search-container">
+            <img src="https://img.icons8.com/ios/50/e5e5e5/open-delivered-box.png"/>
+            <input type="text" class="search-product" placeholder="Search product (by Name)">
+
+            <button class="btn btn-clear btn-search" type="submit">
+                <span>Searching</span>
+
+                <svg width="40" height="41" viewBox="0 0 40 41" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="40" height="40" transform="translate(0 0.5)" fill="#7a7a52"/>
+                    <path d="M29.2885 28.6234L24.76 24.0948C24.6514 23.9863 24.4997 23.9407 24.3613 23.9407H24.3435C25.4508 22.6204 26.1077 20.9652 26.1077 19.1225C26.1077 15.0285 22.7332 11.654 18.6392 11.654C14.5096 11.654 11.1707 15.029 11.1707 19.1225C11.1707 23.2516 14.5101 26.591 18.6392 26.591C20.4456 26.591 22.1269 25.9366 23.4224 24.8603C23.425 25.0205 23.4675 25.1694 23.5764 25.2784L28.105 29.8069C28.221 29.9229 28.3676 29.9873 28.5212 29.9873C28.6748 29.9873 28.8215 29.9229 28.9375 29.8069L29.2885 29.4558C29.4045 29.3398 29.469 29.1932 29.469 29.0396C29.469 28.886 29.4045 28.7393 29.2885 28.6234ZM18.6392 25.1343C15.291 25.1343 12.6274 22.4707 12.6274 19.1225C12.6274 15.8087 15.2916 13.1107 18.6392 13.1107C21.9523 13.1107 24.651 15.8094 24.651 19.1225C24.651 22.4701 21.9529 25.1343 18.6392 25.1343Z" fill="white" stroke="white" stroke-width="0.333333"/>
+                </svg>
+
+                <img src="assets/market/icons/swal-loading.svg" />
+            </button>
+        </form>
+
+        <div class="searched-product-list"></div>
+
+        <div class="product-selected">
+            <svg width="17" height="19" viewBox="0 0 17 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11.6289 10.9375C10.6094 10.9375 10.1523 11.5 8.5 11.5C6.8125 11.5 6.35547 10.9375 5.33594 10.9375C2.73438 10.9375 0.625 13.082 0.625 15.6836V16.5625C0.625 17.5117 1.36328 18.25 2.3125 18.25H14.6875C15.6016 18.25 16.375 17.5117 16.375 16.5625V15.6836C16.375 13.082 14.2305 10.9375 11.6289 10.9375ZM14.6875 16.5625H2.3125V15.6836C2.3125 13.9961 3.64844 12.625 5.33594 12.625C5.86328 12.625 6.67188 13.1875 8.5 13.1875C10.293 13.1875 11.1016 12.625 11.6289 12.625C13.3164 12.625 14.6875 13.9961 14.6875 15.6836V16.5625ZM8.5 10.375C11.2773 10.375 13.5625 8.125 13.5625 5.3125C13.5625 2.53516 11.2773 0.25 8.5 0.25C5.6875 0.25 3.4375 2.53516 3.4375 5.3125C3.4375 8.125 5.6875 10.375 8.5 10.375ZM8.5 1.9375C10.3281 1.9375 11.875 3.48438 11.875 5.3125C11.875 7.17578 10.3281 8.6875 8.5 8.6875C6.63672 8.6875 5.125 7.17578 5.125 5.3125C5.125 3.48438 6.63672 1.9375 8.5 1.9375Z" fill="#4EB600"/>
+            </svg>
+            
+            <span class="product-details">TAN TEE HOW (MY123456789)</span>
+
+            <svg class="cancel" width="40" height="41" viewBox="0 0 40 41" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="40" height="40" transform="translate(0 0.5)" fill="#1F6247"/>
+                <path d="M20.7773 20.25L23.5938 17.4609L24.168 16.8867C24.25 16.8047 24.25 16.668 24.168 16.5586L23.5664 15.957C23.457 15.875 23.3203 15.875 23.2383 15.957L19.875 19.3477L16.4844 15.957C16.4023 15.875 16.2656 15.875 16.1562 15.957L15.5547 16.5586C15.4727 16.668 15.4727 16.8047 15.5547 16.8867L18.9453 20.25L15.5547 23.6406C15.4727 23.7227 15.4727 23.8594 15.5547 23.9688L16.1562 24.5703C16.2656 24.6523 16.4023 24.6523 16.4844 24.5703L19.875 21.1797L22.6641 23.9961L23.2383 24.5703C23.3203 24.6523 23.457 24.6523 23.5664 24.5703L24.168 23.9688C24.25 23.8594 24.25 23.7227 24.168 23.6406L20.7773 20.25Z" fill="white"/>
+            </svg>
         </div>
-    </div>
-    </div>
 
-    <div class="modal fade modal-full-height" id="modal-shopping-cart" tabindex="-1" role="dialog" aria-labelledby="modal-shopping-cart-title" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modal-shopping-cart-title">MY CART</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="cart-header">
-                    Payday Sale<br />
-                    FREE Delivery Over SGD111<br />
-                    Extra 11% OFF<br />
-
-                    <div class="code">
-                        Use code: 1111DEALS
-                    </div>
-                </div>
-
-                <div class="cart-item-popup">
-                    <div class="item">
-                        <img src="assets/market/runtime-images/product-item-image.png" />
-                        <div class="details">
-                            <span class="discount">20% OFF</span>
-                            <span class="product-title">Basic - Kang 12 Series For Men</span>
-                            <div class="price">
-                                <span class="selling-price">$1,120</span>
-                                <span class="market-price">$1,380</span>
-                            </div>
-                            <div class="pv-container">
-                                <span class="pv"><strong>PV</strong>1,380</span>
-                                <span class="bv"><strong>BV</strong>2,760</span>
-                            </div>
-                        </div>
-                        <span class="quantity">2</span>
-                    </div>
-                </div>
-                <?php include 'component/cart-item-popup.php' ?>
-                <?php include 'component/cart-item-popup.php' ?>
-                <?php include 'component/cart-item-popup.php' ?>
-
-            </div>
-            <div class="modal-footer">
-                <div class="order-summary">
-                    <div class="order-summary-item">
-                        <span class="title">Subtotal</span>
-                        <div class="amount">
-                            <span class="price">$4,480</span>
-                            <span class="market-price">$4,480</span>
-                        </div>
-                    </div>
-                    <div class="order-summary-item pv-container">
-                        <span class="pv"><strong>PV</strong>5,640</span>
-                        <span class="bv"><strong>BV</strong>11,280</span>
-                    </div>
-                </div>
-                <span class="note">Your promotional discounts / gifts will be reflected on the next page</span>
-                <button type="button" class="btn btn-primary" id="modal-shopping-cart-go-cart">GO TO CART</button>
-            </div>
-        </div>
-    </div>
+            
     </div>
 
-    <div class="modal fade" id="modal-search-product" tabindex="-1" role="dialog" aria-labelledby="modal-search-product-title" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modal-search-product-title">SEARCH</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group normal">
-                    <input type="text" class="form-control" placeholder="Type keyword here" />
-                    <button class="btn btn-primary"></button>
-                </div>
-                <div class="search-result">
-                    <a class="item" href="individual-product.php">M13, <strong>Spine</strong> Care For Men, 8 Extraordinary - Governing Vessel </a>
-                    <a class="item" href="individual-product.php">L13, <strong>Spine</strong> Care For Ladies, 8 Extraordinary - Governing Vessel </a>
-                </div>
-            </div>
-        </div>
+    <div class="user-options">
+        <a href="<?php echo base_url("mainsite/shopping-cart") ?>"><img src="https://img.icons8.com/pastel-glyph/64/e5e5e5/shopping-cart--v1.png"/></a>
+        <a href="<?php echo base_url("home") ?>"><img src="https://img.icons8.com/external-inkubators-basic-outline-inkubators/64/e5e5e5/external-user-profile-user-interface-inkubators-basic-outline-inkubators.png"/></a>
+        <a href="#"><img src="https://img.icons8.com/ios-glyphs/64/e5e5e5/address-book.png"/></a>
+
     </div>
-    </div> -->
+</div>
 
 </html>

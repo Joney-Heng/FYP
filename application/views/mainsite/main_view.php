@@ -16,7 +16,7 @@
             display: block;
             padding: 0 !important;
             max-width: 1300px;
-            background: #e5e5e5;
+            background: #fff7e6;
             margin: 0 auto !important;
         }
 
