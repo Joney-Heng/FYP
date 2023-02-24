@@ -17,6 +17,7 @@
             padding: 0 !important;
             max-width: 1300px;
             background: #e5e5e5;
+            margin: 0 auto !important;
         }
 
         .title {

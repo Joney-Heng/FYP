@@ -16,7 +16,6 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding: 30px;
             min-height: 100vh;
             background: #ddd;
             font-size: 0.8rem;
@@ -30,7 +29,7 @@
         }
 
         .shopping-cart-container {
-            margin: auto;
+            margin: 20px auto;
             max-width: 1200px;
             width: 100%;
             box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -60,7 +59,7 @@
             padding: 30px;
             border-bottom-left-radius: 1rem;
             border-top-left-radius: 1rem;
-            background-color: #fff;
+            background-color: #f2f2f2;
         }
 
         .price-content {
@@ -720,10 +719,10 @@
                             </svg>
                             <label for="validationCustom04" class="form-label">Courier Company</label>
                             <select class="form-select select-courier" id="choose-courier" required>
-                                <option selected value="8.00">Standard Delivery - MYR 8.00</option>
-                                <option value="8.50">J&T Expredd - MYR 8.50 </option>
-                                <option value="10.00">Easy Parcel - MYR 10.00 </option>
-                                <option value="12.00">PGeon Delivery - MYR 12.00 </option>
+                                <option data-courier="Standard Delivery" selected value="8.00">Standard Delivery - MYR 8.00</option>
+                                <option data-courier="J&T Express Delivery" value="8.50">J&T Express - MYR 8.50 </option>
+                                <option data-courier="Easy Parcel" value="10.00">Easy Parcel - MYR 10.00 </option>
+                                <option data-courier="PGeon Delivery" value="12.00">PGeon Delivery - MYR 12.00 </option>
                             </select>
                         </div>
                     </div>
@@ -1070,12 +1069,12 @@
 
             $('.selected-address').append(
                 "<span class='title'>Selected Address: " + (address.default_address == 1 ? '(Default Address)' : '') + " </span>" +
-                "<span class='contact'>" + address.contact_name + "</span>" +
-                "<span class='contact'>" + address.contact_no + "</span>" +
-                "<span class='contact'>" + address.email + "</span>" +
+                "<span class='contact' id='checkout-name'>" + address.contact_name + "</span>" +
+                "<span class='contact' id='checkout-contact'>" + address.contact_no + "</span>" +
+                "<span class='contact' id='checkout-email'>" + address.email + "</span>" +
 
-                "<span class='details'>" + address.address_line1 + ", " + address.address_line2 + ", " + "</span>" +
-                "<span class='details'>" + address.city + ", " + address.postcode + ", " + address.state + ", " + address.country + "</span>" +
+                "<span class='details' id='checkout-address'>" + address.address_line1 + ", " + address.address_line2 + ", " + "</span>" +
+                "<span class='details' id='checkout-address-details'>" + address.city + ", " + address.postcode + ", " + address.state + ", " + address.country + "</span>" +
                 "<span class='note'>Note: Kindly make sure your selected address is correct.</span>"
 
             );
@@ -1166,7 +1165,7 @@
                     if (parseFloat(subtotal) >= parseFloat(data.min_spend)) {
                         $('.voucher-code').append(
                             "<span style='color:#59b300'> " + data.voucher_type + " (Code# " + data.voucher_code + ")</span>" +
-                            "<span  class='applied-voucher-value' data-voucher-type='"+ data.voucher_type +"' data-voucher-amount='" + data.capped_amount + "' style='color:#59b300'><b>(-)MYR" + parseFloat(data.capped_amount).toFixed(2) + "</b></span>"
+                            "<span  class='applied-voucher-value' data-voucher-code='"+ data.voucher_code +"' data-voucher-type='"+ data.voucher_type +"' data-voucher-amount='" + data.capped_amount + "' style='color:#59b300'><b>(-)MYR" + parseFloat(data.capped_amount).toFixed(2) + "</b></span>"
                         );
                     } else {
                         $('.voucher-code').append(
@@ -1187,6 +1186,37 @@
 
             calculatePaymentTotal()
         });
+
+        $(document).on('click', '.btn-checkout', function(e) {
+            e.preventDefault();
+
+            var form_data = new FormData();
+            form_data.append("receiver_name", $('#checkout-name').html());
+            form_data.append("receiver_contact_no", $('#checkout-contact').html());
+            form_data.append("shipping_address", $('#checkout-address').html() + $('#checkout-address-details').html());
+            form_data.append("courier_company", $('#choose-courier option:selected').attr('data-courier'));
+            form_data.append("shipping_amount", $('#choose-courier').val());
+            form_data.append("voucher_amount", $('.voucher-amount').html() == undefined ? 0 : $('.voucher-amount').html().replace("(-) MYR ",""));
+            form_data.append("voucher_code_applied", $('.applied-voucher-value').attr('data-voucher-code') == undefined ? 0 : $('.applied-voucher-value').attr('data-voucher-code'));
+            form_data.append("product_subtotal", $('.subtotal').html());
+            form_data.append("order_total", $('.checkout-total').html().replace("MYR ",""));
+
+            $.ajax({
+                url: "<?php echo site_url('user/create/order') ?>",
+                data: form_data,
+                encrypt: "",
+                cache: false,
+                contentType: false,
+                processData: false,
+                method: "POST",
+                success: function(data) {
+                    console.log("Process to payment");
+                    alert ("Process to payment");
+                }
+
+            });
+        });
+
 
     });
 
@@ -1437,12 +1467,12 @@
 
                     $('.selected-address').append(
                         "<span class='title'>Selected Address: " + (value.default_address == 1 ? '(Default Address)' : '') + " </span>" +
-                        "<span class='contact'>" + value.contact_name + "</span>" +
-                        "<span class='contact'>" + value.contact_no + "</span>" +
-                        "<span class='contact'>" + value.email + "</span>" +
+                        "<span class='contact' id='checkout-name'>" + value.contact_name + "</span>" +
+                        "<span class='contact' id='checkout-contact'>" + value.contact_no + "</span>" +
+                        "<span class='contact' id='checkout-email'>" + value.email + "</span>" +
 
-                        "<span class='details'>" + value.address_line1 + ", " + value.address_line2 + ", " + "</span>" +
-                        "<span class='details'>" + value.city + ", " + value.postcode + ", " + value.state + ", " + value.country + "</span>" +
+                        "<span class='details' id='checkout-address'>" + value.address_line1 + ", " + value.address_line2 + ", " + "</span>" +
+                        "<span class='details' id='checkout-address-details'>" + value.city + ", " + value.postcode + ", " + value.state + ", " + value.country + "</span>" +
                         "<span class='note'>Note: Kindly make sure your selected address is correct.</span>"
                     );
                 });
