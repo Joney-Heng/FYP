@@ -2,7 +2,6 @@
 <html>
 
 <head>
-    <title>Header</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.0/js/bootstrap.min.js" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
@@ -14,7 +13,7 @@
             position: sticky;
             top: 0;
             left: 0;
-            height: 91px;
+            height: 71px;
             z-index: 999;
         }
 
@@ -189,8 +188,8 @@
 
     <div class="user-options">
         <a href="<?php echo base_url("mainsite/shopping-cart") ?>"><img src="https://img.icons8.com/pastel-glyph/64/e5e5e5/shopping-cart--v1.png"/></a>
-        <a href="<?php echo base_url("home") ?>"><img src="https://img.icons8.com/external-inkubators-basic-outline-inkubators/64/e5e5e5/external-user-profile-user-interface-inkubators-basic-outline-inkubators.png"/></a>
         <a href="#"><img src="https://img.icons8.com/ios-glyphs/64/e5e5e5/address-book.png"/></a>
+        <a href="<?php echo base_url("home") ?>"><img src="https://img.icons8.com/external-inkubators-basic-outline-inkubators/64/e5e5e5/external-user-profile-user-interface-inkubators-basic-outline-inkubators.png"/></a>
 
     </div>
 </div>

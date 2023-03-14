@@ -39,7 +39,7 @@
         <h2 class="text-center mt-5 mb-3"><?php echo $title ?></h2>
         <div class="card">
             <div class="card-header">
-                <a class="btn btn-outline-primary" href="<?php echo base_url('home'); ?>">
+                <a class="btn btn-outline-primary" href="<?php echo base_url('admin/dashboard'); ?>">
                     Back to Home
                 </a>
                 <a class="btn btn-outline-success" href="<?php echo base_url('voucher/create/'); ?>">

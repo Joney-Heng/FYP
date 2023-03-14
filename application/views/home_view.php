@@ -21,7 +21,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<body>
 		<!-- Page Content -->
 		<div class="container-page">
-			<h1 class="mt-4">Welcome to Jolles' E-ddStore</h1>
+			<h1 class="mt-4">Welcome to Jolles' E-Store</h1>
 			
 		</div>
 

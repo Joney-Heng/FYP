@@ -28,4 +28,20 @@ class Main extends CI_Controller {
     $data['title'] = "Product Details";
     $this->load->view('mainsite/product-details', $data);
   }
+
+  
+  //Filter Product
+  public function filter_products() {
+      // Retrieve the products from your database
+      $this->load->model('product_model');
+      $products = $this->product_model->get_products();
+      
+      // Sort the products by name in ascending order
+      usort($products, function($a, $b) {
+          return strcmp($a->name, $b->name);
+      });
+      
+      // Return the sorted products as JSON
+      echo json_encode($products);
+  }
 }

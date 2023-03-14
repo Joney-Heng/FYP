@@ -2,6 +2,7 @@
 <html>
 
 <head>
+    <title>Header</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.0/js/bootstrap.min.js" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
@@ -173,7 +174,6 @@
         .header .user-options img {
             width: 25px;           
             height: 25px;
-            margin-right: 20px;
         }
 
     </style>
@@ -181,15 +181,14 @@
 <div class="header">
     <div class="logo">
         
-        <a href="<?php echo base_url("home")?>"><img src='<?php echo base_url()?>images/store-logo.png'/></a>
+        <a href="<?php echo base_url("admin/dashboard")?>"><img src='<?php echo base_url()?>images/store-logo.png'/></a>
             
         <div class="horizontal-line"></div>
-        <span class="site"><i>Explore Your Needs.</i></span>
+        <span class="site"><i>Boost Your Salesss Today.</i></span>
     </div>
 
     <div class="user-options">
-        <a href="<?php echo base_url("admin/dashboard")?>"><img src="https://img.icons8.com/small/64/e5e5e5/admin-settings-male.png"/></a>
-        <a href="<?php echo base_url("mainsite")?>"><img src="https://img.icons8.com/external-inkubators-basic-outline-inkubators/64/e5e5e5/external-user-profile-user-interface-inkubators-basic-outline-inkubators.png"/></a>
+        <a href="<?php echo base_url("home")?>"><img src="https://img.icons8.com/small/64/e5e5e5/admin-settings-male.png"/></a>
     </div>
 </div>
 

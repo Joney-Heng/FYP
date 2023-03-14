@@ -58,11 +58,11 @@ class Product extends CI_Controller
 
     if (!$this->form_validation->run()) {
       $this->session->set_flashdata('errors', validation_errors());
-      redirect(base_url('admin/product/create'));
+      redirect(base_url('product/create'));
     } else {
       $this->Product_model->store();
       $this->session->set_flashdata('success', "Saved Successfully!");
-      redirect(base_url('admin/product'));
+      redirect(base_url('product'));
     }
   }
 
@@ -76,7 +76,7 @@ class Product extends CI_Controller
     $postData = array(
       "file" => new CURLFile($_FILES['multipartFile']['tmp_name'], $_FILES['multipartFile']['type'], $_FILES['multipartFile']['name'])
     );
-    // echo json_encode($postData); exit;
+    // echo json_encode($_FILES['multipartFile']); exit;
 
     $postHeaderData = array(
       'Content-Type: multipart/form-data',
@@ -84,8 +84,8 @@ class Product extends CI_Controller
       // $this->session->userdata("key") . ': ' . $this->session->userdata("jwtToken")
     );
     // Prepare new cURL resource
-    $response = $this->initiateCurl('https://storage-api-ten.vercel.app/files/', $postData, $postHeaderData);
-
+    $response = $this->initiateCurl('https://storage-api-ten.vercel.app/files', $postData, $postHeaderData);
+    echo json_encode($response); exit;
     echo json_encode(array("status" => true, "msg" => $response));
   }
 
@@ -110,7 +110,7 @@ class Product extends CI_Controller
     curl_close($ch);
     // $response = json_decode($result, true); 
     // $response["headerCode"] = $httpCode;
-    // echo $result;exit;
+    echo $result;exit;
     $response = $result;
     // echo json_encode(array($httpCode, $result));exit;
     return $result;

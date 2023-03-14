@@ -10,8 +10,19 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.0/js/bootstrap.min.js" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="<?php echo base_url('assets/js/noscreenshot.js'); ?>"></script>
 
     <style type="text/css">
+
+        .no-screenshot {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
         body.p-3 {
             display: block;
             padding: 0 !important;
@@ -33,8 +44,13 @@
         .card-container {
             display: flex;
             flex-wrap: wrap;
+            justify-content: center;
             margin: 0 auto;
             max-width: 1200px;
+        }
+
+        .card-container .filter {
+            display: none;
         }
 
         .card-container a{
@@ -78,10 +94,16 @@
         nav {
             margin: 20px;
         }
+
+        .filter-action {
+            display: block;
+            margin: 20px auto;
+            text-align: center;
+        }
     </style>
 </head>
 
-<body class="p-3 m-0 border-0">
+<body class="p-3 m-0 border-0 no-screenshot">
     <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
@@ -108,6 +130,15 @@
 
     <!-- Show Product -->
     <span class="title">RECOMMENDED PRODUCTS</span>
+
+    <div class="filter-action">
+        <button class="btn btn-primary" onclick="filterProducts()">Sort by Name (A to Z)</button>
+        <button class="btn btn-danger reset">Reset</button>
+    </div>
+        
+
+    <div class="product-list" id="product-list"></div>
+
     <div class="card-container">
         <?php foreach ($products as $product) { ?>
             <?php if ($product->product_status == '1') { ?>
@@ -142,4 +173,56 @@
     </nav>
 </body>
 
+<script>
+
+    $(document).ready(function() {
+        $('.reset').click(function(e) {
+            e.preventDefault();
+
+            $('#product-list').children().remove();
+            $('.card-container').show();
+        });
+
+        $('.no-screenshot').addClass('no-screenshot');
+
+        
+    });
+    
+    $(document).on('keyup keydown', function(e) {
+        if (e.keyCode == 44) { // 44 is the keycode for the "Print Screen" key
+            alert('Screenshots are not allowed on this website.');
+            e.preventDefault();
+            return false;
+        }
+    });
+
+    $(document).on("contextmenu",function(){
+        return false;
+    });
+
+    function filterProducts() {
+        $.ajax({
+            url: '<?php echo base_url('mainsite/sortby/a-z') ?>',
+            type: 'POST',
+            dataType: 'json',
+            success: function(data) {
+                // Update the product list on your web page with the sorted products
+                $('.card-container').hide();
+                $('#product-list').children().remove();
+
+                var productList = $('#product-list');
+                // productList.empty();
+                $.each(data, function(index, product) {
+                    productList.append(
+                        '<li>' + product.name + '</li>',
+                        
+                        );
+                });
+            },
+            error: function(xhr, status, error) {
+                console.log(xhr.responseText);
+            }
+        });
+    }
+</script>
 </html>

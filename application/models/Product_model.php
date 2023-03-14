@@ -78,6 +78,25 @@ class Product_model extends CI_Model{
         $result = $this->db->delete('products', array('id' => $id));
         return $result;
     }
-     
+
+    public function search_products($search_query) {
+        // query the database for products that match the search query
+        $this->db->select('*');
+        $this->db->from('products');
+        $this->db->like('name', $search_query);
+        $query = $this->db->get();
+    
+        // return the results as an array of objects
+        return $query->result();
+    }
+
+    public function get_products() {
+        // Retrieve the products from your database
+        $query = $this->db->get('products');
+        $products = $query->result();
+        
+        // Return the products as an array of objects
+        return $products;
+    }
 }
 ?>

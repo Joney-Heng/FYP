@@ -28,6 +28,11 @@
             margin-bottom: 10px;
         }
 
+        .breadcrumb-container {
+            padding: 0 20px;
+            margin-top: 20px;
+        }
+
         .shopping-cart-container {
             margin: 20px auto;
             max-width: 1200px;
@@ -1190,6 +1195,15 @@
         $(document).on('click', '.btn-checkout', function(e) {
             e.preventDefault();
 
+            let orderDetails = [];
+            $.each($('.quantity-container'), function(i,val){
+                orderDetails.push({
+                    productID: $(val).attr('data-productid'),
+                    quantity: $(val).find('.quantity').html(),
+                });
+            });
+
+
             var form_data = new FormData();
             form_data.append("receiver_name", $('#checkout-name').html());
             form_data.append("receiver_contact_no", $('#checkout-contact').html());
@@ -1200,6 +1214,7 @@
             form_data.append("voucher_code_applied", $('.applied-voucher-value').attr('data-voucher-code') == undefined ? 0 : $('.applied-voucher-value').attr('data-voucher-code'));
             form_data.append("product_subtotal", $('.subtotal').html());
             form_data.append("order_total", $('.checkout-total').html().replace("MYR ",""));
+            form_data.append("product_details", JSON.stringify(orderDetails));
 
             $.ajax({
                 url: "<?php echo site_url('user/create/order') ?>",
