@@ -9,6 +9,9 @@ class Cart extends CI_Controller
     $this->load->library('form_validation');
     $this->load->library('session');
     $this->load->model('Cart_model');
+    $this->load->model('Order_model');
+
+    $this->load->library('paypal_lib'); 
   }
 
   /*
@@ -19,6 +22,7 @@ class Cart extends CI_Controller
     // $data['products'] = $this->Product_model->get_all();
     $data['title'] = 'Shopping Cart';
 
+    $data['orders'] = $this->Order_model->get_Order();
     $this->load->view('layout/header');
     $this->load->view('mainsite/shopping-cart', $data);
 
@@ -76,3 +80,4 @@ class Cart extends CI_Controller
     echo json_encode($this->Cart_model->getCartbyUserId(1));
   }
 }
+?>

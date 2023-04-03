@@ -26,7 +26,6 @@
         body.p-3 {
             display: block;
             padding: 0 !important;
-            max-width: 1300px;
             background: #fff7e6;
             margin: 0 auto !important;
         }
@@ -40,8 +39,12 @@
             font-weight: 700;
             text-align: center;
         }
-        
-        .card-container {
+        .carousel-item img{
+            height: calc(100vh - 71px);
+            width: 95% !important;
+            margin: 0 auto;
+        }
+        .card-container.content{
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
@@ -95,6 +98,18 @@
             margin: 20px;
         }
 
+        .product-list{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 0 auto;
+            max-width: 1200px;
+        }
+
+        .card-container {
+            cursor: pointer !important;
+        }
+
         .filter-action {
             display: block;
             margin: 20px auto;
@@ -107,15 +122,15 @@
     <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img src="<?php echo base_url("images/banner_1.png")?>" class="bd-placeholder-img bd-placeholder-img-lg d-block w-100" width="800" height="400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: First slide" preserveAspectRatio="xMidYMid slice" focusable="false">
+                <img src="<?php echo base_url("images/banner_3.jpeg")?>" class="bd-placeholder-img bd-placeholder-img-lg d-block w-100" width="800" height="400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: First slide" preserveAspectRatio="xMidYMid slice" focusable="false">
             </div>
 
             <div class="carousel-item">
-                <img src="<?php echo base_url("images/banner_2.png")?>" class="bd-placeholder-img bd-placeholder-img-lg d-block w-100" width="800" height="400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Second slide" preserveAspectRatio="xMidYMid slice" focusable="false">
+                <img src="<?php echo base_url("images/banner_2.jpeg")?>" class="bd-placeholder-img bd-placeholder-img-lg d-block w-100" width="800" height="400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Second slide" preserveAspectRatio="xMidYMid slice" focusable="false">
             </div>
             
             <div class="carousel-item">
-                <img src="<?php echo base_url("images/banner_3.png")?>" class="bd-placeholder-img bd-placeholder-img-lg d-block w-100" width="800" height="400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Third slide" preserveAspectRatio="xMidYMid slice" focusable="false">
+                <img src="<?php echo base_url("images/banner_1.jpeg")?>" class="bd-placeholder-img bd-placeholder-img-lg d-block w-100" width="800" height="400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Third slide" preserveAspectRatio="xMidYMid slice" focusable="false">
             </div>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
@@ -139,7 +154,7 @@
 
     <div class="product-list" id="product-list"></div>
 
-    <div class="card-container">
+    <div class="card-container content">
         <?php foreach ($products as $product) { ?>
             <?php if ($product->product_status == '1') { ?>
                 <a href="<?php echo base_url('mainsite/product-details/' . $product->id) ?>">
@@ -188,18 +203,7 @@
         
     });
     
-    $(document).on('keyup keydown', function(e) {
-        if (e.keyCode == 44) { // 44 is the keycode for the "Print Screen" key
-            alert('Screenshots are not allowed on this website.');
-            e.preventDefault();
-            return false;
-        }
-    });
-
-    $(document).on("contextmenu",function(){
-        return false;
-    });
-
+    //Filter from A-Z
     function filterProducts() {
         $.ajax({
             url: '<?php echo base_url('mainsite/sortby/a-z') ?>',
@@ -213,10 +217,22 @@
                 var productList = $('#product-list');
                 // productList.empty();
                 $.each(data, function(index, product) {
-                    productList.append(
-                        '<li>' + product.name + '</li>',
-                        
+                    if(product.product_status == 1) {
+                        productList.append(
+                            '<a style="text-decoration:none" href="<?= site_url('/')?>mainsite/product-details/' + product.id + ' ">'+
+                                '<div class="card-container">'+
+                                        '<div class="card" style="width: 18rem;">'+
+                                                '<img class="bd-placeholder-img card-img-top" src="https://storage-api-ten.vercel.app/files/' + product.photo.split(',')[0] + '">' +
+                                            '<div class="card-body">'+
+                                                '<span class="card-title">' + product.name + '</span>'+
+                                                '<span class="card-text">MYR' + parseFloat(product.price).toFixed(2) +'</span>'+
+                                                '<span class="ori-price">MYR' + parseFloat(product.price).toFixed(2) +'</span>'+
+                                            '</div>'+
+                                        '</div>'+
+                                '</div>' +
+                            '</a>',
                         );
+                    }
                 });
             },
             error: function(xhr, status, error) {
@@ -224,5 +240,19 @@
             }
         });
     }
+
+    // Prevent to Right Click save Image
+    $(document).on('keyup keydown', function(e) {
+        if (e.keyCode == 44) { // 44 is the keycode for the "Print Screen" key
+            alert('Screenshots are not allowed on this website.');
+            e.preventDefault();
+            return false;
+        }
+    });
+
+    $(document).on("contextmenu",function(){
+        return false;
+    });
+
 </script>
 </html>

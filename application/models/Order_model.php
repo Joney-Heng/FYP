@@ -12,8 +12,20 @@ class Order_model extends CI_Model{
     
     public function createOrderbyUserID($id)
     {    
+        // Generate a new order number
+        $order_number = '';
+
+        do {
+            // Generate a new order number
+            $timestamp = round(microtime(true) * 1000);
+            $random_num = str_pad(mt_rand(1, 9999), 4, '0', STR_PAD_LEFT);
+            $order_number = 'ORD' . $timestamp . $random_num;
+            $this->db->where('order_number', $order_number);
+            $result = $this->db->get('orders');
+        } while ($result->num_rows() > 0); // If order number already exists, generate a new one
+        
         $data = [
-            'order_number'          => 1,
+            'order_number'          => $order_number,
             'receiver_name'         => $this->input->post('receiver_name'),
             'receiver_contact_no'   => $this->input->post('receiver_contact_no'),
             'shipping_address'      => $this->input->post('shipping_address'),
@@ -24,74 +36,89 @@ class Order_model extends CI_Model{
             'voucher_code_applied'  => $this->input->post('voucher_code_applied'),
             'product_subtotal'      => $this->input->post('product_subtotal'),
             'order_total'           => $this->input->post('order_total'),
-            'order_status'          => 1,
-            'user_id'               => 1,
+            'order_status'          => 'ORDER CREATED',
+            'user_id'               => $id,
         ];
-
-        $this->db->where('user_id', $id);
+        
 
         $result = $this->db->insert('orders', $data);
-        return $result;
-    }
 
-    public function updateAddressbyID($id) 
-    {
-        if ($this->input->post('default_address'))
-        {
+        // get last order
+        $lastOrderID = $this->db->insert_id();
+        
+        // insert data to order_Details
+        $orderDetails = json_decode($this->input->post('product_details'));
+        foreach($orderDetails as $orderItem) {
+            // insert order item to db
             $data = [
-                'default_address'     => 0
+                'order_id'          => $lastOrderID,
+                'product_id'        => $orderItem->productID,
+                'quantity'          => $orderItem->quantity
             ];
-
-            $this->db->where('user_id', 1)->update('address', $data);
+            $result = $this->db->insert('order_details', $data);
         }
 
-        $data = [
-            'address_line1'         => $this->input->post('address_line1'),
-            'address_line2'         => $this->input->post('address_line2'),
-            'postcode'              => $this->input->post('postcode'),
-            'state'                 => $this->input->post('state'),
-            'city'                  => $this->input->post('city'),
-            'country'               => $this->input->post('country'),
-            'contact_name'          => $this->input->post('contact_name'),
-            'contact_no'            => $this->input->post('contact_no'),
-            'email'                 => $this->input->post('email'),
-            'default_address'       => $this->input->post('default_address'),
-            'user_id'               => 1,
-        ];
+        // Clear Shopping Cart by User ID
+        $this->db->where("user_id", $id);
+        $this->db->delete("carts");
 
+        return $order_number;
+    }
+
+    public function updateOrder($id,$data) 
+    {
         $this->db->where('id', $id);
-        $result = $this->db->where('user_id', 1)->update('address', $data);
+        $result = $this->db->update('Orders', $data);
 
         return $result;
                  
     }
 
-    public function getAddressbyUserId($id)
+    public function getOrderbyOrderNumber($order_number)
     {
-        $this->db->select('id,address_line1,address_line2,postcode,state,city,country,contact_name,contact_no,email,default_address');
-        $this->db->from('address');
-        $this->db->where('user_id', $id);
+        $this->db->select('*');
+        $this->db->from('orders');
+        $this->db->where('order_number', $order_number);
         $query=$this->db->get();
         return $query->result_array();
     }
-
-    public function deleteAddressbyId($id)
+    
+    public function get_Order()
     {
-        $result = $this->db->delete('address', array('id' => $id));
-        return $result;
+        // Retrieve the products from your database
+        $query = $this->db->get('orders');
+        $orders = $query->result_array();
+        
+        // Return the order as an array of objects
+        return $orders;
     }
 
-    public function getDefaultAddressbyUserId($id)
+    public function getRows($id = '')
     {
-        $this->db->select('id,address_line1,address_line2,postcode,state,city,country,contact_name,contact_no,email,default_address');
-        $this->db->from('address');
-        $this->db->where('default_address', 1);
-        $this->db->where('user_id', $id);
+        $this->db->order_by('id', 'DESC');
+        $this->db->limit(1);
+        if($id){ 
+            $this->db->where('id', $id); 
+            $query = $this->db->get(); 
+            $result = $query->row_array(); 
+        }else{ 
+            $this->db->order_by('name', 'asc'); 
+            $query = $this->db->get(); 
+            $result = $query->result_array(); 
+        } 
+         
+        // return fetched data 
+        return !empty($result)?$result:false; 
+    }
 
+    public function getDetailsbyOrderID($order_id)
+    {
+        $this->db->select('*');
+        $this->db->from('order_details');
+        $this->db->where('order_id', $order_id);
+        $this->db->join('products', 'products.id = order_details.product_id');
         $query=$this->db->get();
         return $query->result_array();
     }
-     
-     
 }
 ?>

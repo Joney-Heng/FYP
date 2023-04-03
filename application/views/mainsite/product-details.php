@@ -334,6 +334,48 @@
 
             })
 
+            $('.button-container .buy-now').click(function(e) {
+                e.preventDefault();
+
+                var form_data = new FormData();
+
+                form_data.append("selected_quantity", $('.quantity').html());
+                form_data.append("product_id", <?php echo $product->id?>);
+
+                $.ajax({
+                    url: "<?php echo site_url('mainsite/add-to-cart') ?>",
+                    encrypt: "selected_quantity/form-data",
+                    data: form_data,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    method: "POST",
+                    success:function(data) {
+                        let timerInterval
+                        Swal.fire({
+                        title: 'Redirect to Your<br>Shopping Cart Page now...',
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: () => {
+                            Swal.showLoading()
+                            const b = Swal.getHtmlContainer().querySelector('b')
+                            timerInterval = setInterval(() => {
+                            b.textContent = Swal.getTimerLeft()
+                            }, 100)
+                        },
+                        willClose: () => {
+                            clearInterval(timerInterval)
+                        }
+                        }).then((result) => {
+                            if (result.dismiss === Swal.DismissReason.timer) {
+                                location.replace("<?php echo base_url("mainsite/shopping-cart"); ?>");
+                            }
+                    })
+                }
+                });
+
+            })
+
         }(jQuery));
 
         function changeImage(element) {

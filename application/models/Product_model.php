@@ -8,6 +8,7 @@ class Product_model extends CI_Model{
         $this->load->database();
         $this->load->helper('url');
         $this->load->helper('date');
+        $this->proTable   = 'products'; 
     }
  
     /*
@@ -98,5 +99,21 @@ class Product_model extends CI_Model{
         // Return the products as an array of objects
         return $products;
     }
+     
+    public function getRows($id = ''){ 
+        $this->db->select('*'); 
+        $this->db->from('products'); 
+        if($id){ 
+            $this->db->where('id', $id); 
+            $query = $this->db->get(); 
+            $result = $query->row_array(); 
+        }else{ 
+            $this->db->order_by('name', 'asc'); 
+            $query = $this->db->get(); 
+            $result = $query->result_array(); 
+        } 
+         
+        return !empty($result)?$result:false; 
+    } 
 }
 ?>

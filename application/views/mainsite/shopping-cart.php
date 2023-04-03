@@ -1203,7 +1203,6 @@
                 });
             });
 
-
             var form_data = new FormData();
             form_data.append("receiver_name", $('#checkout-name').html());
             form_data.append("receiver_contact_no", $('#checkout-contact').html());
@@ -1225,8 +1224,28 @@
                 processData: false,
                 method: "POST",
                 success: function(data) {
-                    console.log("Process to payment");
-                    alert ("Process to payment");
+                    let timerInterval
+
+                    Swal.fire({
+                        title: 'Redirected to PayPal Payment Page',
+                        html: 'Directing in <b></b> milliseconds.',
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: () => {
+                            Swal.showLoading()
+                            const b = Swal.getHtmlContainer().querySelector('b')
+                            timerInterval = setInterval(() => {
+                            b.textContent = Swal.getTimerLeft()
+                            }, 100)
+                        },
+                        willClose: () => {
+                            clearInterval(timerInterval)
+                        }
+                        }).then((result) => {
+                            if (result.dismiss === Swal.DismissReason.timer) {
+                                window.location.href = '<?php echo base_url('mainsite/order/pay/'); ?>' + JSON.parse(data).orderNumber;
+                            }
+                        })
                 }
 
             });
@@ -1249,41 +1268,51 @@
                 //Remove previous cart-item (No matter its empty or not)
                 $('.cart-items').children().remove();
 
-                // console.log('xiaobian joney', $('.cart-item').length)
+                data = JSON.parse(data); //String convert to JSON
+                if (data && data.length > 0) {
+                    $.each(data, function(i, value) {
+                        
+                        $('.cart-items').append(
+                            '<div class="row border-top border-bottom cart-item">' +
+                            '    <div class="row main align-items-center">' +
+                            '        <div class="col-2">' +
+                            '            <img class="img-fluid" src="https://storage-api-ten.vercel.app/files/' + value.photo.split(',')[0] + '">' +
+                            '       </div>' +
 
-                $.each(JSON.parse(data), function(i, value) {
+                            '        <div class="col product-name">' +
+                            '            <span class="row" style="color:#663300; font-weight:500">' + value.name + '</span>' +
+                            '        </div>' +
+
+                            '        <div class="quantity-container col" data-productid="' + value.product_id + '">' +
+                            '            <button class="quantity-minus">-</button>' +
+                            '            <a href="#" class="quantity">' + value.selected_quantity + '</a>' +
+                            '            <button class="quantity-plus">+</button>' +
+                            '        </div>' +
+
+                            '        <div class="col content-row">' +
+                            '           <div class="price-content">' +
+                            '               <span>MYR <span class="item-price">' +
+                            '                   ' + parseFloat(value.price * value.selected_quantity).toFixed(2) + ' ' +
+                            '               </span></span>' +
+                            '               <span class="price-per-unit">' +
+                            '                   MYR ' + parseFloat(value.price).toFixed(2) + '/unit ' +
+                            '               </span>' +
+                            '           </div>' +
+
+                            '            <button class="close delete-cart-item" data-cartid="' + value.id + '">&#10005;</button>' +
+                            '        </div>' +
+                            '    </div>' +
+                            '</div>'
+                        );
+                    });
+                } else {
                     $('.cart-items').append(
-                        '<div class="row border-top border-bottom cart-item">' +
-                        '    <div class="row main align-items-center">' +
-                        '        <div class="col-2">' +
-                        '            <img class="img-fluid" src="https://storage-api-ten.vercel.app/files/' + value.photo.split(',')[0] + '">' +
-                        '       </div>' +
-
-                        '        <div class="col product-name">' +
-                        '            <span class="row" style="color:#663300; font-weight:500">' + value.name + '</span>' +
-                        '        </div>' +
-
-                        '        <div class="quantity-container col" data-productid="' + value.product_id + '">' +
-                        '            <button class="quantity-minus">-</button>' +
-                        '            <a href="#" class="quantity">' + value.selected_quantity + '</a>' +
-                        '            <button class="quantity-plus">+</button>' +
-                        '        </div>' +
-
-                        '        <div class="col content-row">' +
-                        '           <div class="price-content">' +
-                        '               <span>MYR <span class="item-price">' +
-                        '                   ' + parseFloat(value.price * value.selected_quantity).toFixed(2) + ' ' +
-                        '               </span></span>' +
-                        '               <span class="price-per-unit">' +
-                        '                   MYR ' + parseFloat(value.price).toFixed(2) + '/unit ' +
-                        '               </span>' +
-                        '           </div>' +
-
-                        '            <button class="close delete-cart-item" data-cartid="' + value.id + '">&#10005;</button>' +
-                        '        </div>' +
-                        '    </div>' +
-                        '</div>');
-                });
+                        '<div class="empty-cart">' +
+                        '   <span>Your Cart is empty Now</span>' +
+                        '   <a href="<?php echo base_url('mainsite') ?>">Browse our shop now</a>' +
+                        '</div>'
+                    );
+                }
 
                 //Update quantity - Plus to add
                 $('.quantity-container .quantity-plus').click(function(e) {
@@ -1531,7 +1560,7 @@
 
                                 "       <div class='coupon-row'>" +
                                 "           <span id='cpnCode'> " + value.voucher_code + " </span>" +
-                                "           <span id='cpnBtn' class='apply-btn' >Apply</span>" +
+                                "           <span id='cpnBtn' class='apply-btn' >APPLY</span>" +
                                 "       </div>" +
 
                                 "       <div class='valid-date'>" +

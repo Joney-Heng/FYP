@@ -156,7 +156,7 @@
                     method: "POST",
                     success: function(data) {
                         data = JSON.parse(data);
-                        $('#preview-photo').append("<div class='wrapper'><img data-value='" + data.msg + "'src='https://storage-api-ten.vercel.app/files/" + data.msg + "'><button class='btn btn-danger remove'>Remove</button></div>");
+                        $('#preview-photo').append("<div class='wrapper'><img data-value='" + data.name + "'src='https://storage-api-ten.vercel.app/" + data.name + "'><button class='btn btn-danger remove'>Remove</button></div>");
 
                         $('.remove').click(function(e) {
                             e.preventDefault();

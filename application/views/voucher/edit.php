@@ -315,8 +315,11 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="voucherCode">Voucher Code</label>
-                            <input type="text" class="form-control" id="voucherCode" name="voucherCode" value="<?php echo $voucherDetails->voucher_code ?>"></input>
+                            <div style="display:flex; justify-content:space-between;align-items:center">
+                                <label for="voucherCode" >Voucher Code</label>
+                                <button class="btn btn-primary" id="generateNewCode">Generate New Code <img src="https://img.icons8.com/external-tal-revivo-bold-tal-revivo/20/e6e6e6/external-click-to-add-more-with-plus-sign-isolated-on-white-background-touch-bold-tal-revivo.png"/></button>
+                            </div>
+                            <input type="text" class="form-control" id="voucherCode" name="voucherCode" style="margin-top:5px" value="<?php echo $voucherDetails->voucher_code ?>"></input>
                         </div>
 
                         <div class="form-group">
@@ -364,7 +367,7 @@
 
                             <div class="coupon-row">
                                 <span id="cpnCode"><?php echo $voucherDetails->voucher_code ?></span>
-                                <span id="cpnBtn">Apply</span>
+                                <span id="cpnBtn">APPLY</span>
                             </div>
 
                             <div class="valid-date">
@@ -407,61 +410,95 @@
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
 
 <script>
-    $(document).ready(function($) {
 
-        $("#discountVoucher").click(function(e) {
-            $('.voucher-image').children().remove();
+    $(document).ready(function() {
+        $("#generateNewCode").click(function(e) {
+            e.preventDefault();
 
-            $('.voucher-image').html(
-                "<img class='logo' src='https://img.icons8.com/glyph-neue/64/null/discount-ticket.png' />",
-            );
-
-            $('.discount-type').html(
-                "PRODUCT",
-            );
-        });
-
-        $("#shippingVoucher").click(function(e) {
-            $('.voucher-image').children().remove();
-
-            $('.voucher-image').html(
-                "<img class='logo' src='https://img.icons8.com/material-rounded/96/null/truck--v1.png' />",
-            );
-
-            $('.discount-type').html(
-                "SHIPPING",
-            );
-        });
-
-        //Key up function - Display while texting
-        $('#voucherCode').keyup(function() {
-            $('#cpnCode').html($('#voucherCode').val())
-        });
-
-        $('#minSpend').keyup(function() {
-            $('.min-spend').html("(Min.spend MYR" + $('#minSpend').val() + ")");
-        });
-
-        $('#cappedAmount').keyup(function() {
-            $('.discount-value').html("MYR" + $('#cappedAmount').val() + " OFF");
-        });
-
-        $('#minSpend').keyup(function() {
-            $('.tnc-min-spend').html($('#minSpend').val());
-        });
-
-        $('#cappedAmount').keyup(function() {
-            $('.tnc-discount-value').html($('#cappedAmount').val());
-        });
-
-        $('#endDate').on("keyup change", function() {
-            var end_date = $('#endDate').val();
-
-            var copy_end_date = end_date.replace('T', ' ');
-            $('.expired-date').html(copy_end_date);
-
+            var voucher = generateVoucher();
+            $("#voucherCode").val(voucher);
+            $("#cpnCode").html(voucher);
         });
     });
+
+    function generateVoucher() {
+        var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        var codeLength = 8;
+        var voucher = "";
+
+        for (var i = 0; i < codeLength; i++) {
+            voucher += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+
+        return voucher;
+    }
+    
+ 
+        
+    $("#discountVoucher").click(function(e) {
+        $('.voucher-image').children().remove();
+
+        $('.voucher-image').html(
+            "<img class='logo' src='https://img.icons8.com/glyph-neue/64/null/discount-ticket.png' />",
+        );
+
+        $('.discount-type').html(
+            "PRODUCT",
+        );
+    });
+
+    $("#shippingVoucher").click(function(e) {
+        $('.voucher-image').children().remove();
+
+        $('.voucher-image').html(
+            "<img class='logo' src='https://img.icons8.com/material-rounded/96/null/truck--v1.png' />",
+        );
+
+        $('.discount-type').html(
+            "SHIPPING",
+        );
+    });
+
+    //Key up function - Display while texting
+    $('#voucherCode').keyup(function() {
+        $('#cpnCode').html($('#voucherCode').val())
+    });
+
+    $('#minSpend').keyup(function() {
+        $('.min-spend').html("(Min.spend MYR" + $('#minSpend').val() + ")");
+    });
+
+    $('#cappedAmount').keyup(function() {
+        $('.discount-value').html("MYR" + $('#cappedAmount').val() + " OFF");
+    });
+
+    $('#minSpend').keyup(function() {
+        $('.tnc-min-spend').html($('#minSpend').val());
+    });
+
+    $('#cappedAmount').keyup(function() {
+        $('.tnc-discount-value').html($('#cappedAmount').val());
+    });
+
+    $('#endDate').on("keyup change", function() {
+        var end_date = $('#endDate').val();
+
+        var copy_end_date = end_date.replace('T', ' ');
+        $('.expired-date').html(copy_end_date);
+
+    });
+
+    var cpnBtn = document.getElementById("cpnBtn");
+    var cpnCode = document.getElementById("cpnCode");
+
+    cpnBtn.onclick = function() {
+        navigator.clipboard.writeText(cpnCode.innerHTML);
+        cpnBtn.innerHTML = "DONE";
+        setTimeout(function() {
+            cpnBtn.innerHTML = "APPLY";
+        }, 3000);
+    }
+   
 </script>
 
 </html>

@@ -123,8 +123,7 @@ $route['user/create/order'] = "user/order/createOrder";
 $route['mainsite/search-product'] = "mainsite/search/search";
 
 //PAYMENT PAYPAL
-$route['payment'] = "payment/paypal/index";
-$route['payment/paypal/create-payment'] = "payment/paypal/create_payment";
+$route['mainsite/order/pay/(:any)'] = "user/order/pay/$1";
 
 
 //ADMIN PAGE

@@ -7,6 +7,9 @@ class Main extends CI_Controller {
       $this->load->library('form_validation');
       $this->load->library('session');
       $this->load->model('Product_model');
+           
+      // Load paypal library 
+      $this->load->library('paypal_lib'); 
    }
  
    /*
@@ -44,4 +47,31 @@ class Main extends CI_Controller {
       // Return the sorted products as JSON
       echo json_encode($products);
   }
+
+  function buy($id){ 
+    $this->load->model('Product_model');
+
+    // Set variables for paypal form 
+    $returnURL = base_url().'paypal/success'; //payment success url 
+    $cancelURL = base_url().'paypal/cancel'; //payment cancel url 
+    $notifyURL = base_url().'paypal/ipn'; //ipn url 
+     
+    // Get product data from the database 
+    $products = $this->Product_model->getRows($id); 
+     
+    // Add fields to paypal form 
+    $this->paypal_lib->add_field('return', $returnURL); 
+    $this->paypal_lib->add_field('cancel_return', $cancelURL); 
+    $this->paypal_lib->add_field('notify_url', $notifyURL); 
+    $this->paypal_lib->add_field('item_name', $products['name']); //order Number -> auto generate order number
+    // $this->paypal_lib->add_field('custom', $userID);
+    $this->paypal_lib->add_field('item_number',  $products['id']); //payment ID
+    $this->paypal_lib->add_field('amount',  $products['price']); 
+    $this->paypal_lib->add_field('amount',  $products['price']); //payment Gross = Order Total
+     
+    // Render paypal form 
+    $this->paypal_lib->paypal_auto_form(); 
+  }
+
 }
+?>

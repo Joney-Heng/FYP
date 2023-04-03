@@ -8,41 +8,44 @@ class Order extends CI_Controller
     parent::__construct();
     $this->load->library('form_validation');
     $this->load->library('session');
+    $this->load->library('paypal_lib');
+
     $this->load->model('Order_model');
-  }
-
-  public function index()
-  {
-    $data['addressbooks'] = $this->Address_model->getAddressbyUserId(1);
-
-    // $this->load->view('layout/header');
-    $this->load->view('mainsite/shopping-cart', $data);
+    $this->load->model('Payment');
   }
 
   public function createOrder()
   {
-      $this->Order_model->createOrderbyUserID($this->input->post('user_id'));
+      $orderNumber = $this->Order_model->createOrderbyUserID(1);
+      echo json_encode(['orderNumber' => $orderNumber]);
   }
 
-  public function deleteAddress()
-  {
-    $this->Order_model->deleteAddressbyId($this->input->post('address_id'));
-  }
+  function pay($order_number) { 
+    // Set variables for paypal form 
+    $returnURL = base_url().'paypal/success';  //payment success url 
+    $cancelURL = base_url().'paypal/cancel';  //payment cancel url 
+    $notifyURL = base_url().'paypal/ipn';     //ipn url 
 
-  public function updateAddress()
-  {
-    echo json_encode($this->Order_model->updateAddressbyID($this->input->post('address_id')));
-  }
+    //joney-todo: use order_number to get order, because you need the total amount
+    $order = $this->Order_model->getOrderbyOrderNumber($order_number);
+    
+    // create a row of payment, and return the payment_id, because you need item_number
 
-  public function getAddressDetails()
-  {
-    echo json_encode($this->Order_model->getAddressbyUserId(1));
+    $paymentID = $this->Payment->createPaymentbyOrderID($order[0]['id'],$order[0]['order_total']);
 
-  }
+    // Add fields to paypal form 
+    $this->paypal_lib->add_field('return', $returnURL); 
+    $this->paypal_lib->add_field('cancel_return', $cancelURL); 
+    $this->paypal_lib->add_field('notify_url', $notifyURL); 
+    $this->paypal_lib->add_field('item_name', $order_number); 
+    $this->paypal_lib->add_field('custom', 1); 
 
-  public function getDefaultAddressDetails()
-  {
-    echo json_encode($this->Order_model->getDefaultAddressbyUserId(1));
-
+    if(is_array($order)) {
+      $this->paypal_lib->add_field('amount',  $order[0]['order_total']); 
+    }
+     
+    // Render paypal form 
+    $this->paypal_lib->paypal_auto_form(); 
   }
 }
+?>
