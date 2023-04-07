@@ -38,6 +38,7 @@ class Order extends CI_Controller
     $this->paypal_lib->add_field('cancel_return', $cancelURL); 
     $this->paypal_lib->add_field('notify_url', $notifyURL); 
     $this->paypal_lib->add_field('item_name', $order_number); 
+    $this->paypal_lib->add_field('item_number', $paymentID); 
     $this->paypal_lib->add_field('custom', 1); 
 
     if(is_array($order)) {

@@ -93,6 +93,25 @@ class Order_model extends CI_Model{
         return $orders;
     }
 
+    public function get_OrderSuccess()
+    {
+        // Retrieve the products from your database
+        $this->db->select('*');
+        $this->db->from('orders');
+        $this->db->where('order_status', 'PAYMENT RECEIVED');
+        $query=$this->db->get();
+        $orders = $query->result_array();
+        
+        // Return the order as an array of objects
+        return $orders;
+    }
+
+    public function get($id)
+    {
+        $order = $this->db->get_where('orders', ['id' => $id ])->row();
+        return $order;
+    }
+
     public function getRows($id = '')
     {
         $this->db->order_by('id', 'DESC');

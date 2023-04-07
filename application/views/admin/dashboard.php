@@ -12,20 +12,30 @@
         }
 
         .container {
+            display: flex;
             padding: 20px;
             margin-top: 20px;
             text-align: center;
         }
 
-        .container a {
+        .container .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             margin-right: 20px;
             padding: 30px;
+            border-radius: 20px;
             background: #fff;
             text-decoration: none;
         }
 
-        .container a:hover {
+        .container .content:hover {
             background: #f2f2f2;
+            cursor: pointer;
+        }
+
+        .container a {
+            text-decoration: none;
         }
 
         .container img{
@@ -34,23 +44,41 @@
         }
 
         .container span{
-            margin-left: 5px;
-            margin-top: 2px;
-            font-size: 14px;
+            margin-top: 10px;
+            font-size: 16px;
         }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <a href="<?php echo base_url("product")?>"><img src="https://img.icons8.com/dotty/64/null/delivery-settings--v2.png"/>
-            <span>PRODUCT MANAGEMENT</span>
+        <a href="<?php echo base_url("product")?>">
+            <div class="content">
+                <img src="https://img.icons8.com/dotty/64/null/delivery-settings--v2.png"/>
+                <span>PRODUCT MANAGEMENT</span>
+            </div>
         </a>
 
-        <a href="<?php echo base_url("voucher")?>"><img src="https://img.icons8.com/wired/64/null/discount-ticket.png"/>
-            <span>VOUCHER MANAGEMENT</span>
+        <a href="<?php echo base_url("voucher")?>">
+            <div class="content">
+            <img src="https://img.icons8.com/wired/64/null/discount-ticket.png"/>
+                <span>VOUCHER MANAGEMENT</span>
+            </div>
         </a>
 
+        <a href="<?php echo base_url("orders")?>">
+            <div class="content">
+                <img src="https://img.icons8.com/ios-glyphs/64/null/purchase-order.png"/>
+                <span>ORDER MANAGEMENT</span>
+            </div>
+        </a>
+
+        <a href="<?php echo base_url("voucher")?>">
+            <div class="content">
+                <img src="https://img.icons8.com/dotty/64/null/graph-report.png"/>
+                <span>REPORT MANAGEMENT</span>
+            </div>
+        </a>
     </div>
 
 </body>

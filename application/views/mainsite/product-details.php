@@ -193,6 +193,10 @@
         .description-label .content {
             padding: 20px;
         }
+
+        .btn:disabled {
+            cursor: not-allowed;
+        }
     </style>
 </head>
 
@@ -263,7 +267,8 @@
                         </div>
 
                         <div class="buttons button-container">
-                            <button class="btn btn-outline-dark buy-now">Buy Now</button>
+                            
+                            <?php echo $product->stock_quantity == 0 || $product->stock_quantity == null ? "<button class='btn btn-outline-dark buy-now' disabled>BUY NOW</button>" : "<button class='btn btn-outline-dark buy-now'>Buy Now</button>" ?>
                             <?php echo $product->stock_quantity == 0 || $product->stock_quantity == null ? "<button class='btn btn-dark' disabled>OUT OF STOCK</button>" : "<button class='btn btn-dark addToCart'>ADD TO CART</button>" ?>
                         </div>
 
@@ -325,7 +330,7 @@
                         Swal.fire({
                             position: 'center',
                             icon: 'success',
-                            title: 'Added to your cart Successful!',
+                            title: 'ADDED TO CART',
                             showConfirmButton: false,
                             timer: 2000
                         })
@@ -353,7 +358,7 @@
                     success:function(data) {
                         let timerInterval
                         Swal.fire({
-                        title: 'Redirect to Your<br>Shopping Cart Page now...',
+                        title: 'REDIRECTING TO CART NOW...',
                         timer: 3000,
                         timerProgressBar: true,
                         didOpen: () => {

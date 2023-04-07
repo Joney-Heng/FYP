@@ -456,7 +456,7 @@
                 Swal.fire({
                     position: 'center',
                     icon: 'success',
-                    title: 'Create Voucher Successful!',
+                    title: 'VOUCHER CREATED',
                     showConfirmButton: false,
                     timer: 2000,
                 })

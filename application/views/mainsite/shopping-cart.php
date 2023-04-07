@@ -35,7 +35,7 @@
 
         .shopping-cart-container {
             margin: 20px auto;
-            max-width: 1200px;
+            max-width: 1350px;
             width: 100%;
             box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
             border-radius: 1rem;
@@ -45,6 +45,7 @@
         .cart-items {
             overflow-x: hidden;
             min-height: 350px;
+            height: 100%;
         }
 
         .product-name {
@@ -60,8 +61,7 @@
         .cart {
             display: flex;
             flex-direction: column;
-            justify-content: space-evenly;
-            padding: 30px;
+            padding: 60px !important;
             border-bottom-left-radius: 1rem;
             border-top-left-radius: 1rem;
             background-color: #f2f2f2;
@@ -144,6 +144,8 @@
         }
 
         .back-to-shop {
+            display: flex;
+            align-items: flex-end;
             margin-top: 25px;
         }
 
@@ -1023,7 +1025,7 @@
                         Swal.fire({
                             position: 'center',
                             icon: 'success',
-                            title: 'Update Address Successful!',
+                            title: 'ADDRESS UPDATED',
                             showConfirmButton: false,
                             timer: 2000
                         })
@@ -1047,7 +1049,7 @@
                         Swal.fire({
                             position: 'center',
                             icon: 'success',
-                            title: 'Create New Address Successful!',
+                            title: 'NEW ADDRESS CREATED',
                             showConfirmButton: false,
                             timer: 2000
                         })
@@ -1096,8 +1098,8 @@
             form_data.append("address_id", $(this).closest('.address-list-container').attr('data-address-id'));
 
             Swal.fire({
-                title: 'Are you sure?',
-                text: "Remove this ADDRESS?",
+                title: 'ARE YOU SURE?',
+                text: "Remove this Address?",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -1227,9 +1229,8 @@
                     let timerInterval
 
                     Swal.fire({
-                        title: 'Redirected to PayPal Payment Page',
-                        html: 'Directing in <b></b> milliseconds.',
-                        timer: 3000,
+                        title: 'REDIRECTING TO PAYPAL PAYMENT',
+                        timer: 2000,
                         timerProgressBar: true,
                         didOpen: () => {
                             Swal.showLoading()
@@ -1312,6 +1313,9 @@
                         '   <a href="<?php echo base_url('mainsite') ?>">Browse our shop now</a>' +
                         '</div>'
                     );
+
+                    $('.btn-checkout').hide();
+                    $('.powered-by').hide();
                 }
 
                 //Update quantity - Plus to add
@@ -1386,7 +1390,7 @@
                     form_data.append("cart_id", $(this).attr("data-cartid"));
 
                     Swal.fire({
-                        title: 'Are you sure?',
+                        title: 'ARE YOU SURE?',
                         text: "Remove this item from your Cart?",
                         icon: 'warning',
                         showCancelButton: true,

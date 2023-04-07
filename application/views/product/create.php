@@ -138,38 +138,77 @@
 
 <script>
     $(document).ready(function() {
-        $('#photo').change(function(e) {
-            e.preventDefault();
+        $('#photo').on('change', function() {
+            var formData = new FormData();
+            formData.append('multipartFile', this.files[0]);
 
-            if ($(e.target)[0].files[0]) {
-                var form_data = new FormData();
+            $.ajax({
+                url: "<?php echo site_url('home/upload') ?>",
+                type: 'POST',
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function(response) {
+                    // $('#response').html(response);
+                    console.log('s: ' + response);
 
-                form_data.append("multipartFile", $(e.target)[0].files[0]);
-
-                $.ajax({
-                    url: "<?php echo site_url('product/upload') ?>",
-                    encrypt: "multipartFile/form-data",
-                    data: form_data,
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    method: "POST",
-                    success: function(data) {
-                        data = JSON.parse(data);
-                        $('#preview-photo').append("<div class='wrapper'><img data-value='" + data.name + "'src='https://storage-api-ten.vercel.app/" + data.name + "'><button class='btn btn-danger remove'>Remove</button></div>");
-
-                        $('.remove').click(function(e) {
-                            e.preventDefault();
-                            $(this).closest('.wrapper').remove();
-
-                            updateProductPhoto();
-                        });
-
-                        updateProductPhoto();
-                    }
-                });
-            }
+                },
+                error: function() {
+                    // $('#response').html('Error: Unable to upload the image.');
+                    console.log('Error: Unable to upload the image.');
+                }
+            });
         });
+
+        // $('#photo').change(function(e) {
+        //     e.preventDefault();
+
+        //     if ($(e.target)[0].files[0]) {
+        //         // var form_data = new FormData();
+
+        //         // form_data.append("multipartFile", $(e.target)[0].files[0]);
+
+        //         var formData = new FormData();
+        //         formData.append('multipartFile', $($('#photo')[0]).files[0]);
+
+        //         $.ajax({
+        //             url: "<?php echo site_url('product/upload') ?>",
+        //             type: 'POST',
+        //             data: formData,
+        //             processData: false,
+        //             contentType: false,
+        //             success: function(response) {
+        //                 console.log('s: ' + response);
+        //             // Handle success response
+        //             },
+        //             error: function(xhr, status, error) {
+        //                 console.log(xhr.responseText);
+        //             // Handle error response
+        //             }
+        //             // encrypt: "multipartFile/form-data",
+        //             // data: form_data,
+        //             // cache: false,
+        //             // contentType: false,
+        //             // processData: false,
+        //             // method: "POST",
+        //             // success: function(data) {
+        //             //     data = JSON.parse(data);
+        //             //     $('#preview-photo').append("<div class='wrapper'><img data-value='" + data.name + "'src='https://storage-api-ten.vercel.app/files" + data.name + "'><button class='btn btn-danger remove'>Remove</button></div>");
+
+        //             //     $('.remove').click(function(e) {
+        //             //         e.preventDefault();
+        //             //         $(this).closest('.wrapper').remove();
+
+        //             //         updateProductPhoto();
+        //             //     });
+
+        //             //     updateProductPhoto();
+        //             // }
+
+        //         });
+        //     }
+        // });
 
         $('.remove').click(function(e) {
             e.preventDefault();

@@ -18,7 +18,7 @@ class Voucher extends CI_Controller
     {
         $data['vouchers'] = $this->Voucher_model->get_all();
         $data['title'] = 'Voucher Management';
-        // $this->load->view('layout/header');
+        $this->load->view('layout/admin_header');
         $this->load->view('voucher/index', $data);
         // $this->load->view('layout/footer');
     }

@@ -18,7 +18,7 @@ class Product extends CI_Controller
   {
     $data['products'] = $this->Product_model->get_all();
     $data['title'] = 'Products Management';
-    // $this->load->view('layout/header');
+    $this->load->view('layout/admin_header');
     $this->load->view('product/index', $data);
     // $this->load->view('layout/footer');
   }
