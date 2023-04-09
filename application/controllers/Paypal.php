@@ -69,7 +69,6 @@ class Paypal extends CI_Controller{
 
         $this->load->view('layout/loading');
         $this->load->view('paypal/success', $data); 
-        $this->load->view('admin/order_details', $data); 
         // Pass the transaction data to view 
     } 
       
