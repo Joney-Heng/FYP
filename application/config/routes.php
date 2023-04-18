@@ -109,6 +109,11 @@ $route['user/create/order'] = "user/order/createOrder";
 //ADMIN ORDER MANAGEMENT
 $route['orders'] = "admin/orderreceived/index";
 $route['orders/show/(:num)'] = "admin/orderreceived/show/$1";
+$route['orders/update-tracking/preparing-to-ship/(:num)'] = "admin/orderreceived/preparing/$1";
+
+//ADMIN TRACKING MANAGEMENT
+$route['orders/tracking'] = "admin/orderreceived/indexTracking";
+$route['orders/tracking/show/(:num)'] = "admin/orderreceived/showTracking/$1";
 
 //SEARCH PRODUCTS FEATURES
 $route['mainsite/search-product'] = "mainsite/search/search";

@@ -139,5 +139,28 @@ class Order_model extends CI_Model{
         $query=$this->db->get();
         return $query->result_array();
     }
+
+    public function updatePreparingToShipbyID($order_id,$parcel_id)
+    {
+        $data = [
+            'order_status' => 'PREPARING TO SHIP',
+            'parcel_id'    => $parcel_id,
+        ];
+        $response = $this->db->where('id', $order_id)->update('orders', $data);
+
+        return $response;
+    }
+
+    public function get_TrackingSuccess()
+    {
+        // Retrieve the products from your database
+        $this->db->select('*');
+        $this->db->from('orders');
+        $query=$this->db->get();
+        $orders = $query->result_array();
+        
+        // Return the order as an array of objects
+        return $orders;
+    }
 }
 ?>

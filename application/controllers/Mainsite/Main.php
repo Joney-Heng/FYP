@@ -21,7 +21,7 @@ class Main extends CI_Controller {
     $data['title'] = 'Mainsite - Shopping View';
     $this->load->view('layout/_header');
     $this->load->view('mainsite/main_view',$data);
-    // $this->load->view('layout/footer');
+    $this->load->view('layout/footer');
   }
  
   public function show($id)

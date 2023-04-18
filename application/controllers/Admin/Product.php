@@ -31,7 +31,7 @@ class Product extends CI_Controller
   {
     $data['product'] = $this->Product_model->get($id);
     $data['title'] = "Show Products";
-    // $this->load->view('layout/header');
+    $this->load->view('layout/admin_header');
     $this->load->view('product/show', $data);
     // $this->load->view('layout/footer'); 
   }
@@ -42,7 +42,7 @@ class Product extends CI_Controller
   public function create()
   {
     $data['title'] = "Create Products";
-    // $this->load->view('layout/header');
+    $this->load->view('layout/admin_header');
     $this->load->view('product/create', $data);
     // $this->load->view('layout/footer');
   }
@@ -68,25 +68,55 @@ class Product extends CI_Controller
 
   public function uploadImage()
   {
-    // $target_dir = "uploads/";
-    // $target_file = $target_dir . basename($_FILES["multipartFile"]["name"]);
+    // // $target_dir = "uploads/";
+    // // $target_file = $target_dir . basename($_FILES["multipartFile"]["name"]);
 
-    // move_uploaded_file($_FILES["multipartFile"]["tmp_name"], $target_file);
+    // // move_uploaded_file($_FILES["multipartFile"]["tmp_name"], $target_file);
 
-    $postData = array(
-      "file" => new CURLFile($_FILES['multipartFile']['tmp_name'], $_FILES['multipartFile']['type'], $_FILES['multipartFile']['name'])
-    );
+    // $postData = array(
+    //   "file" => new CURLFile($_FILES['multipartFile']['tmp_name'], $_FILES['multipartFile']['type'], $_FILES['multipartFile']['name'])
+    // );
     // echo json_encode($_FILES['multipartFile']); exit;
 
-    $postHeaderData = array(
-      'Content-Type: multipart/form-data',
-      'Accept: */*'
-      // $this->session->userdata("key") . ': ' . $this->session->userdata("jwtToken")
-    );
-    // Prepare new cURL resource
-    $response = $this->initiateCurl('https://storage-api-ten.vercel.app/files', $postData, $postHeaderData);
-    echo json_encode($response); exit;
-    echo json_encode(array("status" => true, "msg" => $response));
+    // $postHeaderData = array(
+    //   'Content-Type: multipart/form-data',
+    //   'Accept: */*'
+    //   // $this->session->userdata("key") . ': ' . $this->session->userdata("jwtToken")
+    // );
+    // // Prepare new cURL resource
+    // $response = $this->initiateCurl('https://storage-api-ten.vercel.app/files', $postData, $postHeaderData);
+    // echo json_encode($response); exit;
+    // echo json_encode(array("status" => true, "msg" => $response));
+
+    $uploadDir = 'uploads/';
+    $uploadedFile = $uploadDir . basename($_FILES['multipartFile']['name']);
+
+    move_uploaded_file($_FILES['multipartFile']['tmp_name'], $uploadedFile);
+
+    // C:\wamp64\www\FYP\application\controllers\Admin\Product.php
+
+    $curl = curl_init();
+
+    echo (('/C:/wamp64/www/FYP/' . $uploadedFile));
+
+    curl_setopt_array($curl, array(
+      CURLOPT_URL => 'https://storage-api-ten.vercel.app/files',
+      CURLOPT_RETURNTRANSFER => true,
+      CURLOPT_ENCODING => '',
+      CURLOPT_MAXREDIRS => 10,
+      CURLOPT_TIMEOUT => 0,
+      CURLOPT_FOLLOWLOCATION => true,
+      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+      CURLOPT_CUSTOMREQUEST => 'POST',
+      // CURLOPT_POSTFIELDS => array('file'=> new CURLFILE('/C:/wamp64/www/FYP/' . $uploadedFile)),
+      CURLOPT_POSTFIELDS => array('file'=> new CURLFILE('/C:/wamp64/www/FYP/uploads/banner_1.jpeg'))
+    ));
+
+    $response = curl_exec($curl);
+
+    curl_close($curl);
+    echo 'abcdefg' . $response;
+
   }
 
   function initiateCurl($url, $postData, $postHeaderData)
@@ -123,7 +153,7 @@ class Product extends CI_Controller
   {
     $data['product'] = $this->Product_model->get($id);
     $data['title'] = "Edit Product";
-    // $this->load->view('layout/header');
+    $this->load->view('layout/admin_header');
     $this->load->view('product/edit', $data);
     // $this->load->view('layout/footer');    
   }

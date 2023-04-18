@@ -5,10 +5,10 @@ class Voucher extends CI_Controller
 
     public function __construct()
     {
-        parent::__construct();
-        $this->load->library('form_validation');
-        $this->load->library('session');
-        $this->load->model('Voucher_model');
+      parent::__construct();
+      $this->load->library('form_validation');
+      $this->load->library('session');
+      $this->load->model('Voucher_model');
     }
 
     /*
@@ -16,11 +16,11 @@ class Voucher extends CI_Controller
    */
     public function index()
     {
-        $data['vouchers'] = $this->Voucher_model->get_all();
-        $data['title'] = 'Voucher Management';
-        $this->load->view('layout/admin_header');
-        $this->load->view('voucher/index', $data);
-        // $this->load->view('layout/footer');
+      $data['vouchers'] = $this->Voucher_model->get_all();
+      $data['title'] = 'Voucher Management';
+      $this->load->view('layout/admin_header');
+      $this->load->view('voucher/index', $data);
+      // $this->load->view('layout/footer');
     }
 
     /*
@@ -29,11 +29,11 @@ class Voucher extends CI_Controller
   */
     public function show($id)
     {
-        $data['vouchers'] = $this->Voucher_model->getVoucherDetails($id);
-        $data['title'] = "Show Voucher";
-        // $this->load->view('layout/header');
-        $this->load->view('voucher/show', $data);
-        // $this->load->view('layout/footer'); 
+      $data['vouchers'] = $this->Voucher_model->getVoucherDetails($id);
+      $data['title'] = "Show Voucher";
+      $this->load->view('layout/admin_header');
+      $this->load->view('voucher/show', $data);
+      // $this->load->view('layout/footer'); 
     }
 
     /*
@@ -41,10 +41,10 @@ class Voucher extends CI_Controller
   */
     public function create()
     {
-        $data['title'] = "Create Voucher";
-        // $this->load->view('layout/header');
-        $this->load->view('voucher/create', $data);
-        // $this->load->view('layout/footer');
+      $data['title'] = "Create Voucher";
+      $this->load->view('layout/admin_header');
+      $this->load->view('voucher/create', $data);
+      // $this->load->view('layout/footer');
     }
 
     /*
@@ -52,7 +52,7 @@ class Voucher extends CI_Controller
   */
     public function store()
     {
-        $this->Voucher_model->store();
+      $this->Voucher_model->store();
     }
 
     /*
@@ -60,11 +60,11 @@ class Voucher extends CI_Controller
   */
     public function edit($id)
     {
-        $data['voucherDetails'] = $this->Voucher_model->getVoucherDetails($id);
-        $data['title'] = "Edit voucher";
-        // $this->load->view('layout/header');
-        $this->load->view('voucher/edit', $data);
-        // $this->load->view('layout/footer');    
+      $data['voucherDetails'] = $this->Voucher_model->getVoucherDetails($id);
+      $data['title'] = "Edit voucher";
+      $this->load->view('layout/admin_header');
+      $this->load->view('voucher/edit', $data);
+      // $this->load->view('layout/footer');    
     }
 
     /*
@@ -72,17 +72,17 @@ class Voucher extends CI_Controller
   */
     public function update($id)
     {
-        $this->form_validation->set_rules('campaignName', 'Name', 'required');
-        // $this->form_validation->set_rules('description', 'Description', 'required');
+      $this->form_validation->set_rules('campaignName', 'Name', 'required');
+      // $this->form_validation->set_rules('description', 'Description', 'required');Pcr
 
-        if (!$this->form_validation->run()) {
-            $this->session->set_flashdata('errors', validation_errors());
-            redirect(base_url('voucher/edit/' . $id));
-        } else {
-            $this->Voucher_model->update($id);
-            $this->session->set_flashdata('success', "Updated Successfully!");
-            redirect(base_url('voucher'));
-        }
+      if (!$this->form_validation->run()) {
+          $this->session->set_flashdata('errors', validation_errors());
+          redirect(base_url('voucher/edit/' . $id));
+      } else {
+          $this->Voucher_model->update($id);
+          $this->session->set_flashdata('success', "Updated Successfully!");
+          redirect(base_url('voucher'));
+      }
     }
 
     public function deleteVoucher()
@@ -92,11 +92,11 @@ class Voucher extends CI_Controller
 
     public function getAvailableVouchers()
     {
-        echo json_encode($this->Voucher_model->getAvailableVouchersbyDate());
+      echo json_encode($this->Voucher_model->getAvailableVouchersbyDate());
     }
 
     public function getAppliedVoucherDetails()
     {
-        echo json_encode($this->Voucher_model->getAppliedVoucherbyID($this->input->post('voucher_id')));
+      echo json_encode($this->Voucher_model->getAppliedVoucherbyID($this->input->post('voucher_id')));
     }
 }

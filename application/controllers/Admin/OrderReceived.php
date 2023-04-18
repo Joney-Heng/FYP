@@ -16,7 +16,7 @@ class OrderReceived extends CI_Controller
   public function index()
   {
     $data['orders'] = $this->Order_model->get_OrderSuccess();
-    $data['title'] = 'Order Received';
+    $data['title'] = 'Order Management';
     $this->load->view('layout/admin_header');
     $this->load->view('admin/order_received', $data);
     // $this->load->view('layout/footer');
@@ -30,6 +30,30 @@ class OrderReceived extends CI_Controller
     $this->load->view('layout/admin_header');
     $this->load->view('admin/order_details', $data);
     // $this->load->view('layout/footer'); 
+  }
+
+  public function showTracking($id)
+  {
+    $data['order'] = $this->Order_model->get($id);
+    $data['product'] = $this->Order_model->getDetailsbyOrderID($id);
+    $data['title'] = "Order Details";
+    $this->load->view('layout/admin_header');
+    $this->load->view('admin/order_details_tracking', $data);
+    // $this->load->view('layout/footer'); 
+  }
+
+  public function preparing($order_id)
+  {
+    $data['response'] = $this->Order_model->updatePreparingToShipbyID($order_id,$this->input->post('parcel_id'));
+  }
+
+  public function indexTracking()
+  {
+    $data['orders'] = $this->Order_model->get_TrackingSuccess();
+    $data['title'] = 'Tracking Management';
+    $this->load->view('layout/admin_header');
+    $this->load->view('admin/order_tracking', $data);
+    // $this->load->view('layout/footer');
   }
 
 }

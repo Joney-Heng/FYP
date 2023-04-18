@@ -39,12 +39,16 @@
 </head>
 
 <body>
+
     <div class="container">
         <h2 class="text-center mt-5 mb-3"><?php echo $title ?></h2>
         <div class="card">
             <div class="card-header">
                 <a class="btn btn-outline-primary" href="<?php echo base_url('admin/dashboard'); ?>">
                     Back to Home
+                </a>
+                <a class="btn btn-outline-success" style="color: black;" target="popup" onclick="window.open('https://app.easyparcel.com/my/en/integrations/orders/','name','width=600,height=400')">
+                    Open EasyParcel Account
                 </a>
             </div>
             <div class="card-body">
@@ -74,10 +78,10 @@
                             <td><?php echo $order['order_total']; ?></td>
                             <td><?php echo $order['order_status']; ?></td>
 
-                            <td class="action-container">
+                            <td class="action-container" data-order-id="<?php echo $order['id']?>">
                                 <div class="btn-group">
-                                    <input type="text" name="" id="">
-                                    <button class="btn btn-primary">Submit</button>
+                                    <input type="text" name="" id="input-tracking-no">
+                                    <button class="btn btn-primary" id="submit-tracking">Submit</button>
                                 </div>
                             </td>
                         </tr>
@@ -93,6 +97,50 @@
 <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 
 <script>
+    $(document).on('click', '#submit-tracking', function(e) {
+        e.preventDefault();
 
-    </script>
+        var form_data = new FormData();
+        orderID = $(this).closest('.action-container').attr('data-order-id');
+        
+        form_data.append("parcel_id", $(this).closest('.action-container').find('#input-tracking-no').val());
+
+        Swal.fire({
+            title: 'KINDLY MAKE SURE<br>TRACKING NO. IS CORRECT',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'YES',
+            cancelButtonText: 'NO'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: "<?php echo site_url('orders/update-tracking/preparing-to-ship/')?>" + orderID,
+                    data: form_data,
+                    encrypt: "",
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    method: "POST",
+                    success: function(data) {
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: 'TRACKING NUMBER ADDED',
+                            showConfirmButton: false,
+                            timer: 4000
+                        }).then(() => {
+                            setTimeout(() => {
+                                location.reload();
+                            }, 1000); // 3000 milliseconds = 3 seconds
+                        });
+
+                    }
+                });
+            }
+        })
+
+    });
+</script>
 </html>

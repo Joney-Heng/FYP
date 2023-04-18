@@ -135,7 +135,7 @@
         <span class="title"><?php echo $title; ?></span>
         <div class="card">
             <div class="card-header">
-                <a class="float-left back-btn" href="<?php echo base_url('orders'); ?>">
+                <a class="float-left back-btn" href="<?php echo base_url('orders/tracking'); ?>">
                     <img src="https://img.icons8.com/windows/32/000000/circled-left-2.png" />
                     BACK
                 </a>
@@ -208,7 +208,6 @@
                 </div>
             
             </div>
-            <a href="https://app.easyparcel.com/my/en/BuyerTool?d=MHdOem9RaUM=" target="popup" onclick="window.open('https://app.easyparcel.com/my/en/BuyerTool?d=MHdOem9RaUM=','name','width=600,height=400')" class="btn btn-primary">Open EasyParcel</a>
         </div>
     </div>
 </body>

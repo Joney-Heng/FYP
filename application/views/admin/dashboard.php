@@ -68,15 +68,15 @@
 
         <a href="<?php echo base_url("orders")?>">
             <div class="content">
-                <img src="https://img.icons8.com/ios-glyphs/64/null/purchase-order.png"/>
+                <img src="https://img.icons8.com/ios/64/null/purchase-order.png"/>
                 <span>ORDER MANAGEMENT</span>
             </div>
         </a>
 
-        <a href="<?php echo base_url("voucher")?>">
+        <a href="<?php echo base_url("orders/tracking")?>">
             <div class="content">
-                <img src="https://img.icons8.com/dotty/64/null/graph-report.png"/>
-                <span>REPORT MANAGEMENT</span>
+                <img src="https://img.icons8.com/ios/64/null/order-shipped.png"/>
+                <span>TRACKING MANAGEMENT</span>
             </div>
         </a>
     </div>
