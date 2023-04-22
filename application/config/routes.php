@@ -58,8 +58,8 @@ $route['translate_uri_dashes'] = FALSE;
 $route['home']                  = 'home';
 
 //LOGIN & SIGN-UP
-$route['login']                 = 'login';
-$route['sign-up']               = 'signup';
+$route['user/login']            = 'user/login/index';
+$route['user/register']         = 'user/register/index';
 $route['google-login']          = 'googleLogin';
 
 //PRODUCT MANAGEMENT
