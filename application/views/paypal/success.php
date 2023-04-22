@@ -194,7 +194,6 @@
 
 <body>
 <?php include 'application/views/layout/header.php' ?>
-
 <?php if($payment) { ?>
     <h1 class="main-header">PAYMENT DETAILS</h1>
     <div class="success">

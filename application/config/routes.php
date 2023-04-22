@@ -102,6 +102,10 @@ $route['voucher/get-available-vouchers'] = "admin/voucher/getAvailableVouchers";
 $route['voucher/get-applied-voucher-details'] = "admin/voucher/getAppliedVoucherDetails";
 $route['voucher/delete'] = "admin/voucher/deleteVoucher";
 $route['voucher/show/(:num)'] = "admin/voucher/show/$1";
+$route['voucher/generate'] = "admin/voucher/generate_vouchers";
+$route['voucher/get-available-redeem-vouchers'] = "admin/voucher/getAvailableRedeemVouchers";
+$route['voucher/get-available-claimed-vouchers'] = "admin/voucher/getClaimedRedeemVouchers";
+$route['voucher/update-claimed-voucher'] = "admin/voucher/updateClaimedVoucher";
 
 //USER ORDER MANAGEMENT
 $route['user/create/order'] = "user/order/createOrder";

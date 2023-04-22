@@ -188,6 +188,7 @@
     </nav>
 </body>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 
     $(document).ready(function() {
@@ -251,6 +252,11 @@
     });
 
     $(document).on("contextmenu",function(){
+        Swal.fire(
+            'Save Image?',
+            'This action we are strictly prohibited<br>to protect the original content',
+            'question'
+        )
         return false;
     });
 

@@ -316,8 +316,8 @@
 
                         <div class="form-group">
                             <div style="display:flex; justify-content:space-between;align-items:center">
-                                <label for="voucherCode" >Voucher Code</label>
-                                <button class="btn btn-primary" id="generateNewCode">Generate New Code <img src="https://img.icons8.com/external-tal-revivo-bold-tal-revivo/20/e6e6e6/external-click-to-add-more-with-plus-sign-isolated-on-white-background-touch-bold-tal-revivo.png"/></button>
+                                <label for="voucherCode" >Prefixed Code</label>
+                                <!-- <button class="btn btn-primary" id="generateNewCode">Generate New Code <img src="https://img.icons8.com/external-tal-revivo-bold-tal-revivo/20/e6e6e6/external-click-to-add-more-with-plus-sign-isolated-on-white-background-touch-bold-tal-revivo.png"/></button> -->
                             </div>
                             <input type="text" class="form-control" id="voucherCode" name="voucherCode" style="margin-top:5px" value="<?php echo $voucherDetails->voucher_code ?>"></input>
                         </div>

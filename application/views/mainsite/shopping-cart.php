@@ -357,13 +357,31 @@
 
         }
 
+        .cta .voucher .voucher-title .cta-view-vouchers {
+            display: flex;
+            flex-direction:column;
+            justify-content: flex-end;
+        }
+
         .cta .voucher .voucher-title #view-voucher {
+            text-align: right;
             font-size: 12px;
             color: #007bff;
             cursor: pointer;
         }
 
         .cta .voucher .voucher-title #view-voucher:hover {
+            color: #0a58ca;
+        }
+
+        .cta .voucher .voucher-title #view-claimed-voucher {
+            text-align: right;
+            font-size: 12px;
+            color: #007bff;
+            cursor: pointer;
+        }
+
+        .cta .voucher .voucher-title #view-claimed-voucher:hover {
             color: #0a58ca;
         }
 
@@ -623,6 +641,8 @@
         }
 
         #available-voucher-modal .modal-body .coupon-card .tnc {
+            text-decoration: none;
+            color: #d6d6c2;
             font-weight: 600;
             font-size: 12px;
             cursor: pointer;
@@ -658,12 +678,127 @@
             color: #59b300;
         }
 
-        #available-voucher-modal .modal-body .tnc {
-            margin-top: 20px;
-            font-weight: 600;
+        #claimed-voucher-modal .modal-dialog {
+            max-width: 702px;
+        }
+
+        #claimed-voucher-modal .modal-header .modal-title {
+            width: 100%;
+            text-align: center;
+            font-weight: 700;
+            font-size: 25px;
+        }
+
+        #claimed-voucher-modal .modal-body {
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+
+        }
+
+        #claimed-voucher-modal .modal-body .claimed-shipping-voucher {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        #claimed-voucher-modal .modal-body .claimed-discount-voucher {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        #claimed-voucher-modal .modal-body .title {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 18px;
+            font-weight: 700;
+            color: #DEB887;
+        }
+
+        #claimed-voucher-modal .modal-body .coupon-card {
+            margin: 0 20px 20px 0;
+            padding: 20px;
+            width: 200px;
+            height: 250px;
+            text-align: center;
+            color: #fff;
+            background: linear-gradient(135deg, #ff9933, #e67300);
+            border-radius: 15px;
+            box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.15);
+        }
+
+        #claimed-voucher-modal .modal-body .coupon-card .voucher-icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 10px;
+            height: 120px;
+            border-radius: 5px;
+            background: #ffe6cc;
+        }
+
+        #claimed-voucher-modal .modal-body .coupon-card .voucher-icon img {
+            width: 50px;
+            height: 50px;
+        }
+
+        #claimed-voucher-modal .modal-body .coupon-card .voucher-icon .discount-value {
             font-size: 16px;
-            color: #d6d6c2;
+            font-weight: 700;
+            color: #13221C;
+        }
+
+        #claimed-voucher-modal .modal-body .coupon-card .voucher-icon .discount-type {
+            font-weight: 700;
+            color: #13221C;
+        }
+
+        #claimed-voucher-modal .modal-body .coupon-card .voucher-icon .min-spend {
+            font-size: 12px;
+            font-weight: 300;
+            color: #13221C;
+        }
+
+        #claimed-voucher-modal .modal-body .coupon-card .valid-date {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        #claimed-voucher-modal .modal-body .coupon-card .tnc {
             text-decoration: none;
+            color: #d6d6c2;
+            font-weight: 600;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        #claimed-voucher-modal .modal-body .coupon-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+            width: 100%;
+        }
+
+        #claimed-voucher-modal .modal-body #cpnCode {
+            padding: 10px;
+            border: 1px dashed #fff;
+            border-right: 0;
+            width: 60%;
+            font-size: 12px;
+        }
+
+        #claimed-voucher-modal .modal-body #cpnBtn {
+            border: 1px solid #fff;
+            padding: 10px;
+            width: 40%;
+            font-size: 12px;
+            color: #ff5c33;
+            background: #fff;
+            cursor: pointer;
+        }
+
+        #claimed-voucher-modal .modal-body #cpnBtn:hover {
+            background: #f2f2f2;
+            color: #59b300;
         }
     </style>
 </head>
@@ -743,7 +878,12 @@
                                 </svg>
                                 <span class="title">Voucher</span>
                             </div>
-                            <span id="view-voucher">View Voucher</span>
+
+                            <div class="cta-view-vouchers">
+                                <span id="view-voucher">Available Vouchers</span>
+                                <span id="view-claimed-voucher">View Claimed Voucher</span>
+                            </div>
+
                         </div>
                         <div class="voucher-code">
                             <span class="without-voucher" data-voucher-amount="0">- No Voucher Apply -</span>
@@ -932,6 +1072,35 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal - Claimed Vouchers Modal -->
+    <div class="modal fade" id="claimed-voucher-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">-- CLAIMED VOUCHERS --</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <span class='title'>Shipping Voucher</span>
+                    <div class="claimed-shipping-voucher"></div>
+
+                    <hr>
+
+                    <span class='title'>Discount Voucher</span>
+                    <div class="claimed-discount-voucher"></div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 <!-- jquery & sweetalert -->
@@ -985,6 +1154,15 @@
             getAvailableVouchers();
 
             $('#available-voucher-modal').modal('show');
+        });
+
+        //Modal - Claimed Vouchers
+        $('#view-claimed-voucher').click(function(e) {
+            e.preventDefault();
+
+            getAvailableRedeemVouchers();
+
+            $('#claimed-voucher-modal').modal('show');
         });
 
         //Modal - Close Modal
@@ -1148,7 +1326,7 @@
             $('#add-address-modal').modal('show');
         });
 
-        //Apply Voucher
+        //Apply Voucher = Used Voucher
         $(document).on('click', '.apply-btn', function(e) {
             e.preventDefault();
 
@@ -1187,6 +1365,26 @@
             });
         });
 
+        $(document).on('click', '.claim-btn', function(e) {
+            e.preventDefault();
+
+            var form_data = new FormData();
+            form_data.append("voucher_id", $(this).closest('.coupon-card').attr('data-voucher'));
+
+            $.ajax({
+                url: "<?php echo site_url('voucher/update-claimed-voucher') ?>",
+                data: form_data,
+                encrypt: "",
+                cache: false,
+                contentType: false,
+                processData: false,
+                method: "POST",
+                success: function(data) {
+                    console.log("update claimed voucher:",data)
+                }
+            });
+        });
+
         //Choose courier shipping and update total
         $(document).on('click', '.select-courier', function(e) {
             e.preventDefault();
@@ -1212,7 +1410,7 @@
             form_data.append("courier_company", $('#choose-courier option:selected').attr('data-courier'));
             form_data.append("shipping_amount", $('#choose-courier').val());
             form_data.append("voucher_amount", $('.voucher-amount').html() == undefined ? 0 : $('.voucher-amount').html().replace("(-) MYR ",""));
-            form_data.append("voucher_code_applied", $('.applied-voucher-value').attr('data-voucher-code') == undefined ? 0 : $('.applied-voucher-value').attr('data-voucher-code'));
+            form_data.append("voucher_code_applied", $('.coupon-card').attr('data-voucher') == undefined ? 0 : $('.coupon-card').attr('data-voucher'));
             form_data.append("product_subtotal", $('.subtotal').html());
             form_data.append("order_total", $('.checkout-total').html().replace("MYR ",""));
             form_data.append("product_details", JSON.stringify(orderDetails));
@@ -1529,31 +1727,29 @@
         });
     }
 
-    // Display available voucher
-    function getAvailableVouchers() {
-
+    function getAvailableRedeemVouchers() {
         $.ajax({
-            url: "<?php echo site_url('voucher/get-available-vouchers') ?>",
+            url: "<?php echo site_url('voucher/get-available-claimed-vouchers') ?>",
             encrypt: "",
             cache: false,
             contentType: false,
             processData: false,
-            method: "POST",
             success: function(data) {
-
-                $('.shipping-voucher').children().remove();
-                $('.discount-voucher').children().remove();
+                console.log("multiple:",data);
+                $('.claimed-shipping-voucher').children().remove();
+                $('.claimed-discount-voucher').children().remove();
 
                 $.each(JSON.parse(data), function(i, value) {
-
+                    
                     var today = new Date();
                     var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
                     var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
                     var dateTime = date + ' ' + time;
-
+                    
                     if (new Date(value.end_date) >= new Date(dateTime) && new Date(value.start_date) <= new Date(dateTime)) {
+                        console.log("data",value);
                         if (value.voucher_type == 'Shipping') {
-                            $('.shipping-voucher').append(
+                            $('.claimed-shipping-voucher').append(
                                 "   <div class='coupon-card' data-voucher='" + value.id + "'>" +
                                 "       <div class='voucher-icon'>" +
                                 "           <img class='logo' src='https://img.icons8.com/material-rounded/96/null/truck--v1.png' />" +
@@ -1577,7 +1773,7 @@
                             );
 
                         } else if (value.voucher_type == 'Discount') {
-                            $('.discount-voucher').append(
+                            $('.claimed-discount-voucher').append(
                                 "<div class='coupon-card' data-voucher='" + value.id + "'>" +
                                 "   <div class='voucher-icon'>" +
                                 "       <img class='logo' src='https://img.icons8.com/glyph-neue/64/null/discount-ticket.png' />" +
@@ -1604,6 +1800,137 @@
                 });
             }
         });
+    }
+
+    // Display available voucher
+    function getAvailableVouchers() {
+
+        $.ajax({
+            url: "<?php echo site_url('voucher/get-available-redeem-vouchers') ?>",
+            encrypt: "",
+            cache: false,
+            contentType: false,
+            processData: false,
+            method: "POST",
+            success: function(data) {
+                
+                $('.shipping-voucher').children().remove();
+                $('.discount-voucher').children().remove();
+                
+                $.each(JSON.parse(data), function(i, value) {
+                    
+                    var today = new Date();
+                    var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+                    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+                    var dateTime = date + ' ' + time;
+                    
+                    if (new Date(value.end_date) >= new Date(dateTime) && new Date(value.start_date) <= new Date(dateTime)) {
+                        console.log("data",value);
+                        if (value.voucher_type == 'Shipping') {
+                            $('.shipping-voucher').append(
+                                "   <div class='coupon-card' data-voucher='" + value.id + "'>" +
+                                "       <div class='voucher-icon'>" +
+                                "           <img class='logo' src='https://img.icons8.com/material-rounded/96/null/truck--v1.png' />" +
+                                "           <span class='discount-value'>MYR" + value.capped_amount + " OFF</span>" +
+                                "           <span class='discount-type'>SHIPPING</span>" +
+                                "           <span class='min-spend'>(Min.spend MYR" + value.min_spend + ")</span>" +
+                                "       </div>" +
+
+                                "       <div class='coupon-row'>" +
+                                "           <span id='cpnCode'> " + value.voucher_code + " </span>" +
+                                "           <span id='cpnBtn' class='claim-btn' >CLAIM</span>" +
+                                "       </div>" +
+
+                                "       <div class='valid-date'>" +
+                                "           <span class='expired-date'> " + value.end_date + " </span><br>" +
+                                "       </div>" +
+                                "       <a href='' class='tnc'>T&C Apply</a>" +
+
+                                "</div>" +
+                                "<hr>",
+                            );
+
+                        } else if (value.voucher_type == 'Discount') {
+                            $('.discount-voucher').append(
+                                "<div class='coupon-card' data-voucher='" + value.id + "'>" +
+                                "   <div class='voucher-icon'>" +
+                                "       <img class='logo' src='https://img.icons8.com/glyph-neue/64/null/discount-ticket.png' />" +
+                                "       <span class='discount-value'>MYR" + value.capped_amount + " OFF</span>" +
+                                "       <span class='discount-type'>PRODUCT</span>" +
+                                "       <span class='min-spend'>(Min.spend MYR" + value.min_spend + ")</span>" +
+                                "   </div>" +
+
+                                "   <div class='coupon-row'>" +
+                                "       <span id='cpnCode'> " + value.voucher_code + " </span>" +
+                                "       <span id='cpnBtn' class='claim-btn'>CLAIM</span>" +
+                                "   </div>" +
+
+                                "   <div class='valid-date'>" +
+                                "       <span class='expired-date'> " + value.end_date + " </span><br>" +
+                                "   </div>" +
+                                "   <span class='tnc'>T&C Apply</span>" +
+
+                                "</div>",
+
+                            );
+                        }
+                    }
+
+                    // if (new Date(value.end_date) >= new Date(dateTime) && new Date(value.start_date) <= new Date(dateTime)) {
+                    //     if (value.voucher_type == 'Shipping') {
+                    //         $('.shipping-voucher').append(
+                    //             "   <div class='coupon-card' data-voucher='" + value.id + "'>" +
+                    //             "       <div class='voucher-icon'>" +
+                    //             "           <img class='logo' src='https://img.icons8.com/material-rounded/96/null/truck--v1.png' />" +
+                    //             "           <span class='discount-value'>MYR" + value.capped_amount + " OFF</span>" +
+                    //             "           <span class='discount-type'>SHIPPING</span>" +
+                    //             "           <span class='min-spend'>(Min.spend MYR" + value.min_spend + ")</span>" +
+                    //             "       </div>" +
+
+                    //             "       <div class='coupon-row'>" +
+                    //             "           <span id='cpnCode'> " + value.voucher_code + " </span>" +
+                    //             "           <span id='cpnBtn' class='apply-btn' >APPLY</span>" +
+                    //             "       </div>" +
+
+                    //             "       <div class='valid-date'>" +
+                    //             "           <span class='expired-date'> " + value.end_date + " </span><br>" +
+                    //             "       </div>" +
+                    //             "       <a href='' class='tnc'>T&C Apply</a>" +
+
+                    //             "</div>" +
+                    //             "<hr>",
+                    //         );
+
+                    //     } else if (value.voucher_type == 'Discount') {
+                    //         $('.discount-voucher').append(
+                    //             "<div class='coupon-card' data-voucher='" + value.id + "'>" +
+                    //             "   <div class='voucher-icon'>" +
+                    //             "       <img class='logo' src='https://img.icons8.com/glyph-neue/64/null/discount-ticket.png' />" +
+                    //             "       <span class='discount-value'>MYR" + value.capped_amount + " OFF</span>" +
+                    //             "       <span class='discount-type'>PRODUCT</span>" +
+                    //             "       <span class='min-spend'>(Min.spend MYR" + value.min_spend + ")</span>" +
+                    //             "   </div>" +
+
+                    //             "   <div class='coupon-row'>" +
+                    //             "       <span id='cpnCode'> " + value.voucher_code + " </span>" +
+                    //             "       <span id='cpnBtn' class='apply-btn'>Apply</span>" +
+                    //             "   </div>" +
+
+                    //             "   <div class='valid-date'>" +
+                    //             "       <span class='expired-date'> " + value.end_date + " </span><br>" +
+                    //             "   </div>" +
+                    //             "   <span class='tnc'>T&C Apply</span>" +
+
+                    //             "</div>",
+
+                    //         );
+                    //     }
+                    // }
+                });
+            }
+        });
+
+      
     }
 
     //Calculate Payment Total

@@ -10,6 +10,7 @@ class Paypal extends CI_Controller{
          
         // Load product model 
         $this->load->model('Order_model'); 
+        $this->load->model('Voucher_model');
          
         // Load payment model 
         $this->load->model('Payment');
@@ -50,7 +51,7 @@ class Paypal extends CI_Controller{
             $payment = $this->Payment->getPaymentbyPaymentID($item_number);
 
             // Verified order and payment got or not, if yes run
-
+            // echo json_encode($order[0]['voucher_code_applied']);exit;
             if (!empty($payment) && !empty($order)) { //Validation
                 // update order status
                 $this->Order_model->updateOrder($order[0]['id'], ['order_status' => 'PAYMENT RECEIVED']);
@@ -59,10 +60,14 @@ class Paypal extends CI_Controller{
                 $this->Payment->updatePayment($payment[0]['id'],$data);
                 $payment = $this->Payment->getPaymentbyPaymentID($item_number);
                 $orderDetails = $this->Order_model->getDetailsbyOrderID($order[0]['id']);
-
+                $voucherDetails = $this->Voucher_model->getVoucherDetailByUserIDAndVoucherID(1, $order[0]['voucher_code_applied']);
+                
+                $this->Voucher_model->updateVoucherDetailStatus($voucherDetails->id, 'USED');
+                
                 $data['product'] = $orderDetails; 
                 $data['payment'] = $payment;
                 $data['order'] = $order;
+                // $data['voucher'] = $voucherDetails;
             }
             // $paypalInfo['verify_sign']
         }

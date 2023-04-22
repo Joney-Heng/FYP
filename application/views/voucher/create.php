@@ -312,10 +312,10 @@
 
                     <div class="form-group">
                         <div style="display:flex; justify-content:space-between;align-items:center">
-                            <label for="voucherCode" >Voucher Code</label>
-                            <button class="btn btn-primary" id="generateCode">Generate Code <img src="https://img.icons8.com/external-tal-revivo-bold-tal-revivo/20/e6e6e6/external-click-to-add-more-with-plus-sign-isolated-on-white-background-touch-bold-tal-revivo.png"/></button>
+                            <label for="voucherCode" >Prefixed Code</label>
+                            <!-- <button class="btn btn-primary" id="generateCode">Generate Code <img src="https://img.icons8.com/external-tal-revivo-bold-tal-revivo/20/e6e6e6/external-click-to-add-more-with-plus-sign-isolated-on-white-background-touch-bold-tal-revivo.png"/></button> -->
                         </div>
-                        <input type="text" class="form-control" id="voucherCode" name="voucherCode" placeholder="eg. STEALDEAL20" style="margin-top:5px"></input>
+                        <input type="text" class="form-control" id="voucherCode" name="voucherCode" placeholder="eg. VOUxxxxxx" style="margin-top:5px"></input>
                     </div>
 
                     <div class="form-group">
@@ -453,6 +453,7 @@
             processData: false,
             method: "POST",
             success: function(data) {
+                console.log("success:",data);
                 Swal.fire({
                     position: 'center',
                     icon: 'success',
@@ -460,9 +461,9 @@
                     showConfirmButton: false,
                     timer: 2000,
                 })
-                window.setTimeout(function() {
-                    window.location.href = "<?php echo site_url('voucher') ?>";
-                }, 1000);
+                // window.setTimeout(function() {
+                //     window.location.href = "<?php echo site_url('voucher') ?>";
+                // }, 1000);
             }
         });
     });
@@ -531,6 +532,7 @@
         $('.expired-date').html(copy_end_date);
 
     });
+
 </script>
 
 </html>
