@@ -25,6 +25,7 @@ class Cart extends CI_Controller
     $this->load->view('layout/_loading');
     $this->load->view('layout/header');
     $this->load->view('mainsite/shopping-cart', $data);
+    $this->load->view('layout/footer');
 
     // 
     // echo json_encode($this->Cart_model->getCartbyUserId(1)); 

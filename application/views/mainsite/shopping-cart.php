@@ -31,7 +31,7 @@
         }
 
         .shopping-cart-container {
-            margin: 20px auto;
+            margin: 50px auto;
             max-width: 1350px;
             width: 100%;
             box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -1758,55 +1758,56 @@
                     var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
                     var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
                     var dateTime = date + ' ' + time;
-                    
-                    if (new Date(value.end_date) >= new Date(dateTime) && new Date(value.start_date) <= new Date(dateTime)) {
-                        if (value.voucher_type == 'Shipping') {
-                            $('.claimed-shipping-voucher').append(
-                                "   <div class='coupon-card' data-voucher='" + value.id + "'>" +
-                                "       <div class='voucher-icon'>" +
-                                "           <img class='logo' src='https://img.icons8.com/material-rounded/96/null/truck--v1.png' />" +
-                                "           <span class='discount-value'>MYR" + value.capped_amount + " OFF</span>" +
-                                "           <span class='discount-type'>SHIPPING</span>" +
-                                "           <span class='min-spend'>(Min.spend MYR" + value.min_spend + ")</span>" +
-                                "       </div>" +
+                    if (value.voucher_status == 1) {
+                        if (new Date(value.end_date) >= new Date(dateTime) && new Date(value.start_date) <= new Date(dateTime)) {
+                            if (value.voucher_type == 'Shipping') {
+                                $('.claimed-shipping-voucher').append(
+                                    "   <div class='coupon-card' data-voucher='" + value.id + "'>" +
+                                    "       <div class='voucher-icon'>" +
+                                    "           <img class='logo' src='https://img.icons8.com/material-rounded/96/null/truck--v1.png' />" +
+                                    "           <span class='discount-value'>MYR" + value.capped_amount + " OFF</span>" +
+                                    "           <span class='discount-type'>SHIPPING</span>" +
+                                    "           <span class='min-spend'>(Min.spend MYR" + value.min_spend + ")</span>" +
+                                    "       </div>" +
 
-                                "       <div class='coupon-row'>" +
-                                "           <span id='cpnCode'> " + value.voucher_code + " </span>" +
-                                "           <span id='cpnBtn' class='apply-btn' >APPLY</span>" +
-                                "       </div>" +
+                                    "       <div class='coupon-row'>" +
+                                    "           <span id='cpnCode'> " + value.voucher_code + " </span>" +
+                                    "           <span id='cpnBtn' class='apply-btn' >APPLY</span>" +
+                                    "       </div>" +
 
-                                "       <div class='valid-date'>" +
-                                "           <span class='expired-date'> " + value.end_date + " </span><br>" +
-                                "       </div>" +
-                                "       <a href='' class='tnc'>T&C Apply</a>" +
+                                    "       <div class='valid-date'>" +
+                                    "           <span class='expired-date'> " + value.end_date + " </span><br>" +
+                                    "       </div>" +
+                                    "       <a href='' class='tnc'>T&C Apply</a>" +
 
-                                "</div>" +
-                                "<hr>",
-                            );
+                                    "</div>" +
+                                    "<hr>",
+                                );
 
-                        } else if (value.voucher_type == 'Discount') {
-                            $('.claimed-discount-voucher').append(
-                                "<div class='coupon-card' data-voucher='" + value.id + "'>" +
-                                "   <div class='voucher-icon'>" +
-                                "       <img class='logo' src='https://img.icons8.com/glyph-neue/64/null/discount-ticket.png' />" +
-                                "       <span class='discount-value'>MYR" + value.capped_amount + " OFF</span>" +
-                                "       <span class='discount-type'>PRODUCT</span>" +
-                                "       <span class='min-spend'>(Min.spend MYR" + value.min_spend + ")</span>" +
-                                "   </div>" +
+                            } else if (value.voucher_type == 'Discount') {
+                                $('.claimed-discount-voucher').append(
+                                    "<div class='coupon-card' data-voucher='" + value.id + "'>" +
+                                    "   <div class='voucher-icon'>" +
+                                    "       <img class='logo' src='https://img.icons8.com/glyph-neue/64/null/discount-ticket.png' />" +
+                                    "       <span class='discount-value'>MYR" + value.capped_amount + " OFF</span>" +
+                                    "       <span class='discount-type'>PRODUCT</span>" +
+                                    "       <span class='min-spend'>(Min.spend MYR" + value.min_spend + ")</span>" +
+                                    "   </div>" +
 
-                                "   <div class='coupon-row'>" +
-                                "       <span id='cpnCode'> " + value.voucher_code + " </span>" +
-                                "       <span id='cpnBtn' class='apply-btn'>Apply</span>" +
-                                "   </div>" +
+                                    "   <div class='coupon-row'>" +
+                                    "       <span id='cpnCode'> " + value.voucher_code + " </span>" +
+                                    "       <span id='cpnBtn' class='apply-btn'>Apply</span>" +
+                                    "   </div>" +
 
-                                "   <div class='valid-date'>" +
-                                "       <span class='expired-date'> " + value.end_date + " </span><br>" +
-                                "   </div>" +
-                                "   <span class='tnc'>T&C Apply</span>" +
+                                    "   <div class='valid-date'>" +
+                                    "       <span class='expired-date'> " + value.end_date + " </span><br>" +
+                                    "   </div>" +
+                                    "   <span class='tnc'>T&C Apply</span>" +
 
-                                "</div>",
+                                    "</div>",
 
-                            );
+                                );
+                            }
                         }
                     }
                 });
@@ -1836,54 +1837,56 @@
                     var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
                     var dateTime = date + ' ' + time;
                     
-                    if (new Date(value.end_date) >= new Date(dateTime) && new Date(value.start_date) <= new Date(dateTime)) {
-                        if (value.voucher_type == 'Shipping') {
-                            $('.shipping-voucher').append(
-                                "   <div class='coupon-card' data-voucher='" + value.id + "'>" +
-                                "       <div class='voucher-icon'>" +
-                                "           <img class='logo' src='https://img.icons8.com/material-rounded/96/null/truck--v1.png' />" +
-                                "           <span class='discount-value'>MYR" + value.capped_amount + " OFF</span>" +
-                                "           <span class='discount-type'>SHIPPING</span>" +
-                                "           <span class='min-spend'>(Min.spend MYR" + value.min_spend + ")</span>" +
-                                "       </div>" +
-
-                                "       <div class='coupon-row'>" +
-                                "           <span id='cpnCode'> " + value.voucher_code + " </span>" +
-                                "           <span id='cpnBtn' class='claim-btn' >CLAIM</span>" +
-                                "       </div>" +
-
-                                "       <div class='valid-date'>" +
-                                "           <span class='expired-date'> " + value.end_date + " </span><br>" +
-                                "       </div>" +
-                                "       <a href='' class='tnc'>T&C Apply</a>" +
-
-                                "</div>" +
-                                "<hr>",
-                            );
-
-                        } else if (value.voucher_type == 'Discount') {
-                            $('.discount-voucher').append(
-                                "<div class='coupon-card' data-voucher='" + value.id + "'>" +
-                                "   <div class='voucher-icon'>" +
-                                "       <img class='logo' src='https://img.icons8.com/glyph-neue/64/null/discount-ticket.png' />" +
-                                "       <span class='discount-value'>MYR" + value.capped_amount + " OFF</span>" +
-                                "       <span class='discount-type'>PRODUCT</span>" +
-                                "       <span class='min-spend'>(Min.spend MYR" + value.min_spend + ")</span>" +
-                                "   </div>" +
-
-                                "   <div class='coupon-row'>" +
-                                "       <span id='cpnCode'> " + value.voucher_code + " </span>" +
-                                "       <span id='cpnBtn' class='claim-btn'>CLAIM</span>" +
-                                "   </div>" +
-
-                                "   <div class='valid-date'>" +
-                                "       <span class='expired-date'> " + value.end_date + " </span><br>" +
-                                "   </div>" +
-                                "   <span class='tnc'>T&C Apply</span>" +
-
-                                "</div>",
-
-                            );
+                    if (value.voucher_status == 1) {
+                        if (new Date(value.end_date) >= new Date(dateTime) && new Date(value.start_date) <= new Date(dateTime)) {
+                            if (value.voucher_type == 'Shipping') {
+                                $('.shipping-voucher').append(
+                                    "   <div class='coupon-card' data-voucher='" + value.id + "'>" +
+                                    "       <div class='voucher-icon'>" +
+                                    "           <img class='logo' src='https://img.icons8.com/material-rounded/96/null/truck--v1.png' />" +
+                                    "           <span class='discount-value'>MYR" + value.capped_amount + " OFF</span>" +
+                                    "           <span class='discount-type'>SHIPPING</span>" +
+                                    "           <span class='min-spend'>(Min.spend MYR" + value.min_spend + ")</span>" +
+                                    "       </div>" +
+    
+                                    "       <div class='coupon-row'>" +
+                                    "           <span id='cpnCode'> " + value.voucher_code + " </span>" +
+                                    "           <span id='cpnBtn' class='claim-btn' >CLAIM</span>" +
+                                    "       </div>" +
+    
+                                    "       <div class='valid-date'>" +
+                                    "           <span class='expired-date'> " + value.end_date + " </span><br>" +
+                                    "       </div>" +
+                                    "       <a href='' class='tnc'>T&C Apply</a>" +
+    
+                                    "</div>" +
+                                    "<hr>",
+                                );
+    
+                            } else if (value.voucher_type == 'Discount') {
+                                $('.discount-voucher').append(
+                                    "<div class='coupon-card' data-voucher='" + value.id + "'>" +
+                                    "   <div class='voucher-icon'>" +
+                                    "       <img class='logo' src='https://img.icons8.com/glyph-neue/64/null/discount-ticket.png' />" +
+                                    "       <span class='discount-value'>MYR" + value.capped_amount + " OFF</span>" +
+                                    "       <span class='discount-type'>PRODUCT</span>" +
+                                    "       <span class='min-spend'>(Min.spend MYR" + value.min_spend + ")</span>" +
+                                    "   </div>" +
+    
+                                    "   <div class='coupon-row'>" +
+                                    "       <span id='cpnCode'> " + value.voucher_code + " </span>" +
+                                    "       <span id='cpnBtn' class='claim-btn'>CLAIM</span>" +
+                                    "   </div>" +
+    
+                                    "   <div class='valid-date'>" +
+                                    "       <span class='expired-date'> " + value.end_date + " </span><br>" +
+                                    "   </div>" +
+                                    "   <span class='tnc'>T&C Apply</span>" +
+    
+                                    "</div>",
+    
+                                );
+                            }
                         }
                     }
 

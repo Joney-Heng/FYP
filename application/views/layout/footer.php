@@ -238,34 +238,26 @@
 					<span class="title">FOLLOW US</span>
 					<div class="social-media">
 						<a href="https://www.facebook.com/MeiziyaMalaysia/" target="_blank"
-							><img src="assets/market/images/facebook-icon.svg"
-						/></a>
+							><img src="https://img.icons8.com/color/48/null/facebook-new.png"/>
+						</a>
 						<a href="https://www.instagram.com/MeiZiYaofficial/" target="_blank"
-							><img src="assets/market/images/instagram-icon.svg"
-						/></a>
-						<a
-							href="https://www.youtube.com/channel/UC38OcLYURWKP9Wep_e7dDnw"
-							target="_blank"
-							><img src="assets/market/images/youtube-icon.svg"
-						/></a>
-						<a href="https://www.tiktok.com/@meiziyaofficial" target="_blank"
-							><img src="assets/market/images/tiktok-icon.svg"
-						/></a>
+							><img src="https://img.icons8.com/fluency/48/null/instagram-new.png"/>
+						</a>
 					</div>
 				</div>
 			</div>
 			<div class="space"></div>
 			<div class="about">
 				<span class="title">CORPORATE</span>
-				<a href="https://info.meiziya.com/journey/" target="_blank"
+				<a href="#" target="_blank"
 					>Our Story</a
 				>
 				<a
-					href="https://info.meiziya.com/about-ancient-12-meridian/"
+					href="#"
 					target="_blank"
 					>Our Philosophy</a
 				>
-				<a href="https://info.meiziya.com/products/" target="_blank"
+				<a href="#" target="_blank"
 					>Our Products</a
 				>
 				<!-- <a href="#">Blog</a> -->
@@ -273,11 +265,11 @@
 			<div class="help-center">
 				<span class="title">HELP CENTER</span>
 
-				<a href="exchange-and-refund-policy.php">Refund Policy</a>
-				<a href="privacy-and-policy.php">Privacy Policy</a>
-				<a href="shipping-policy.php">Shipping Policy</a>
-				<a href="terms-and-conditions.php">Terms & Conditions</a>
-				<a href="contact-us">Contact Us</a>
+				<a href="#">Refund Policy</a>
+				<a href="#">Privacy Policy</a>
+				<a href="#">Shipping Policy</a>
+				<a href="#">Terms & Conditions</a>
+				<a href="#">Contact Us</a>
 
 				<!-- <a href="#">Customer Services</a> -->
 				<!-- <a href="#">Contact Us</a> -->
@@ -288,12 +280,11 @@
 			<div class="payment">
 				<span class="title">PAY SECURELY WITH</span>
 				<div class="payment-with">
-					<img src="assets/market/images/payment-mastercard.png" />
-					<img src="assets/market/images/payment-visa.png" />
+					<img src="https://img.icons8.com/fluency/80/null/paypal.png"/>
 				</div>
 
 				<div class="desktop-container">
-					<img src="assets/market/images/direct-selling-logo.png" />
+					<img src='<?php echo base_url()?>images/store-logo.png'/>
 					<span class="copyright"
 						>© 2022 Jolles' E-Store Sdn Bhd (123456789-V) AJL 932403</span
 					>
