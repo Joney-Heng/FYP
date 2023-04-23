@@ -12,7 +12,7 @@ class Logout extends CI_Controller {
 
 	public function logout() {
 		$this->session->sess_destroy(); // Destroy the user's session
-		redirect('user/login'); // Redirect the user to the login page
+		redirect('home'); // Redirect the user to the login page
 	}
 	
 }

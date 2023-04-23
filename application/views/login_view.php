@@ -65,10 +65,19 @@ defined('BASEPATH') or exit('No direct script access allowed');
         .login-btn:hover {
             background: #999966 !important;
         }
+
+        .admin {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
+            width: 65px;
+        }
     </style>
 </head>
 
-<?php include 'application/views/layout/header.php' ?>
+<?php include 'application/views/main_header.php' ?>
 
 <body>
     <span class="title">Login</span>
@@ -90,6 +99,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <input type="submit" class="btn btn-primary login-btn" value="LOGIN" />
             <a href="<?php echo base_url("user/register")?>">No Account? Create one</a>
         </div>
+        
+        <hr>
+        
+        <a class="admin" href="<?php echo base_url("admin/dashboard")?>">
+        <img src="https://img.icons8.com/small/64/e5e5e5/admin-settings-male.png"/>
+        <span>ADMIN</span>
+        </a>
 
     </div>
 

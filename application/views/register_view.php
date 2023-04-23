@@ -67,7 +67,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		</style>
 	</head>
 
-	<?php include 'application/views/layout/header.php' ?>
+	<?php include 'application/views/main_header.php' ?>
 
 	<body>
 		<span class="title">Register</span>

@@ -173,7 +173,6 @@
         .header .user-options img {
             width: 25px;           
             height: 25px;
-            margin-right: 20px;
         }
 
     </style>
@@ -188,8 +187,8 @@
     </div>
 
     <div class="user-options">
-        <a href="<?php echo base_url("admin/dashboard")?>"><img src="https://img.icons8.com/small/64/e5e5e5/admin-settings-male.png"/></a>
-        <a href="<?php echo base_url("mainsite")?>"><img src="https://img.icons8.com/external-inkubators-basic-outline-inkubators/64/e5e5e5/external-user-profile-user-interface-inkubators-basic-outline-inkubators.png"/></a>
+        <!-- <a href="<?php echo base_url("admin/dashboard")?>"><img src="https://img.icons8.com/small/64/e5e5e5/admin-settings-male.png"/></a> -->
+        <a href="<?php echo base_url("user/login")?>"><img src="https://img.icons8.com/ios-glyphs/64/e5e5e5/login-rounded-right--v1.png"/></a>
     </div>
 </div>
 
