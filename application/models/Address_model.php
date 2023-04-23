@@ -7,6 +7,7 @@ class Address_model extends CI_Model{
         $this->load->database();
         $this->load->helper('url');
         $this->load->helper('date');
+        $this->load->library('session'); // Load the session library
     }
 
     public function insert()
@@ -17,7 +18,7 @@ class Address_model extends CI_Model{
                 'default_address'     => 0
             ];
 
-            $this->db->where('user_id', 1)->update('address', $data);
+            $this->db->where('user_id', $this->session->userdata('user_id'))->update('address', $data);
         }
 
         $data = [
@@ -31,7 +32,7 @@ class Address_model extends CI_Model{
             'contact_no'            => $this->input->post('contact_no'),
             'email'                 => $this->input->post('email'),
             'default_address'       => $this->input->post('default_address'),
-            'user_id'               => 1,
+            'user_id'               => $this->session->userdata('user_id'),
         ];
 
         $result = $this->db->insert('address', $data);
@@ -46,7 +47,7 @@ class Address_model extends CI_Model{
                 'default_address'     => 0
             ];
 
-            $this->db->where('user_id', 1)->update('address', $data);
+            $this->db->where('user_id', $this->session->userdata('user_id'))->update('address', $data);
         }
 
         $data = [
@@ -60,11 +61,11 @@ class Address_model extends CI_Model{
             'contact_no'            => $this->input->post('contact_no'),
             'email'                 => $this->input->post('email'),
             'default_address'       => $this->input->post('default_address'),
-            'user_id'               => 1,
+            'user_id'               => $this->session->userdata('user_id'),
         ];
 
         $this->db->where('id', $id);
-        $result = $this->db->where('user_id', 1)->update('address', $data);
+        $result = $this->db->where('user_id', $this->session->userdata('user_id'))->update('address', $data);
 
         return $result;
                  

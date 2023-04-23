@@ -110,19 +110,19 @@ class Voucher extends CI_Controller
     public function getAvailableRedeemVouchers()
     {
       $this->load->model('voucher_model');
-      echo json_encode($this->voucher_model->getAvailableRedeemVouchers(1));
+      echo json_encode($this->voucher_model->getAvailableRedeemVouchers($this->session->userdata('user_id')));
     }
 
     public function getClaimedRedeemVouchers()
     {
       $this->load->model('voucher_model');
-      echo json_encode($this->voucher_model->getRedeemedVouchers(1));
+      echo json_encode($this->voucher_model->getRedeemedVouchers($this->session->userdata('user_id')));
     }
 
     public function updateClaimedVoucher()
     {
       $this->load->model('voucher_model');
       $voucherID = $this->input->post('voucher_id');
-      echo json_encode($this->voucher_model->updateClaimedVoucherbyUserID(1,$voucherID));
+      echo json_encode($this->voucher_model->updateClaimedVoucherbyUserID($this->session->userdata('user_id'),$voucherID));
     }
 }

@@ -6,6 +6,7 @@ class Payment extends CI_Model{
         $this->load->database();
         $this->load->helper('url');
         $this->load->helper('date');
+        $this->load->library('session'); // Load the session library
     } 
      
     /* 
@@ -32,7 +33,7 @@ class Payment extends CI_Model{
     {    
         $data = [
             'order_id'              => $id,
-            'user_id'               => 1,
+            'user_id'               => $this->session->userdata('user_id'),
             'payment_gross'         => $amount,
             'currency_code'         => 'MYR',
             'status'                => 'PENDING PAYMENT',
@@ -53,7 +54,7 @@ class Payment extends CI_Model{
 
     public function createPayment()
     {
-        $orderNumber = $this->Payment->createOrderbyUserID(1);
+        $orderNumber = $this->Payment->createOrderbyUserID($this->session->userdata('user_id'));
         echo json_encode(['orderNumber' => $orderNumber]);
     }
 

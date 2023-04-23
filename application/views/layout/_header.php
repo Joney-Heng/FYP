@@ -256,7 +256,7 @@
     <div class="user-options">
         <a href="<?php echo base_url("mainsite/shopping-cart") ?>"><img src="https://img.icons8.com/pastel-glyph/64/e5e5e5/shopping-cart--v1.png"/></a>
         <a href="#"><img src="https://img.icons8.com/ios-glyphs/64/e5e5e5/address-book.png"/></a>
-        <a href="<?php echo base_url("home") ?>"><img src="https://img.icons8.com/external-inkubators-basic-outline-inkubators/64/e5e5e5/external-user-profile-user-interface-inkubators-basic-outline-inkubators.png"/></a>
+        <a href="<?php echo base_url('user/logout'); ?>"><img src="https://img.icons8.com/external-inkubators-basic-outline-inkubators/64/e5e5e5/external-user-profile-user-interface-inkubators-basic-outline-inkubators.png"/></a>
 
     </div>
 </div>

@@ -60,6 +60,7 @@ $route['home']                  = 'home';
 //LOGIN & SIGN-UP
 $route['user/login']            = 'user/login/index';
 $route['user/register']         = 'user/register/index';
+$route['user/logout']           = 'user/logout/logout';
 $route['google-login']          = 'googleLogin';
 
 //PRODUCT MANAGEMENT

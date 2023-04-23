@@ -8,6 +8,7 @@ class Voucher_model extends CI_Model{
         $this->load->database();
         $this->load->helper('url');
         $this->load->helper('date');
+        $this->load->library('session'); // Load the session library
     }
 
     public function get_all()
@@ -144,7 +145,12 @@ class Voucher_model extends CI_Model{
 
         $this->db->select('*');
         $this->db->from('vouchers');
-        $this->db->where_not_in('id', $result_array); //Claimed
+
+        if(count($result_array) > 0) {
+            $this->db->where_not_in('id', $result_array); //Claimed
+        }
+
+        // $this->db->where_not_in('id', $result_array); //Claimed
         // $this->db->join('products','carts.product_id = products.id');
 
         $vouchers = $this->db->get();
@@ -166,7 +172,9 @@ class Voucher_model extends CI_Model{
 
         $this->db->select('*');
         $this->db->from('vouchers');
-        $this->db->where_in('id', $result_array); //Claimed
+        if(count($result_array) > 0) {
+            $this->db->where_in('id', $result_array); //Claimed
+        }
 
         $vouchers = $this->db->get();
         return $vouchers->result_array();
@@ -235,7 +243,7 @@ class Voucher_model extends CI_Model{
         $this->db->select('*');
         $this->db->from('voucher_details');
         $this->db->where('voucher_id',$voucherID);
-        $this->db->where('user_id', $userID);   // check user_id == 0 means havent claim
+        $this->db->where('user_id', $userID);
 
         $voucher_details = $this->db->get()->row();
         return $voucher_details;

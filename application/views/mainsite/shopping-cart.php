@@ -13,9 +13,6 @@
 
     <style>
         body {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
             min-height: 100vh;
             background: #ddd;
             font-size: 0.8rem;
@@ -1310,7 +1307,6 @@
 
             var addressDetails = JSON.parse($(this).closest('.address-list-container').attr('data-address'));
 
-            // console.log(addressDetails);
             $('#add-address-id').val(addressDetails.id);
             $('#add-address-line1').val(addressDetails.address_line1);
             $('#add-address-line2').val(addressDetails.address_line2);
@@ -1359,7 +1355,7 @@
                     }
 
                     calculatePaymentTotal();
-                    $('#available-voucher-modal').modal('hide');
+                    $('#claimed-voucher-modal').modal('hide');
                 }
 
             });
@@ -1380,7 +1376,25 @@
                 processData: false,
                 method: "POST",
                 success: function(data) {
-                    console.log("update claimed voucher:",data)
+                    if (data == true) {
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: 'Voucher is Claimed',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    }
+
+                    else {
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'warning',
+                            title: 'Voucher has been<br>FULLY CLAIMED',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    }
                 }
             });
         });
@@ -1735,7 +1749,6 @@
             contentType: false,
             processData: false,
             success: function(data) {
-                console.log("multiple:",data);
                 $('.claimed-shipping-voucher').children().remove();
                 $('.claimed-discount-voucher').children().remove();
 
@@ -1747,7 +1760,6 @@
                     var dateTime = date + ' ' + time;
                     
                     if (new Date(value.end_date) >= new Date(dateTime) && new Date(value.start_date) <= new Date(dateTime)) {
-                        console.log("data",value);
                         if (value.voucher_type == 'Shipping') {
                             $('.claimed-shipping-voucher').append(
                                 "   <div class='coupon-card' data-voucher='" + value.id + "'>" +
@@ -1825,7 +1837,6 @@
                     var dateTime = date + ' ' + time;
                     
                     if (new Date(value.end_date) >= new Date(dateTime) && new Date(value.start_date) <= new Date(dateTime)) {
-                        console.log("data",value);
                         if (value.voucher_type == 'Shipping') {
                             $('.shipping-voucher').append(
                                 "   <div class='coupon-card' data-voucher='" + value.id + "'>" +
@@ -1978,6 +1989,17 @@
             "</div>"
         );
     }
+
+    // var cpnBtn = document.getElementById("cpnBtn");
+    // var cpnCode = document.getElementById("cpnCode");
+
+    // cpnBtn.onclick = function() {
+    //     navigator.clipboard.writeText(cpnCode.innerHTML);
+    //     cpnBtn.innerHTML = "DONE";
+    //     setTimeout(function() {
+    //         cpnBtn.innerHTML = "APPLY";
+    //     }, 3000);
+    // }
 </script>
 
 </html>

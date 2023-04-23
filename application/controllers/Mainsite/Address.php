@@ -15,7 +15,7 @@ class Address extends CI_Controller
   {
     // $data['products'] = $this->Product_model->get_all();
     $data['title'] = 'Address Book';
-    $data['addressbooks'] = $this->Address_model->getAddressbyUserId(1);
+    $data['addressbooks'] = $this->Address_model->getAddressbyUserId($this->session->userdata('user_id'));
 
     // $this->load->view('layout/header');
     $this->load->view('mainsite/shopping-cart', $data);
@@ -38,13 +38,13 @@ class Address extends CI_Controller
 
   public function getAddressDetails()
   {
-    echo json_encode($this->Address_model->getAddressbyUserId(1));
+    echo json_encode($this->Address_model->getAddressbyUserId($this->session->userdata('user_id')));
 
   }
 
   public function getDefaultAddressDetails()
   {
-    echo json_encode($this->Address_model->getDefaultAddressbyUserId(1));
+    echo json_encode($this->Address_model->getDefaultAddressbyUserId($this->session->userdata('user_id')));
 
   }
 }

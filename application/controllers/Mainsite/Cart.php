@@ -35,7 +35,7 @@ class Cart extends CI_Controller
 
   public function addtoCart()
   {
-    $cart_item = $this->Cart_model->getCartbyUserIDandProductId($this->input->post('product_id'), 1);
+    $cart_item = $this->Cart_model->getCartbyUserIDandProductId($this->input->post('product_id'), $this->session->userdata('user_id'));
     if ($cart_item) {
       //Update the new quantity to DB quantity
 
@@ -63,7 +63,7 @@ class Cart extends CI_Controller
 
   public function updateCart()
   {
-    $cart_item = $this->Cart_model->getCartbyUserIDandProductId($this->input->post('product_id'), 1);
+    $cart_item = $this->Cart_model->getCartbyUserIDandProductId($this->input->post('product_id'), $this->session->userdata('user_id'));
     if ($cart_item) {
 
       $this->Cart_model->updateQuantitybyID($cart_item->id, $this->input->post('selected_quantity'));
@@ -77,7 +77,7 @@ class Cart extends CI_Controller
 
   public function getCartDetails()
   {
-    echo json_encode($this->Cart_model->getCartbyUserId(1));
+    echo json_encode($this->Cart_model->getCartbyUserId($this->session->userdata('user_id')));
   }
 }
 ?>

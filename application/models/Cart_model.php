@@ -8,6 +8,7 @@ class Cart_model extends CI_Model{
         $this->load->database();
         $this->load->helper('url');
         $this->load->helper('date');
+        $this->load->library('session'); // Load the session library
     }
  
     /*
@@ -29,7 +30,7 @@ class Cart_model extends CI_Model{
         $data = [
             'product_id'            => $this->input->post('product_id'),
             'selected_quantity'     => $this->input->post('selected_quantity'),
-            'user_id'               => 1
+            'user_id'               => $this->session->userdata('user_id'),
         ];
 
         $result = $this->db->insert('carts', $data);

@@ -16,7 +16,7 @@ class Order extends CI_Controller
 
   public function createOrder()
   {
-      $orderNumber = $this->Order_model->createOrderbyUserID(1);
+      $orderNumber = $this->Order_model->createOrderbyUserID($this->session->userdata('user_id'));
       echo json_encode(['orderNumber' => $orderNumber]);
   }
 
@@ -39,7 +39,7 @@ class Order extends CI_Controller
     $this->paypal_lib->add_field('notify_url', $notifyURL); 
     $this->paypal_lib->add_field('item_name', $order_number); 
     $this->paypal_lib->add_field('item_number', $paymentID); 
-    $this->paypal_lib->add_field('custom', 1); 
+    $this->paypal_lib->add_field('custom', $this->session->userdata('user_id')); 
 
     if(is_array($order)) {
       $this->paypal_lib->add_field('amount',  $order[0]['order_total']); 

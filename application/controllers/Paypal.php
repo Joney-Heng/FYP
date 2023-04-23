@@ -14,6 +14,8 @@ class Paypal extends CI_Controller{
          
         // Load payment model 
         $this->load->model('Payment');
+
+        $this->load->library('session'); // Load the session library
      } 
       
     function success(){ 
@@ -60,7 +62,7 @@ class Paypal extends CI_Controller{
                 $this->Payment->updatePayment($payment[0]['id'],$data);
                 $payment = $this->Payment->getPaymentbyPaymentID($item_number);
                 $orderDetails = $this->Order_model->getDetailsbyOrderID($order[0]['id']);
-                $voucherDetails = $this->Voucher_model->getVoucherDetailByUserIDAndVoucherID(1, $order[0]['voucher_code_applied']);
+                $voucherDetails = $this->Voucher_model->getVoucherDetailByUserIDAndVoucherID($order[0]['user_id'], $order[0]['voucher_code_applied']);
                 
                 $this->Voucher_model->updateVoucherDetailStatus($voucherDetails->id, 'USED');
                 
