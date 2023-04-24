@@ -19,7 +19,6 @@ class OrderReceived extends CI_Controller
     $data['title'] = 'Order Management';
     $this->load->view('layout/admin_header');
     $this->load->view('admin/order_received', $data);
-    // $this->load->view('layout/footer');
   }
 
   public function show($id)
@@ -29,7 +28,6 @@ class OrderReceived extends CI_Controller
     $data['title'] = "Order Details";
     $this->load->view('layout/admin_header');
     $this->load->view('admin/order_details', $data);
-    // $this->load->view('layout/footer'); 
   }
 
   public function showTracking($id)
@@ -47,9 +45,11 @@ class OrderReceived extends CI_Controller
     $data['order'] = $this->Order_model->get($id);
     $data['product'] = $this->Order_model->getDetailsbyOrderID($id);
     $data['title'] = "Order Details";
+
+    $this->load->view('layout/_loading');
     $this->load->view('layout/header');
     $this->load->view('mainsite/order_details_tracking', $data);
-    $this->load->view('layout/footer'); 
+    $this->load->view('layout/footer');
   }
 
   public function preparing($order_id)
@@ -63,7 +63,6 @@ class OrderReceived extends CI_Controller
     $data['title'] = 'Tracking Management';
     $this->load->view('layout/admin_header');
     $this->load->view('admin/order_tracking', $data);
-    // $this->load->view('layout/footer');
   }
 
 }

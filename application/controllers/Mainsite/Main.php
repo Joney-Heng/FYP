@@ -79,6 +79,7 @@ class Main extends CI_Controller {
     
     $data['orders'] = $this->Order_model->getOrderbyUserID($this->session->userdata('user_id'));
 
+    $this->load->view('layout/_loading');
     $this->load->view('layout/header');
     $this->load->view('mainsite/order_view', $data);
     $this->load->view('layout/footer');
