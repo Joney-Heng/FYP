@@ -30,6 +30,7 @@ class Main extends CI_Controller {
     $data['product'] = $this->Product_model->get($id);
     $data['title'] = "Product Details";
     $this->load->view('mainsite/product-details', $data);
+    $this->load->view('layout/footer');
   }
 
   
