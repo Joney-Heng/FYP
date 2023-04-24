@@ -7,6 +7,7 @@ class Main extends CI_Controller {
       $this->load->library('form_validation');
       $this->load->library('session');
       $this->load->model('Product_model');
+      $this->load->model('Order_model');
            
       // Load paypal library 
       $this->load->library('paypal_lib'); 
@@ -74,5 +75,13 @@ class Main extends CI_Controller {
     $this->paypal_lib->paypal_auto_form(); 
   }
 
+  public function getUserOrder() {
+    
+    $data['orders'] = $this->Order_model->getOrderbyUserID($this->session->userdata('user_id'));
+
+    $this->load->view('layout/header');
+    $this->load->view('mainsite/order_view', $data);
+    $this->load->view('layout/footer');
+  }
 }
 ?>

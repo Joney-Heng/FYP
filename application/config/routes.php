@@ -93,6 +93,11 @@ $route['mainsite/update-address'] = "mainsite/address/updateAddress";
 $route['mainsite/get-address-details'] = "mainsite/address/getAddressDetails";
 $route['mainsite/get-default-address-details'] = "mainsite/address/getDefaultAddressDetails";
 
+//USER ORDER MANAGEMENT
+$route['mainsite/user/create/order'] = "user/order/createOrder";
+$route['mainsite/user/order'] = "mainsite/main/getUserOrder";
+$route['mainsite/orders/user/tracking/show/(:num)'] = "admin/orderreceived/showUserTracking/$1";
+
 //VOUCHER MANAGEMENT
 $route['voucher'] = "admin/voucher/index";
 $route['voucher/create'] = "admin/voucher/create";
@@ -107,9 +112,6 @@ $route['voucher/generate'] = "admin/voucher/generate_vouchers";
 $route['voucher/get-available-redeem-vouchers'] = "admin/voucher/getAvailableRedeemVouchers";
 $route['voucher/get-available-claimed-vouchers'] = "admin/voucher/getClaimedRedeemVouchers";
 $route['voucher/update-claimed-voucher'] = "admin/voucher/updateClaimedVoucher";
-
-//USER ORDER MANAGEMENT
-$route['user/create/order'] = "user/order/createOrder";
 
 //ADMIN ORDER MANAGEMENT
 $route['orders'] = "admin/orderreceived/index";

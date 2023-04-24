@@ -67,26 +67,18 @@ class Paypal extends CI_Controller{
                 $orderDetails = $this->Order_model->getDetailsbyOrderID($order[0]['id']);
 
                 // Update voucher based on UserID & VoucherID
-                if ($order[0]['voucher_code_applied'] != 0) {
-                    
-                    $voucherDetails = $this->Voucher_model->getVoucherDetailByUserIDAndVoucherID($order[0]['user_id'], $order[0]['voucher_code_applied']);
-                    $this->Voucher_model->updateVoucherDetailStatus($voucherDetails->id, 'USED');
-                }
-                
+                $voucherDetails = $this->Voucher_model->getVoucherDetailByUserIDAndVoucherID($order[0]['user_id'], $order[0]['voucher_code_applied']);
+                $this->Voucher_model->updateVoucherDetailStatus($voucherDetails->id, 'USED');
+
                 // Update product quantity based on ProductID & Quantity Sold
-                
                 foreach ($orderDetails as $detail) {
                     $existingProduct = $this->Product_model->get($detail['product_id']);
-                    
-                    // echo json_encode(['stock_quantity' => $existingProduct->stock_quantity - $detail['quantity']]);exit;
-
                     $this->Product_model->updateDetails($detail['product_id'], ['stock_quantity' => $existingProduct->stock_quantity - $detail['quantity']]);
                 }
                 
                 $data['product'] = $orderDetails; 
                 $data['payment'] = $payment;
                 $data['order'] = $order;
-                // $data['voucher'] = $voucherDetails;
             }
             // $paypalInfo['verify_sign']
         }

@@ -1375,32 +1375,35 @@
                 contentType: false,
                 processData: false,
                 method: "POST",
-                success: function(data) {
-                    Swal.fire({
+                success: function(result) {
+                    var result = JSON.parse(result);
+                    if (result.message == "All vouchers has been fully redeemed") {
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'warning',
+                            title: 'Voucher has been<br>FULLY CLAIMED',
+                            showConfirmButton: true,
+                        })
+                    } else if (result.message == "You have claimed this voucher before."){
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'warning',
+                            title: 'You have claimed this voucher before!',
+                            showConfirmButton: true,
+                        })
+                    } else {
+                        Swal.fire({
                             position: 'center',
                             icon: 'success',
-                            title: 'Voucher is Claimed',
+                            title: 'Voucher is Claimed!',
                             showConfirmButton: false,
-                            timer: 1500
+                            timer: 2000
                         })
-                    // if (data == true) {
-                    //     Swal.fire({
-                    //         position: 'center',
-                    //         icon: 'success',
-                    //         title: 'Voucher is Claimed',
-                    //         showConfirmButton: false,
-                    //         timer: 1500
-                    //     })
-                    // }
-                    // else {
-                    //     Swal.fire({
-                    //         position: 'center',
-                    //         icon: 'warning',
-                    //         title: 'Voucher has been<br>FULLY CLAIMED',
-                    //         showConfirmButton: false,
-                    //         timer: 1500
-                    //     })
-                    // }
+                        
+                        window.setTimeout(function() {
+                            $('#available-voucher-modal').modal('hide');
+                        }, 2000);
+                    }
                 }
             });
         });
@@ -1446,7 +1449,7 @@
                 form_data.append("product_details", JSON.stringify(orderDetails));
 
                 $.ajax({
-                    url: "<?php echo site_url('user/create/order') ?>",
+                    url: "<?php echo site_url('mainsite/user/create/order') ?>",
                     data: form_data,
                     encrypt: "",
                     cache: false,
@@ -1457,7 +1460,7 @@
                         let timerInterval
 
                         Swal.fire({
-                            title: 'REDIRECTING TO PAYPAL PAYMENT',
+                            title: 'REDIRECTING TO...<br>PAYPAL PAYMENT',
                             timer: 2000,
                             timerProgressBar: true,
                             didOpen: () => {
@@ -1844,7 +1847,6 @@
             processData: false,
             method: "POST",
             success: function(data) {
-                
                 $('.shipping-voucher').children().remove();
                 $('.discount-voucher').children().remove();
                 
@@ -2011,16 +2013,6 @@
         );
     }
 
-    // var cpnBtn = document.getElementById("cpnBtn");
-    // var cpnCode = document.getElementById("cpnCode");
-
-    // cpnBtn.onclick = function() {
-    //     navigator.clipboard.writeText(cpnCode.innerHTML);
-    //     cpnBtn.innerHTML = "DONE";
-    //     setTimeout(function() {
-    //         cpnBtn.innerHTML = "APPLY";
-    //     }, 3000);
-    // }
 </script>
 
 </html>

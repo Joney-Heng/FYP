@@ -188,7 +188,7 @@
 
     <div class="user-options">
         <a href="<?php echo base_url("mainsite/shopping-cart") ?>"><img src="https://img.icons8.com/pastel-glyph/64/e5e5e5/shopping-cart--v1.png"/></a>
-        <a href="#"><img src="https://img.icons8.com/ios-glyphs/64/e5e5e5/address-book.png"/></a>
+        <a href="<?php echo site_url('mainsite/user/order'); ?>"><img src="https://img.icons8.com/ios-glyphs/64/e5e5e5/purchase-order.png"/></a>
         <a href="<?php echo base_url("user/logout") ?>"><img src="https://img.icons8.com/material-outlined/64/e5e5e5/exit.png"/></a>
 
     </div>

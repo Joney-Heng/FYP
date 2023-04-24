@@ -42,6 +42,16 @@ class OrderReceived extends CI_Controller
     // $this->load->view('layout/footer'); 
   }
 
+  public function showUserTracking($id)
+  {
+    $data['order'] = $this->Order_model->get($id);
+    $data['product'] = $this->Order_model->getDetailsbyOrderID($id);
+    $data['title'] = "Order Details";
+    $this->load->view('layout/header');
+    $this->load->view('mainsite/order_details_tracking', $data);
+    $this->load->view('layout/footer'); 
+  }
+
   public function preparing($order_id)
   {
     $data['response'] = $this->Order_model->updatePreparingToShipbyID($order_id,$this->input->post('parcel_id'));

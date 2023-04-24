@@ -161,6 +161,7 @@ class Voucher_model extends CI_Model{
     {
         $this->db->select('voucher_id');
         $this->db->from('voucher_details');
+        $this->db->where('claimed_status', 'CLAIMED');
         $this->db->where('user_id',$user_id); // check user get what vouchers
 
         $query = $this->db->get();
@@ -174,6 +175,10 @@ class Voucher_model extends CI_Model{
         $this->db->from('vouchers');
         if(count($result_array) > 0) {
             $this->db->where_in('id', $result_array); //Claimed
+        }
+
+        else {
+            $this->db->where('id', -1); 
         }
 
         $vouchers = $this->db->get();

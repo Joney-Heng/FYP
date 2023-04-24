@@ -162,5 +162,15 @@ class Order_model extends CI_Model{
         // Return the order as an array of objects
         return $orders;
     }
+
+    public function getOrderbyUserID ($userID) {
+        $this->db->select('*');
+        $this->db->from('orders');
+        $this->db->where('user_id',$userID);
+        $query=$this->db->get();
+        $orders = $query->result_array();
+        
+        return $orders;
+    }
 }
 ?>
