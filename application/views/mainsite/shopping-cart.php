@@ -1377,18 +1377,11 @@
                 method: "POST",
                 success: function(result) {
                     var result = JSON.parse(result);
-                    if (result.message == "All vouchers has been fully redeemed") {
+                    if (result.message) {
                         Swal.fire({
                             position: 'center',
                             icon: 'warning',
-                            title: 'Voucher has been<br>FULLY CLAIMED',
-                            showConfirmButton: true,
-                        })
-                    } else if (result.message == "You have claimed this voucher before."){
-                        Swal.fire({
-                            position: 'center',
-                            icon: 'warning',
-                            title: 'You have claimed this voucher before!',
+                            title: result.message,
                             showConfirmButton: true,
                         })
                     } else {
@@ -1909,57 +1902,6 @@
                             }
                         }
                     }
-
-                    // if (new Date(value.end_date) >= new Date(dateTime) && new Date(value.start_date) <= new Date(dateTime)) {
-                    //     if (value.voucher_type == 'Shipping') {
-                    //         $('.shipping-voucher').append(
-                    //             "   <div class='coupon-card' data-voucher='" + value.id + "'>" +
-                    //             "       <div class='voucher-icon'>" +
-                    //             "           <img class='logo' src='https://img.icons8.com/material-rounded/96/null/truck--v1.png' />" +
-                    //             "           <span class='discount-value'>MYR" + value.capped_amount + " OFF</span>" +
-                    //             "           <span class='discount-type'>SHIPPING</span>" +
-                    //             "           <span class='min-spend'>(Min.spend MYR" + value.min_spend + ")</span>" +
-                    //             "       </div>" +
-
-                    //             "       <div class='coupon-row'>" +
-                    //             "           <span id='cpnCode'> " + value.voucher_code + " </span>" +
-                    //             "           <span id='cpnBtn' class='apply-btn' >APPLY</span>" +
-                    //             "       </div>" +
-
-                    //             "       <div class='valid-date'>" +
-                    //             "           <span class='expired-date'> " + value.end_date + " </span><br>" +
-                    //             "       </div>" +
-                    //             "       <a href='' class='tnc'>T&C Apply</a>" +
-
-                    //             "</div>" +
-                    //             "<hr>",
-                    //         );
-
-                    //     } else if (value.voucher_type == 'Discount') {
-                    //         $('.discount-voucher').append(
-                    //             "<div class='coupon-card' data-voucher='" + value.id + "'>" +
-                    //             "   <div class='voucher-icon'>" +
-                    //             "       <img class='logo' src='https://img.icons8.com/glyph-neue/64/null/discount-ticket.png' />" +
-                    //             "       <span class='discount-value'>MYR" + value.capped_amount + " OFF</span>" +
-                    //             "       <span class='discount-type'>PRODUCT</span>" +
-                    //             "       <span class='min-spend'>(Min.spend MYR" + value.min_spend + ")</span>" +
-                    //             "   </div>" +
-
-                    //             "   <div class='coupon-row'>" +
-                    //             "       <span id='cpnCode'> " + value.voucher_code + " </span>" +
-                    //             "       <span id='cpnBtn' class='apply-btn'>Apply</span>" +
-                    //             "   </div>" +
-
-                    //             "   <div class='valid-date'>" +
-                    //             "       <span class='expired-date'> " + value.end_date + " </span><br>" +
-                    //             "   </div>" +
-                    //             "   <span class='tnc'>T&C Apply</span>" +
-
-                    //             "</div>",
-
-                    //         );
-                    //     }
-                    // }
                 });
             }
         });
