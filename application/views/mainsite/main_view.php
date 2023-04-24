@@ -254,7 +254,7 @@
     $(document).on("contextmenu",function(){
         Swal.fire(
             'Save Image?',
-            'This action we are strictly prohibited<br>to protect the original content',
+            'To protect our original content,<br>This action we are strictly prohibited.',
             'question'
         )
         return false;

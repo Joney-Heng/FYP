@@ -13,7 +13,7 @@
 
     <style>
         body {
-            background: #fff7e6;
+            background: #fff7e6 !important;
         }
 
         body .product-details ol.breadcrumb {
@@ -240,7 +240,6 @@
 
                         <div class="product-title">
                             <span class="product-name"><?php echo $product->name; ?></span>
-                            <span class="heart"><i class='bx bx-heart'></i></span>
                         </div>
 
                         <div class="price-container">
@@ -388,5 +387,17 @@
             var main_prodcut_image = document.getElementById('main_product_image');
             main_prodcut_image.src = element.src;
         }
+
+        $(document).on("contextmenu",function(){
+            Swal.fire(
+                'Save Image?',
+                'To protect our original content,<br>This action we are strictly prohibited.',
+                'question'
+            )
+            return false;
+        });
     </script>
 </body>
+
+
+<?php include 'application/views/layout/footer.php' ?>

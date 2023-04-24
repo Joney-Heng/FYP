@@ -114,6 +114,21 @@ class Product_model extends CI_Model{
         } 
          
         return !empty($result)?$result:false; 
-    } 
+    }
+
+    public function getExistingQtybyID(){ 
+        $this->db->select('*'); 
+        $this->db->from('products'); 
+         
+        $stockQty=$this->db->get()->row();
+        
+        return $stockQty;
+    }
+
+    public function updateDetails($id, $details){ 
+
+        $result = $this->db->where('id',$id)->update('products',$details);
+        return $result;
+    }
 }
 ?>

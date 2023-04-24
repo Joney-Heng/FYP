@@ -384,7 +384,7 @@ $config['encryption_key'] = '';
 |
 */
 $config['sess_driver'] = 'files';
-$config['sess_expiration'] = 300; // 30 minutes (30 * 60 seconds)
+$config['sess_expiration'] = 3000; // 30 minutes (30 * 60 seconds)
 $config['sess_cookie_name'] = 'ci_session';
 $config['sess_samesite'] = 'Lax';
 $config['sess_expiration'] = 7200;

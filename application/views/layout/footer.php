@@ -237,10 +237,10 @@
 				<div class="follow-us">
 					<span class="title">FOLLOW US</span>
 					<div class="social-media">
-						<a href="https://www.facebook.com/MeiziyaMalaysia/" target="_blank"
+						<a href="#" target="_blank"
 							><img src="https://img.icons8.com/color/48/null/facebook-new.png"/>
 						</a>
-						<a href="https://www.instagram.com/MeiZiYaofficial/" target="_blank"
+						<a href="#" target="_blank"
 							><img src="https://img.icons8.com/fluency/48/null/instagram-new.png"/>
 						</a>
 					</div>
@@ -281,6 +281,7 @@
 				<span class="title">PAY SECURELY WITH</span>
 				<div class="payment-with">
 					<img src="https://img.icons8.com/fluency/80/null/paypal.png"/>
+					<img src="<?php echo base_url("images/paypal-icon.png")?>">
 				</div>
 
 				<div class="desktop-container">

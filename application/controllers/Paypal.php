@@ -11,6 +11,7 @@ class Paypal extends CI_Controller{
         // Load product model 
         $this->load->model('Order_model'); 
         $this->load->model('Voucher_model');
+        $this->load->model('Product_model');
          
         // Load payment model 
         $this->load->model('Payment');
@@ -61,10 +62,26 @@ class Paypal extends CI_Controller{
                 // Update payment status like order Status
                 $this->Payment->updatePayment($payment[0]['id'],$data);
                 $payment = $this->Payment->getPaymentbyPaymentID($item_number);
+
+                // Get OrderDetails
                 $orderDetails = $this->Order_model->getDetailsbyOrderID($order[0]['id']);
-                $voucherDetails = $this->Voucher_model->getVoucherDetailByUserIDAndVoucherID($order[0]['user_id'], $order[0]['voucher_code_applied']);
+
+                // Update voucher based on UserID & VoucherID
+                if ($order[0]['voucher_code_applied'] != 0) {
+                    
+                    $voucherDetails = $this->Voucher_model->getVoucherDetailByUserIDAndVoucherID($order[0]['user_id'], $order[0]['voucher_code_applied']);
+                    $this->Voucher_model->updateVoucherDetailStatus($voucherDetails->id, 'USED');
+                }
                 
-                $this->Voucher_model->updateVoucherDetailStatus($voucherDetails->id, 'USED');
+                // Update product quantity based on ProductID & Quantity Sold
+                
+                foreach ($orderDetails as $detail) {
+                    $existingProduct = $this->Product_model->get($detail['product_id']);
+                    
+                    // echo json_encode(['stock_quantity' => $existingProduct->stock_quantity - $detail['quantity']]);exit;
+
+                    $this->Product_model->updateDetails($detail['product_id'], ['stock_quantity' => $existingProduct->stock_quantity - $detail['quantity']]);
+                }
                 
                 $data['product'] = $orderDetails; 
                 $data['payment'] = $payment;

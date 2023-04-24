@@ -843,14 +843,14 @@
                             <a href="" class="btn-choose-address">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" width="18px" height="18px">
                                     <path d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 256c-35.3 0-64-28.7-64-64s28.7-64 64-64s64 28.7 64 64s-28.7 64-64 64z" />
-                                </svg>Change Address
+                                </svg>Add Address
                             </a>
                             <!-- show selected address -->
                             <div class="selected-address"></div>
                         </div>
                     </div>
 
-                    <div class="col-md-12 shipping">
+                    <div class="shipping">
                         <div class="title-content">
 
                             <svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" viewBox="0 0 640 512" style="margin-bottom:2px">
@@ -1027,7 +1027,7 @@
 
                 <div class="modal-footer">
 
-                    <div class="form-check form-switch">
+                    <div class="form-check form-switch" style="padding-left:45px">
                         <input class="form-check-input" type="checkbox" role="switch" id="checked_default_address" checked>
                         <label class="form-check-label" for="flexSwitchCheckChecked">Marked as Default Address</label>
                     </div>
@@ -1376,25 +1376,31 @@
                 processData: false,
                 method: "POST",
                 success: function(data) {
-                    if (data == true) {
-                        Swal.fire({
+                    Swal.fire({
                             position: 'center',
                             icon: 'success',
                             title: 'Voucher is Claimed',
                             showConfirmButton: false,
                             timer: 1500
                         })
-                    }
-
-                    else {
-                        Swal.fire({
-                            position: 'center',
-                            icon: 'warning',
-                            title: 'Voucher has been<br>FULLY CLAIMED',
-                            showConfirmButton: false,
-                            timer: 1500
-                        })
-                    }
+                    // if (data == true) {
+                    //     Swal.fire({
+                    //         position: 'center',
+                    //         icon: 'success',
+                    //         title: 'Voucher is Claimed',
+                    //         showConfirmButton: false,
+                    //         timer: 1500
+                    //     })
+                    // }
+                    // else {
+                    //     Swal.fire({
+                    //         position: 'center',
+                    //         icon: 'warning',
+                    //         title: 'Voucher has been<br>FULLY CLAIMED',
+                    //         showConfirmButton: false,
+                    //         timer: 1500
+                    //     })
+                    // }
                 }
             });
         });
@@ -1409,59 +1415,71 @@
         $(document).on('click', '.btn-checkout', function(e) {
             e.preventDefault();
 
-            let orderDetails = [];
-            $.each($('.quantity-container'), function(i,val){
-                orderDetails.push({
-                    productID: $(val).attr('data-productid'),
-                    quantity: $(val).find('.quantity').html(),
+            if ($('.selected-address').html() == '') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: '"Address" field cannot be empty',
+                })
+            }
+            else {
+                
+                let orderDetails = [];
+
+                $.each($('.quantity-container'), function(i,val){
+                    orderDetails.push({
+                        productID: $(val).attr('data-productid'),
+                        quantity: $(val).find('.quantity').html(),
+                    });
                 });
-            });
 
-            var form_data = new FormData();
-            form_data.append("receiver_name", $('#checkout-name').html());
-            form_data.append("receiver_contact_no", $('#checkout-contact').html());
-            form_data.append("shipping_address", $('#checkout-address').html() + $('#checkout-address-details').html());
-            form_data.append("courier_company", $('#choose-courier option:selected').attr('data-courier'));
-            form_data.append("shipping_amount", $('#choose-courier').val());
-            form_data.append("voucher_amount", $('.voucher-amount').html() == undefined ? 0 : $('.voucher-amount').html().replace("(-) MYR ",""));
-            form_data.append("voucher_code_applied", $('.coupon-card').attr('data-voucher') == undefined ? 0 : $('.coupon-card').attr('data-voucher'));
-            form_data.append("product_subtotal", $('.subtotal').html());
-            form_data.append("order_total", $('.checkout-total').html().replace("MYR ",""));
-            form_data.append("product_details", JSON.stringify(orderDetails));
+                var form_data = new FormData();
+                form_data.append("receiver_name", $('#checkout-name').html());
+                form_data.append("receiver_contact_no", $('#checkout-contact').html());
+                form_data.append("shipping_address", $('#checkout-address').html() + $('#checkout-address-details').html());
+                form_data.append("courier_company", $('#choose-courier option:selected').attr('data-courier'));
+                form_data.append("shipping_amount", $('#choose-courier').val());
+                form_data.append("voucher_amount", $('.voucher-amount').html() == undefined ? 0 : $('.voucher-amount').html().replace("(-) MYR ",""));
+                form_data.append("voucher_code_applied", $('.coupon-card').attr('data-voucher') == undefined ? 0 : $('.coupon-card').attr('data-voucher'));
+                form_data.append("product_subtotal", $('.subtotal').html());
+                form_data.append("order_total", $('.checkout-total').html().replace("MYR ",""));
+                form_data.append("product_details", JSON.stringify(orderDetails));
 
-            $.ajax({
-                url: "<?php echo site_url('user/create/order') ?>",
-                data: form_data,
-                encrypt: "",
-                cache: false,
-                contentType: false,
-                processData: false,
-                method: "POST",
-                success: function(data) {
-                    let timerInterval
+                $.ajax({
+                    url: "<?php echo site_url('user/create/order') ?>",
+                    data: form_data,
+                    encrypt: "",
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    method: "POST",
+                    success: function(data) {
+                        let timerInterval
 
-                    Swal.fire({
-                        title: 'REDIRECTING TO PAYPAL PAYMENT',
-                        timer: 2000,
-                        timerProgressBar: true,
-                        didOpen: () => {
-                            Swal.showLoading()
-                            const b = Swal.getHtmlContainer().querySelector('b')
-                            timerInterval = setInterval(() => {
-                            b.textContent = Swal.getTimerLeft()
-                            }, 100)
-                        },
-                        willClose: () => {
-                            clearInterval(timerInterval)
-                        }
-                        }).then((result) => {
-                            if (result.dismiss === Swal.DismissReason.timer) {
-                                window.location.href = '<?php echo base_url('mainsite/order/pay/'); ?>' + JSON.parse(data).orderNumber;
+                        Swal.fire({
+                            title: 'REDIRECTING TO PAYPAL PAYMENT',
+                            timer: 2000,
+                            timerProgressBar: true,
+                            didOpen: () => {
+                                Swal.showLoading()
+                                const b = Swal.getHtmlContainer().querySelector('b')
+                                timerInterval = setInterval(() => {
+                                b.textContent = Swal.getTimerLeft()
+                                }, 100)
+                            },
+                            willClose: () => {
+                                clearInterval(timerInterval)
                             }
-                        })
-                }
+                            }).then((result) => {
+                                if (result.dismiss === Swal.DismissReason.timer) {
+                                    window.location.href = '<?php echo base_url('mainsite/order/pay/'); ?>' + JSON.parse(data).orderNumber;
+                                }
+                            })
+                    }
 
-            });
+                });
+            }
+
         });
 
 

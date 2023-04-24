@@ -461,9 +461,9 @@
                     showConfirmButton: false,
                     timer: 2000,
                 })
-                // window.setTimeout(function() {
-                //     window.location.href = "<?php echo site_url('voucher') ?>";
-                // }, 1000);
+                window.setTimeout(function() {
+                    window.location.href = "<?php echo site_url('voucher') ?>";
+                }, 1500);
             }
         });
     });
