@@ -1361,6 +1361,7 @@
             });
         });
 
+        //Claiming a voucher
         $(document).on('click', '.claim-btn', function(e) {
             e.preventDefault();
 
@@ -1424,7 +1425,7 @@
 
                 $.each($('.quantity-container'), function(i,val){
                     orderDetails.push({
-                        productID: $(val).attr('data-productid'),
+                    productID: $(val).attr('data-productid'),
                         quantity: $(val).find('.quantity').html(),
                     });
                 });
@@ -1436,7 +1437,8 @@
                 form_data.append("courier_company", $('#choose-courier option:selected').attr('data-courier'));
                 form_data.append("shipping_amount", $('#choose-courier').val());
                 form_data.append("voucher_amount", $('.voucher-amount').html() == undefined ? 0 : $('.voucher-amount').html().replace("(-) MYR ",""));
-                form_data.append("voucher_code_applied", $('.coupon-card').attr('data-voucher') == undefined ? 0 : $('.coupon-card').attr('data-voucher'));
+                // form_data.append("voucher_code_applied", $('.coupon-card').attr('data-voucher') == undefined ? 0 : $('.coupon-card').attr('data-voucher'));
+                form_data.append("voucher_code_applied", $('.coupon-card').attr('data-voucher') ? $('.coupon-card').attr('data-voucher') : 0);
                 form_data.append("product_subtotal", $('.subtotal').html());
                 form_data.append("order_total", $('.checkout-total').html().replace("MYR ",""));
                 form_data.append("product_details", JSON.stringify(orderDetails));
@@ -1498,7 +1500,6 @@
                 data = JSON.parse(data); //String convert to JSON
                 if (data && data.length > 0) {
                     $.each(data, function(i, value) {
-                        
                         $('.cart-items').append(
                             '<div class="row border-top border-bottom cart-item">' +
                             '    <div class="row main align-items-center">' +
@@ -1510,7 +1511,7 @@
                             '            <span class="row" style="color:#663300; font-weight:500">' + value.name + '</span>' +
                             '        </div>' +
 
-                            '        <div class="quantity-container col" data-productid="' + value.product_id + '">' +
+                            '        <div class="quantity-container col" data-stock-quantity="' + value.stock_quantity  + '" data-productid="' + value.product_id + '">' +
                             '            <button class="quantity-minus">-</button>' +
                             '            <a href="#" class="quantity">' + value.selected_quantity + '</a>' +
                             '            <button class="quantity-plus">+</button>' +
@@ -1554,7 +1555,14 @@
                         "<span class='without-voucher' data-voucher-amount='0'>- No Voucher Apply -</span>"
                     );
 
-                    let value = (parseInt($(this).closest('.quantity-container').find('.quantity').html()) || 0) + 1;
+                    let stockQuantity = (parseInt($(this).closest('.quantity-container').attr("data-stock-quantity")));
+                    let quantity = (parseInt($(this).closest('.quantity-container').find('.quantity').html()));
+                    let value = 0;
+
+                    if (quantity < stockQuantity) {
+                        value = quantity + 1;
+                    }
+
                     var form_data = new FormData();
 
                     form_data.append("selected_quantity", value);

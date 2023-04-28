@@ -29,6 +29,7 @@ class Cart_model extends CI_Model{
 
         $data = [
             'product_id'            => $this->input->post('product_id'),
+            'stock_quantity'        => $this->input->post('stock_quantity'),
             'selected_quantity'     => $this->input->post('selected_quantity'),
             'user_id'               => $this->session->userdata('user_id'),
         ];
@@ -54,10 +55,10 @@ class Cart_model extends CI_Model{
 
     public function getCartbyUserId($id)
     {
-        $this->db->select('carts.id,carts.selected_quantity,carts.product_id,products.name,products.price,products.photo');
+        $this->db->select('carts.id,carts.selected_quantity,carts.product_id,carts.stock_quantity,products.name,products.price,products.photo,products.stock_quantity');
         $this->db->from('carts');
         $this->db->where('user_id', $id);
-        $this->db->join('products','carts.product_id = products.id');
+        $this->db->join('products','carts.product_id = products.id','carts.stock_quantity = products.stock_quantity');
         $query=$this->db->get();
         return $query->result_array();
         // $cart = $this->db->result_array();

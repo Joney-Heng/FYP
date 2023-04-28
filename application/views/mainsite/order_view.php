@@ -82,7 +82,7 @@
 							<td><?php echo $order['receiver_name']; ?></td>
 							<td><?php echo $order['receiver_contact_no']; ?></td>
 							<td><?php echo $order['order_created']; ?></td>
-							<td><?php echo $order['order_total']; ?></td>
+							<td><?php echo number_format($order['order_total'], 2, '.', ''); ?></td>
 							<td><?php echo $order['order_status']; ?></td>
 
 							<td class="action-container" data-order-id="<?php echo $order['id']?>">

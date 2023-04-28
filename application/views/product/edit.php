@@ -169,30 +169,52 @@
             e.preventDefault();
 
             if ($(e.target)[0].files[0]) {
-                var form_data = new FormData();
 
-                form_data.append("multipartFile", $(e.target)[0].files[0]);
+                var formData = new FormData();
+                formData.append('multipartFile', $('#photo')[0].files[0]);
 
                 $.ajax({
                     url: "<?php echo site_url('product/upload') ?>",
-                    encrypt: "multipartFile/form-data",
-                    data: form_data,
-                    cache: false,
-                    contentType: false,
+                    type: 'POST',
+                    data: formData,
                     processData: false,
-                    method: "POST",
+                    contentType: false,
                     success: function(data) {
-                        data = JSON.parse(data);
-                        $('#preview-photo').append("<div class='wrapper'><img data-value='" + data.msg + "'src='https://storage-api-ten.vercel.app/files/" + data.msg + "'><button class='btn btn-danger remove'>Remove</button></div>");
+                        // data = JSON.parse(data);
+                        $('#preview-photo').append("<div class='wrapper'><img data-value='" + data + "'src='https://storage-api-ten.vercel.app/files/" + data + "'><button class='btn btn-danger remove'>Remove</button></div>");
 
                         $('.remove').click(function(e) {
                             e.preventDefault();
-                            $(this).closest('.wrapper').remove();
+                            
+                            Swal.fire({
+                                title: 'Are you sure?',
+                                text: "You won't be able to revert this!",
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Yes, delete it!'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    
+                                    $(this).closest('.wrapper').remove();
 
-                            updateProductPhoto();
+                                    updateProductPhoto();
+
+                                    Swal.fire(
+                                        'Deleted!',
+                                        'Your file has been deleted.',
+                                        'success'
+                                    )
+                                }
+                            })
                         });
 
                         updateProductPhoto();
+                    },
+
+                    error: function(xhr, status, error) {
+                        console.log(xhr.responseText);
                     }
                 });
             }

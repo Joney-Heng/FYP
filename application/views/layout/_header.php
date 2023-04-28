@@ -1,9 +1,3 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.0/js/bootstrap.min.js" rel="stylesheet">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
     <style>
         .header {
@@ -55,7 +49,7 @@
         .header .search #search_form {
             display: flex;
             align-items: center;
-            margin-left: 20px;
+            margin: 0 20px;
             flex: 1;
         }
 
@@ -224,7 +218,7 @@
         }
 
     </style>
-</head>
+
 <div class="header">
     <div class="logo">
         
@@ -255,13 +249,14 @@
 
     <div class="user-options">
         <a href="<?php echo base_url("mainsite/shopping-cart") ?>"><img src="https://img.icons8.com/pastel-glyph/64/e5e5e5/shopping-cart--v1.png"/></a>
-        <a href="<?php echo site_url('mainsite/user/order'); ?>"><img src="https://img.icons8.com/ios-glyphs/64/e5e5e5/address-book.png"/></a>
+        <a href="<?php echo site_url('mainsite/user/order'); ?>"><img src="https://img.icons8.com/ios-glyphs/64/e5e5e5/purchase-order.png"/></a>
         <a href="<?php echo base_url('user/logout'); ?>"><img src="https://img.icons8.com/material-outlined/64/e5e5e5/exit.png"/></a>
+        <span><?php echo $this->session->userdata('user_name'); ?></span>
+
 
     </div>
 </div>
 
-</html>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script>

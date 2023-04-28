@@ -67,8 +67,10 @@ class Paypal extends CI_Controller{
                 $orderDetails = $this->Order_model->getDetailsbyOrderID($order[0]['id']);
 
                 // Update voucher based on UserID & VoucherID
-                $voucherDetails = $this->Voucher_model->getVoucherDetailByUserIDAndVoucherID($order[0]['user_id'], $order[0]['voucher_code_applied']);
-                $this->Voucher_model->updateVoucherDetailStatus($voucherDetails->id, 'USED');
+                if ($order[0]['voucher_code_applied'] != 0) {
+                    $voucherDetails = $this->Voucher_model->getVoucherDetailByUserIDAndVoucherID($order[0]['user_id'], $order[0]['voucher_code_applied']);
+                    $this->Voucher_model->updateVoucherDetailStatus($voucherDetails->id, 'USED');
+                }
 
                 // Update product quantity based on ProductID & Quantity Sold
                 foreach ($orderDetails as $detail) {

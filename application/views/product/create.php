@@ -138,77 +138,124 @@
 
 <script>
     $(document).ready(function() {
-        $('#photo').on('change', function() {
-            var formData = new FormData();
-            formData.append('multipartFile', this.files[0]);
+        // $('#photo').on('change', function() {
+        //     var formData = new FormData();
+        //     formData.append('multipartFile', this.files[0]);
 
-            $.ajax({
-                url: "<?php echo site_url('home/upload') ?>",
-                type: 'POST',
-                data: formData,
-                cache: false,
-                contentType: false,
-                processData: false,
-                success: function(response) {
-                    // $('#response').html(response);
-                    console.log('s: ' + response);
+        //     $.ajax({
+        //         url: "<?php echo site_url('home/upload') ?>",
+        //         type: 'POST',
+        //         data: formData,
+        //         cache: false,
+        //         contentType: false,
+        //         processData: false,
+        //         success: function(response) {
+        //             // $('#response').html(response);
+        //             console.log('s: ' + response);
 
-                },
-                error: function() {
-                    // $('#response').html('Error: Unable to upload the image.');
-                    console.log('Error: Unable to upload the image.');
-                }
-            });
-        });
+        //         },
+        //         error: function() {
+        //             // $('#response').html('Error: Unable to upload the image.');
+        //             console.log('Error: Unable to upload the image.');
+        //         }
+        //     });
+        // });
 
         // $('#photo').change(function(e) {
         //     e.preventDefault();
 
-        //     if ($(e.target)[0].files[0]) {
-        //         // var form_data = new FormData();
+        //     // Select the file input element
+        //     const fileInput = $('input[type="file"]');
 
-        //         // form_data.append("multipartFile", $(e.target)[0].files[0]);
+        //     // Get the selected file from the input element
+        //     const file = fileInput[0].files[0];
 
-        //         var formData = new FormData();
-        //         formData.append('multipartFile', $($('#photo')[0]).files[0]);
+        //     // Create a new FormData object
+        //     const formData = new FormData();
 
-        //         $.ajax({
-        //             url: "<?php echo site_url('product/upload') ?>",
-        //             type: 'POST',
-        //             data: formData,
-        //             processData: false,
-        //             contentType: false,
-        //             success: function(response) {
-        //                 console.log('s: ' + response);
-        //             // Handle success response
-        //             },
-        //             error: function(xhr, status, error) {
-        //                 console.log(xhr.responseText);
-        //             // Handle error response
-        //             }
-        //             // encrypt: "multipartFile/form-data",
-        //             // data: form_data,
-        //             // cache: false,
-        //             // contentType: false,
-        //             // processData: false,
-        //             // method: "POST",
-        //             // success: function(data) {
-        //             //     data = JSON.parse(data);
-        //             //     $('#preview-photo').append("<div class='wrapper'><img data-value='" + data.name + "'src='https://storage-api-ten.vercel.app/files" + data.name + "'><button class='btn btn-danger remove'>Remove</button></div>");
+        //     // Append the file to the FormData object
+        //     formData.append('file', file);
 
-        //             //     $('.remove').click(function(e) {
-        //             //         e.preventDefault();
-        //             //         $(this).closest('.wrapper').remove();
-
-        //             //         updateProductPhoto();
-        //             //     });
-
-        //             //     updateProductPhoto();
-        //             // }
-
-        //         });
-        //     }
+        //     // Make the Ajax request
+        //     $.ajax({
+        //         url: 'https://storage-api-ten.vercel.app/files/',
+        //         type: 'POST',
+        //         data: formData,
+        //         processData: false,
+        //         contentType: false,
+        //         processData: false,
+        //         crossDomain: true,
+        //         beforeSend: function(xhr) {
+        //             xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+        //         },
+        //         success: function(response) {
+        //             console.log("response",response); // Log the response to the console
+        //         },
+        //         error: function(jqXHR, textStatus, errorThrown) {
+        //             console.log("failed")
+        //             console.error(errorThrown); // Log any errors to the console
+        //         }
+        //     });
         // });
+
+
+        $('#photo').change(function(e) {
+            e.preventDefault();
+
+            if ($(e.target)[0].files[0]) {
+                // var form_data = new FormData();
+
+                // form_data.append("multipartFile", $(e.target)[0].files[0]);
+
+                var formData = new FormData();
+                formData.append('multipartFile', $('#photo')[0].files[0]);
+
+                $.ajax({
+                    url: "<?php echo site_url('product/upload') ?>",
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(data) {
+                        // data = JSON.parse(data);
+                        $('#preview-photo').append("<div class='wrapper'><img data-value='" + data + "'src='https://storage-api-ten.vercel.app/files/" + data + "'><button class='btn btn-danger remove'>Remove</button></div>");
+
+                        $('.remove').click(function(e) {
+                            e.preventDefault();
+                            
+                            Swal.fire({
+                                title: 'Are you sure?',
+                                text: "You won't be able to revert this!",
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Yes, delete it!'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    
+                                    $(this).closest('.wrapper').remove();
+
+                                    updateProductPhoto();
+
+                                    Swal.fire(
+                                        'Deleted!',
+                                        'Your file has been deleted.',
+                                        'success'
+                                    )
+                                }
+                            })
+                        });
+
+                        updateProductPhoto();
+                    },
+
+                    error: function(xhr, status, error) {
+                        console.log(xhr.responseText);
+                    }
+                });
+            }
+        });
 
         $('.remove').click(function(e) {
             e.preventDefault();

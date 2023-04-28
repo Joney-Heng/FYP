@@ -262,7 +262,9 @@
                                 <span class="quantity">1</span>
                                 <button class="quantity-plus">+</button>
                             </div>
-                            <span stock-quantity><?php echo $product->stock_quantity ?> unit available</span>
+                            <div>
+                                <span class="stock-quantity"><?php echo $product->stock_quantity ?></span> unit available
+                            </div>
                         </div>
 
                         <div class="buttons button-container">
@@ -297,8 +299,12 @@
                 e.preventDefault();
 
                 let value = (parseInt($(this).closest('.cta').find('.quantity').html()) || 0)
+                let stockQuantity = parseInt($('.quantity-container .stock-quantity').html());
 
-                $(this).closest('.cta').find('.quantity').html(value + 1);
+                if (value < stockQuantity) {
+                    $(this).closest('.cta').find('.quantity').html(value + 1);
+                }
+
             });
 
             $('.cta .quantity-minus').click(function(e) {
@@ -314,6 +320,7 @@
 
                 var form_data = new FormData();
 
+                form_data.append("stock_quantity", parseInt($('.quantity-container .stock-quantity').html()));
                 form_data.append("selected_quantity", $('.quantity').html());
                 form_data.append("product_id", <?php echo $product->id?>);
 
@@ -343,6 +350,7 @@
 
                 var form_data = new FormData();
 
+                form_data.append("stock_quantity", parseInt($('.quantity-container .stock-quantity').html()));
                 form_data.append("selected_quantity", $('.quantity').html());
                 form_data.append("product_id", <?php echo $product->id?>);
 

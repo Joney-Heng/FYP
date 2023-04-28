@@ -97,8 +97,6 @@ class Product extends CI_Controller
 
     $curl = curl_init();
 
-    echo (('/C:/wamp64/www/FYP/' . $uploadedFile));
-
     curl_setopt_array($curl, array(
       CURLOPT_URL => 'https://storage-api-ten.vercel.app/files',
       CURLOPT_RETURNTRANSFER => true,
@@ -108,14 +106,20 @@ class Product extends CI_Controller
       CURLOPT_FOLLOWLOCATION => true,
       CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
       CURLOPT_CUSTOMREQUEST => 'POST',
-      // CURLOPT_POSTFIELDS => array('file'=> new CURLFILE('/C:/wamp64/www/FYP/' . $uploadedFile)),
-      CURLOPT_POSTFIELDS => array('file'=> new CURLFILE('/C:/wamp64/www/FYP/uploads/banner_1.jpeg'))
+      CURLOPT_POSTFIELDS => array('file'=> new CURLFILE('C:/wamp64/www/FYP/' . $uploadedFile)),
+      CURLOPT_SSL_VERIFYPEER => false,
     ));
 
     $response = curl_exec($curl);
-
+    $error = curl_error($curl);
+    
     curl_close($curl);
-    echo 'abcdefg' . $response;
+    
+    if ($error) {
+      echo "cURL Error: $error";
+    } else {
+      echo $response;
+    }
 
   }
 

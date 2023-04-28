@@ -48,6 +48,15 @@
 
         return $user_id;
     }
+
+    public function get_user_by_id($user_id) {
+        $query = $this->db->get_where('users', array('id' => $user_id)); // Retrieve the user's data from the database
+
+        echo json_encode($query);exit;
+        return $query->row(); // Return the user's data as an object
+
+        
+    }
   
 }
 

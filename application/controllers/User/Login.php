@@ -39,4 +39,19 @@ class Login extends CI_Controller {
 		}
 	  
 	}
+
+	public function user_profile() {
+		$user_id = $this->session->userdata('user_id');
+		$this->load->model('User_model');
+
+		$user = $this->User_model->get_user_by_id($user_id);
+		$this->session->set_userdata('name', $user->name);
+		
+		$user_name = $this->session->userdata('name');
+		$data['user_name'] = $user_name;
+		
+		$this->load->view('layout/header', $data);
+		// $this->load->view('layout/_header', $data);
+	}
+	
 }

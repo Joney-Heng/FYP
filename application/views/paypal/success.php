@@ -269,7 +269,7 @@
                                 <?php } ?>
                             </table>
                             
-                        <a href="<?php echo base_url("mainsite")?>" class="go-to-home">Go to Home</a>
+                        <a href="<?php echo base_url("user/logout")?>" class="go-to-home">Go to Home</a>
 
                         </div>
                     
@@ -277,7 +277,7 @@
                     </div>
                     <?php } else if(empty($payment)) { ?>
                         <h1 class="error">Oppss...Something Went Wrong!</h1>
-                        <a href="<?php echo base_url("mainsite")?>">Click to Back to Merchant Site.</a>
+                        <a href="<?php echo base_url("user/logout")?>">Click to Back to Merchant Site.</a>
                     <?php } ?>
                  </div>
                  
